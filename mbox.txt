@@ -1,0 +1,4 @@
+hey there
+I'm here to teach you Python
+so let's get started
+From here we're gonna set a plus and that's it

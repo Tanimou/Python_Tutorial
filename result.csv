@@ -1,0 +1,14 @@
+,listli,lista
+0,Prerequisites,Prerequisites
+1,Create a project environment for the Django tutorial,Create a project environment for the Django tutorial
+2,Create and run a minimal Django app,Create and run a minimal Django app
+3,Create a debugger launch profile,Create a debugger launch profile
+4,Explore the debugger,Explore the debugger
+5,Go to Definition and Peek Definition commands,Go to Definition and Peek Definition commands
+6,Use a template to render a page,Use a template to render a page
+7,Serve static files,Serve static files
+8,Create multiple templates that extend a base template,Create multiple templates that extend a base template
+9,"Work with data, data models, and migrations","Work with data, data models, and migrations"
+10,Use the debugger with page templates,Use the debugger with page templates
+11,Optional activities,Optional activities
+12,Next steps,Next steps
