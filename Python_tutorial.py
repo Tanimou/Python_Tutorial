@@ -7,7 +7,7 @@ from pathlib import Path
 ##!we can ask python what type something is by using the type() function
 print(type("hello"))
 
-#tanimou
+#tanimou cisse
 
 #nam = input("who are you?")
 #print("welcome", nam)
