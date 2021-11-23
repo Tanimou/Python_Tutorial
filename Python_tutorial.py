@@ -8,7 +8,7 @@ from pathlib import Path
 print(type("hello"))
 
 #tanimou cissee
-
+#this is a test on github with a team partner
 #nam = input("who are you?")
 #print("welcome", nam)
 
