@@ -1,8 +1,8 @@
 import csv
-
+from abc import ABC,abstractmethod ## abc stands for abstract based class
 
 #!Creation of class
-class Item:
+class Item(ABC):
     #pass // we use pass if we want to write nothing in the class:
    
     #*like in javascript we have a class attribute that comes before the constructor
@@ -25,7 +25,7 @@ class Item:
         #!to make an attribute private we put "__" after self. while in javascripte we say: #attribute
         self.__name = name## similar to this.__name=name in javascript
         self.__price = price
-        self.quantity = quantity
+        self.__quantity = quantity
         #*create a list of objects
         Item.all.append(self)
     
@@ -46,6 +46,11 @@ class Item:
         print("Getting price...")
         return self.__price
     
+    @property
+    def getQuantity(self): 
+        print("Getting quantity...")
+        return self.__quantity
+    
     #*if we still want anyway to change a property attribute we use the decorator setter like this:
     @getName.setter #! like setter in javascript
     def setName(self, value):
@@ -59,12 +64,18 @@ class Item:
     def setPrice(self, value):
         print("setting price...")
         self.__price = value
+    
+    @getQuantity.setter
+    def setQuantity(self, value):
+        print("setting quantity...")
+        self.__quantity = value 
+        
         
     #*the __repr__ method is used to configure the representation of objects in a way we want
     #*it is called implicity when we want to print an object or a list of objects
     #*it's also called a dunder or magic method, and allows us to being able to create our own methods
     def __repr__(self):
-        return f"{self.__class__.__name__}('{self.__name}', {self.__price}, {self.quantity})"
+        return f"{self.__class__.__name__}('{self.__name}', {self.__price}, {self.__quantity})"
     
     #*read data from csv file and create insta'nces of Item from csv file
     #*cls is as self but it's the class itself rather than the object that is going to be passed as a parameter
@@ -102,8 +113,10 @@ class Item:
   
   
     #*methods are functions created inside of a class
+
+    #@abstractmethod
     def calculate_total_price(self):
-        return self.__price*self.quantity
+        return self.__price*self.__quantity
 
 
 
@@ -120,6 +133,8 @@ class Item:
 #*instead of using the "extends" keyword like in javascript    
 class Phone(Item):
     listphone=[]
+
+    
     def __init__(self, name:str, price:float, quantity=0,broken_phones=0):
         ##it's very like in javascript or java, for the child class we use the super().__init__() function in python
         ##then the child class inherits all the data and methods from his parent class
@@ -128,7 +143,25 @@ class Phone(Item):
         self.broken_phones=broken_phones
         Phone.listphone.append(self)
         
-        
+
+#! Multiple inheritance of classes
+#*so we have 2 classes: Item and Phone.
+#* Let's say we want to create a class that inherit these 2 classes, like class touchscreen for all touchscreen phones:
+#*In order to do that each class must not inherit eachother together
+#*But here because Phone is a subclass of Item, we cannot create the touchscreen class from these 2 classes
+#*It's like we inherit 2 times the same class, which makes nonsens
+#*Let's create an independent class
+
+class Priceless:
+    def pricy(self):
+        print("this item is priceless")
+#*Now we can create our touchscreen class that will inherit Item and Priceless classes
+class Touchscreen(Phone,Priceless):
+    listpriceless=[]
+    def __init__(self, name, price, quantity=0):
+        super().__init__(name, price, quantity)
+        Touchscreen.listpriceless.append(self)       
+   
 def make_class(x):
     class Dog:
         def __init__(self, name):
@@ -153,8 +186,8 @@ print(item1.getName)
 #?item1.name = "phone"
 #?item1.price = 100
 #?item1.quantity = 5
-#item1.calculate_total_price()##so python passes item1 as a first parameter everytime you call calculate_total_price
-print(item1.calculate_total_price())
+
+print(item1.calculate_total_price())##so python passes item1 as a first parameter everytime you call calculate_total_price
 
 item2 = Item("laptop",1000,3)
 
@@ -170,10 +203,7 @@ item2.pay_rate =0.7
 item2.apply_discount()
 print(item2.getPrice)
 
-#item3 = Item("psp", 1000, 3)
-#item4 = Item("xbox", 1000, 3)
-#item5 = Item("wii", 1000, 3)
-#item6 = Item("ps4", 1000, 3)
+
 
 ##as we defined __repr__ we can print our list of object or even a simple object:
 #print(Item.all)
@@ -198,13 +228,20 @@ phone1.setName ="TabS7Pro"
 print("\n")
 print(phone1.getName)
 print(Item.all)
+Priceless1=Touchscreen("Iphone12",2500,40)
+print(Priceless1.pricy())
+print(Priceless1.getName)
+
 #! Encapsulation refers to a mechanism of restricting the direct access to some of attributes in a program
 #! for example restricting the ability to overwrite the value of name within our setters is exactly what encapsulation is
 
-## Abstraction is the concepts of OOP that only shows the necessary attributes or methods and hide the unnecessary information in the instance level
+## Abstraction is the concepts of OOP that only shows the necessary attributes or methods and hide the unnecessary information in the instance level or even in the class level
 ## By making attributes and methods that are not necessary for the user private is what the abstraction is
-##For exemple if i were to send items to someone by email with a send_email method, in my class Item making private all the methods/attributes(by adding __ before them) related to send_email method and that are not necessary 
+##For exemple if i were to send items to someone by email with a send_email method, in my class Item making private all the methods/attributes(by adding __ before them for attributes) related to send_email method and that are not necessary 
 ##for the user so that send_email method can only be accessed from the instance is what we call abstraction
+#*we can also abstract a class so that user can't create any instance from that abstracted class
+#*To do that we need to import ABC, and abstractmethod from abc. An abstract class is a class that contains one or more abstract methods
+#*Let's say that we want to abstract the calculate_total_price() method, Item must inherit from ABC and we just put the @abstractmethod decorator to that
 
 #*Polymorphism is a very important concept in programming, it refers to use a single type of entity to represent different types 
 #*in differents scenarios. It is the ability to have different scenarios when we call the exact same entity(an entity could be a function)

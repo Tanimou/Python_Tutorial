@@ -1,5 +1,6 @@
 #import pathlib
-import re,turtle,calendar,datetime as dt,inc_dec,pytz
+import re,turtle,calendar,datetime as dt,inc_dec,pytz,random,os,shutil
+
 #import POO_tutorial
 from POO_tutorial import Item ,Phone##here i can import a specific element from another python file
 from collections import Counter, deque, namedtuple## in order to use collections's features
@@ -7,10 +8,24 @@ from pathlib import Path
 ##!we can ask python what type something is by using the type() function
 print(type("hello"))
 
-#tanimou cissee
-#this is a test on github with a team partner
 #nam = input("who are you?")
 #print("welcome", nam)
+#!the format function
+#*optional method that gives users more control when displaying output
+
+animal="cow"
+item="moon"
+print("the {} jumped over the {}".format(animal, item))
+
+#!Random function
+x=random.randint(1,6)#will print a random number between 1 and 6
+print(x)
+mylist=["rock","paper","scissors"]
+z=random.choice(mylist)#will choose between rock, paper and scissors
+print(z)
+cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+random.shuffle(cards)
+print(cards)
 
 #! if statement
 x = 30
@@ -182,6 +197,19 @@ sppot = data.find(" ", atpos)
 print(sppot)
 print(data[atpos+1:sppot])
 
+#!Detection of file
+#*we need to import os first
+#*we specify the path where we want to check the existence of the file
+path="C:\\Users\\tanim\\Desktop\\procuration.docx"
+if os.path.exists(path):
+    print("the location exists")
+    if os.path.isdir(path):
+        print("that is a directory")
+    elif os.path.isfile(path):
+        print("that is a file")
+else:
+    print("the location doesn't exist")
+
 #! Reading files
 #*opening a file
 ##Before we can read the contents of the file, we must tell python which file we are going to work with and what we'll be doing with this file
@@ -235,16 +263,43 @@ fhanddd.close()
   #  fhand.close()
 
 #* "w" overwrite an existing file or create a new file.
-#*int this way we can create different files in different in differents format using python 
+#*int this way we can create different files  in different formats using python 
 with open("index.html", "w") as fhand:
     fhand.write("<p>Hey there</p>")
     fhand.close()
+ 
+ #! Copying a file
+ #*there is 3 ways of copying a file but we need to import shutil first   
+ ##copyfile()= copies contents of a file
+ ##copy()= copyfile() + permission mode + destination can be a directory
+ ##copy2()= copy() + copies metadata (file's creation and modification times)
+
+shutil.copyfile("mbox.txt", "mbox2.txt")##will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
+
+#!Moving a file
+#* need to import os
+source="mbox2.txt"
+destination="C:\\Users\\tanim\\Desktop\\mbox2.docx" #At the end we specify the name of the new file. we can move a directory as well
+if os.path.exists(destination):
+    print("there is already a file there")
+else:
+    os.replace(source,destination)
+    print("{} was moved".format(source))
+
+#! Deletiong a file
+if os.path.exists(source):
+     os.remove(source)##if the file is in the same directory just specify the name, otherwise must specify the path
+else:
+    print("there is no file to delete")
     
+#*to remove an empty directory (folder): os.rmdir(name_directory or path_to_the_directory)
+#* to delete an unempty folder: shutil.rmtree(name_directory or path_to_the_directory) must import shutil first
+
 
 #! Python list
 #*Data structures
 #? Using range function
-#* the range function returns a list of numbers that range from 0 to one less thn the parameter. It actually gives an array of indexex, simply put
+#* the range function returns a list of numbers that range from 0 to one less than the parameter. It actually gives an array of indexes, simply put
 print(range(4))
 friends = ["Joseph", "Glenn","Glenn","Glenn", "Gill"]
 print(range(len(friends)))
@@ -281,10 +336,10 @@ print(friends)
 friends.reverse()
 print(friends)
 friends.reverse()
+
 #*and also remove an element
 friends.remove("Joseph")
 print(friends)
-
 
 #*to remove the last element of a list we use pop()
 print(friends.pop())
@@ -327,7 +382,7 @@ print(joined)
 print("\n")
 #!Another type of list:Deque(Double-ended queue)
 #*Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
-#*with approximately the same performance i either direction
+#*with approximately the same performance in either direction
 #*Deque is faster than a list in terms of adding retrieving elements
 d=deque("hello")
 print(d)
@@ -343,7 +398,7 @@ d.extend("456")
 print(d)
 d.extendleft("olleh")
 print(d)
-d.rotate(-5)#rotate to the left
+d.rotate(-5)#rotate from the left 5 times
 print(d)
 c=deque("yahoo",maxlen=5)
 print(c)
@@ -351,25 +406,8 @@ c.append(1)
 print(c)
 print("\n")
 
-#!Sets
-#*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
-#*and we can't have duplicate values
-s={"blueberry","raspberry"}
-s.add("strawberry")
-print(s)
-s.add("blueberry")
-print(s)
-d={"blueberry","Harry potter","strawberry","hunger games"}
-print(s.union(d))
-print(s.intersection(d))
-print(s.difference(d))
-print(d.difference(s))
-#*we can convert a set to a list and vice-versa. this is called casting
-l=[1,2,3,3,4,4,4,5,8,8,6,]
-s=set(l)##casting the list to a set
-l=list(s)##casting back to a list
-print(s)
-print(l)
+
+
 #!Python dictionnaries
 #*dictionnaries are like list but while lists are ordered, dictionnaries are not ordered. We can access values of lists using indexes while in dictionnaries we access them with keys
 purse = dict()
@@ -410,7 +448,7 @@ jjj = {
     "jan": 100
 }
 print(jjj)
-print(jjj.get("chuck"))
+print(jjj.get("chuck"))#same as print(jjj["chuck"]) but this is an old way
 print(jjj.get("frad"))
 print("\n")
 #*it's an error to reference a key which is not in the dictionary
@@ -456,7 +494,7 @@ x = counts.get(name, 0)  # *0 is the default balue if name not in counts
 counts = dict()
 names = ["csev", "cwen", "csev", "zqian", "cwen"]
 for name in names:
-   # *if name in names:counts[name]=counts[name]+1 else: counts[name] =0+1=1
+   # *if name in counts:counts[name]=counts[name]+1 else: counts[name] =0+1=1
    counts[name] = counts.get(name, 0)+1
 print("\n")
 print(counts)
@@ -509,10 +547,31 @@ print(jjj.items())
 for aa, bb in jjj.items():
     print(aa, bb)
 
-#*to delete an element of a list we use pop() and specify the key.
+#*to delete an element of a dictionary we use pop() and specify the key.
 #*it will return the value of that key and delete the key/value pairs from the dictionary
 l=jjj.pop("jan")
 print(jjj)
+print(l)
+
+#!Sets
+#*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
+#*and we can't have duplicate values
+s = {"blueberry", "raspberry"}
+s.add("strawberry")
+print(s)
+s.add("blueberry")
+print("s: ",s)
+d = {"blueberry", "Harry potter", "strawberry", "hunger games"}
+print("d: ",d)
+print("s union d: ",s.union(d))
+print("s inter d: ",s.intersection(d))
+print("s diff d: ",s.difference(d))
+print("d diff s: ",d.difference(s))
+#*we can convert a set to a list and vice-versa. this is called casting
+l = [1, 2, 3, 3, 4, 4, 4, 5, 8, 8, 6, ]
+s = set(l)  # casting the list to a set
+l = list(s)  # casting back to a list
+print(s)
 print(l)
 
 #! Tuples
@@ -588,7 +647,7 @@ hand=open("mbox.txt")
 for line in hand:
     line=line.rstrip()
 print(line) if re.search("^From",line) else print("Not found")
-
+hand.close()
 #*greedy matching
 ##the repeat characters(*and+) push outward in both directions to match the largest possible string
 
@@ -614,18 +673,17 @@ y=re.findall("^From (\S+@\S+)",x)##so we search starting by From but we want wha
 print(y)                              
 
 #!Module and pip
-#*a module is a part of program we can actually import from a python file to another one in order to use that program
+#*a module is a part of program we can actually import from a python file to another one in order to use that part of program
 #*this is really useful instead of copy paste a programm all accross
 #*we use the import keyword at the top of the file where we want to import our module
 #*let's say we want to import inc_dec.py so we can use increment and decrement functions here
-#*Now i can use the decrement function like this:
+#*Now we can use the decrement function like this:
 inc_dec.decrement(6)
 
 #!Class and Objects in python
 #*we can import the Item class from POO_tutorial python file(see the top of this file)
 #*and it will import all the data of Item class
-#?item= Item("consolegame",195,10)
-#?print(Item.all)
+
 #item=POO_tutorial.Item("consolegame",195,10)
 item = Item("consolegame", 195, 10)
 print(item)
@@ -680,30 +738,45 @@ print(newList1)
 print("\n")
 
 #!Decorators
+
+##the *args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
+##this allows us to pass any function that takes any arguments
+
+#* *args: parameter that will pack all arguments into a tuple
+def add(*args):
+    return sum(args)
+print(add(12,1,45,75))
+
+#* **kwargs: parameter that will pack all arguments into a dictionary
+def hello(**kwargs):
+    print("hello",end=" ")
+    for value in kwargs.values():
+        print(value,end=" ")#with end keyword we can print all values in one line
+
+hello(title="Mr.",firstname="Cisse",middlename="Amadou",lastname="Tanimou")
+
 def func(f):
-    ##args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
-    ##this allows us to pass any function that takes any arguments
     def wrapper(*args, **kwargs):
         print("started")
-        rv= f(*args, **kwargs)
+        f(*args, **kwargs)
         print("Ended")
-        return rv
+        
     return wrapper
 
 @func##this a decorator. with that we don't need to write func2=func(func2)
-def func2(x,y):
-    print("i am ",x,"and i am ",y,"yers old")
-    return y
+def func2(*args):
+    print("i am ",args[0],"and i am ",args[1],"yers old")
+
 @func
-def func3(b):
-    print("i am ",b)
+def func3(**b):
+    f=list(b.values())#we need to casting the dictionary of values to a list because we don't know the keys of the dictionary since it is created when calling the function
+    print("i am ",f[0]," and my profession is ",f[1])
   
 #*we can avoid writing this code by putting a decorator above func3()  
-#func3=func(func3)
 #func2=func(func2)
-t=func2("tanimou",24)
-func3("affane")
-print(t)
+#func3=func(func3)
+func2("tanimou",24)
+func3(name="affane",profession="developper javascript")
 print("\n")
 
 #!Creating a new package in python
@@ -744,9 +817,9 @@ print(calendar.calendar(2021))
 #*to have the date of today
 today=dt.date.today()
 print(today)
-#*to create a date. This function returns a object
+#*to create a date. This function returns an object
 print(dt.date(1997,9,25))
-#*to calculate the number fo days between 2 dates
+#*to calculate the number of days between 2 dates
 day_since_birthday = today-dt.date(1997, 9, 25)
 print(day_since_birthday.days)
 #* to calculate the upcoming date
@@ -775,3 +848,41 @@ print(datetime_pacific.strftime("%B %d %Y %X"))
 #*String parsing: getting datetime object from date string with strptime()
 # Sep 19, 2019 -> datetime(2019,09,19)
 print(dt.datetime.strptime("November 13, 2021","%B %d, %Y"))
+
+#!Assignment with the walrus operator ":="
+#*assigns values to variables as part of a larger expression
+print(x:=12)
+def cub(num):
+    return num*3
+num_list=[1,2,3,4,5]
+print(ttt:=[y for x in num_list if(y:=cub(x))<14])
+
+##happy=True
+##print( happy)
+print(happy:=True)
+## we cannot say: print(happy=True)
+#*for example this code:
+#?foods=[]
+#?while True:
+  #?  food=input("what food do you like? : ")
+  #?  if food=="quit":
+#?        break
+  #?  foods.append(food)
+
+#*can be easily be simplified with the walrus operator:
+#?foods=[]
+#?while (food:=input("what food do you like? : ")) != "quit":
+  #?  foods.append(food)
+#?print(foods)
+##here is some examples with walrus operator
+#numlist = []
+#while (inp := input("Enter a number: "))!="done":
+ # value = float(inp.strip())
+  #numlist.append(value) 
+#print("Average:", sum(numlist)/len(numlist))
+
+#inputs = []
+#while (current = input ("Input data: "))!="ennd":
+    #inputs.append(current)
+#print(inputs)
+
