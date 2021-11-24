@@ -1,5 +1,6 @@
 #import pathlib
-import re,turtle,calendar,datetime as dt,inc_dec,pytz
+import re,turtle,calendar,datetime as dt,inc_dec,pytz,random,os,shutil
+
 #import POO_tutorial
 from POO_tutorial import Item ,Phone##here i can import a specific element from another python file
 from collections import Counter, deque, namedtuple## in order to use collections's features
@@ -11,7 +12,22 @@ print(type("hello"))
 #this is a test on github with a team partner
 #nam = input("who are you?")
 #print("welcome", nam)
+#!the format function
+#*optional method that gives users more control when displayong output
 
+animal="cow"
+item="moon"
+print("the {} jumped over the {}".format(animal, item))
+
+#!Random function
+x=random.randint(1,6)#will print a random number between 1 and 6
+print(x)
+mylist=["rock","paper","scissors"]
+z=random.choice(mylist)#will choose between rock, paper and scissors
+print(z)
+cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+random.shuffle(cards)
+print(cards)
 #! if statement
 x = 30
 if x < 10:
@@ -182,6 +198,19 @@ sppot = data.find(" ", atpos)
 print(sppot)
 print(data[atpos+1:sppot])
 
+#!Detection of file
+#*we need to import os first
+#*we specify the path where we want to check the existence of the file
+path="C:\\Users\\tanim\\Desktop\\procuration.docx"
+if os.path.exists(path):
+    print("the location exists")
+    if os.path.isdir(path):
+        print("that is a directory")
+    elif os.path.isfile(path):
+        print("that is a file")
+else:
+    print("the location doesn't exist")
+
 #! Reading files
 #*opening a file
 ##Before we can read the contents of the file, we must tell python which file we are going to work with and what we'll be doing with this file
@@ -239,7 +268,30 @@ fhanddd.close()
 with open("index.html", "w") as fhand:
     fhand.write("<p>Hey there</p>")
     fhand.close()
-    
+ 
+ #! Copying a file
+ #*there is 3 ways of copying a file but we need to import shutil first   
+ ##copyfile()= copies contents of a file
+ ##copy()= copyfile() + permission mode + destination can be a directory
+ ##copy2()= copy() + copies metadata (file's creation and modification times)
+
+shutil.copyfile("mbox.txt", "mbox2.txt")##will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
+
+#!Moving a file
+#* need to import os
+source="mbox2.txt"
+destination="C:\\Users\\tanim\\Desktop\\mbox2.docx" #we can move a directory as well
+if os.path.exists(destination):
+    print("there is already a file there")
+else:
+    os.replace(source,destination)
+    print("{} was moved".format(source))
+
+#! Deletiong a file
+os.remove("mbox2.txt")##if the file is in the same directory just specify the name, otherwise must specify the path
+#*to remove an empty directory (folder): os.rmdir(name_directory or path_to_the_directory)
+#* to delete an unempty folder: shutil.rmtree(name_directory or path_to_the_directory) must import shutil first
+
 
 #! Python list
 #*Data structures
@@ -327,7 +379,7 @@ print(joined)
 print("\n")
 #!Another type of list:Deque(Double-ended queue)
 #*Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
-#*with approximately the same performance i either direction
+#*with approximately the same performance in either direction
 #*Deque is faster than a list in terms of adding retrieving elements
 d=deque("hello")
 print(d)
@@ -370,6 +422,7 @@ s=set(l)##casting the list to a set
 l=list(s)##casting back to a list
 print(s)
 print(l)
+
 #!Python dictionnaries
 #*dictionnaries are like list but while lists are ordered, dictionnaries are not ordered. We can access values of lists using indexes while in dictionnaries we access them with keys
 purse = dict()
@@ -680,9 +733,24 @@ print(newList1)
 print("\n")
 
 #!Decorators
+
+##the *args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
+##this allows us to pass any function that takes any arguments
+
+#* *args: parameter that will pack all arguments into a tuple
+def add(*args):
+    return sum(args)
+print(add(12,1,45,75))
+
+#* **kwargs: parameter that will pack all arguments into a dictionary
+def hello(**kwargs):
+    print("hello",end=" ")
+    for key,value in kwargs.items():
+        print(value,end=" ")#with end keyword we can print all values in one line
+
+hello(title="Mr.",firstname="Cisse",middlename="Amadou",lastname="Tanimou")
+
 def func(f):
-    ##args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
-    ##this allows us to pass any function that takes any arguments
     def wrapper(*args, **kwargs):
         print("started")
         rv= f(*args, **kwargs)
@@ -744,9 +812,9 @@ print(calendar.calendar(2021))
 #*to have the date of today
 today=dt.date.today()
 print(today)
-#*to create a date. This function returns a object
+#*to create a date. This function returns an object
 print(dt.date(1997,9,25))
-#*to calculate the number fo days between 2 dates
+#*to calculate the number of days between 2 dates
 day_since_birthday = today-dt.date(1997, 9, 25)
 print(day_since_birthday.days)
 #* to calculate the upcoming date
