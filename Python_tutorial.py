@@ -27,6 +27,19 @@ cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
 random.shuffle(cards)
 print(cards)
 
+animal="cow"
+item="moon"
+print("the {} jumped over the {}".format(animal, item))
+
+#!Random function
+x=random.randint(1,6)#will print a random number between 1 and 6
+print(x)
+mylist=["rock","paper","scissors"]
+z=random.choice(mylist)#will choose between rock, paper and scissors
+print(z)
+cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+random.shuffle(cards)
+print(cards)
 #! if statement
 x = 30
 if x < 10:
@@ -405,7 +418,6 @@ print(c)
 c.append(1)
 print(c)
 print("\n")
-
 
 
 #!Python dictionnaries

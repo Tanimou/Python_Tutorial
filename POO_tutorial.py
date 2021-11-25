@@ -114,7 +114,7 @@ class Item(ABC):
   
     #*methods are functions created inside of a class
 
-    #@abstractmethod
+    @abstractmethod
     def calculate_total_price(self):
         return self.__price*self.__quantity
 
