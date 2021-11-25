@@ -27,6 +27,19 @@ cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
 random.shuffle(cards)
 print(cards)
 
+animal="cow"
+item="moon"
+print("the {} jumped over the {}".format(animal, item))
+
+#!Random function
+x=random.randint(1,6)#will print a random number between 1 and 6
+print(x)
+mylist=["rock","paper","scissors"]
+z=random.choice(mylist)#will choose between rock, paper and scissors
+print(z)
+cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+random.shuffle(cards)
+print(cards)
 #! if statement
 x = 30
 if x < 10:
@@ -407,7 +420,6 @@ print(c)
 print("\n")
 
 
-
 #!Python dictionnaries
 #*dictionnaries are like list but while lists are ordered, dictionnaries are not ordered. We can access values of lists using indexes while in dictionnaries we access them with keys
 purse = dict()
@@ -784,7 +796,7 @@ print("\n")
 #*Python will treat automatically the folder as a package
 
 #!Working with directories
-#*we need to import the path library
+#*we need to import the path library from pathlib
 ##searching all files in the current directory
 path=Path()
 for file in path.glob("*.py"):
