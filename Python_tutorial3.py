@@ -31,6 +31,7 @@ for i in usersfull:
 #print(threading.enumerate())
 #!Multithreading
 #*we can have many threads running concurrently but not truly in parallele by using the concept of multithreading
+#*better for i/o bound tasks
 def eat():
     time.sleep(3)
     print("you're eating")
@@ -54,13 +55,13 @@ def study():
 #?with multithreading
 #*we create a thread that is in charge of each function
 x=threading.Thread(target=eat,args=())#generally we pass our parameters into args field
-x.start()
+#x.start()
 
 y = threading.Thread(target=drink, args=())
-y.start()
+#y.start()
 
 z = threading.Thread(target=study, args=())
-z.start()
+#z.start()
 
 #print(threading.active_count())
 #print(threading.enumerate())
@@ -70,12 +71,12 @@ z.start()
 #!thread synchronisation
 #*we can have a calling thread (in this case the main thread) wait around for another thread to finish before it can move on
 
-x.join()#the main thread will wait till the thread 1 x finish
-y.join()#same thing here 
-z.join()#so the main thread has to wait till these 3 threads complete their tasks
+#x.join()#the main thread will wait till the thread 1 x finish
+#y.join()#same thing here 
+#z.join()#so the main thread has to wait till these 3 threads complete their tasks
 
-print(threading.active_count())
-print(threading.enumerate())
+#print(threading.active_count())
+#print(threading.enumerate())
 
 #!daemon thread
 #*a thread that runs in the background, not important for program to run
@@ -95,9 +96,37 @@ def timer():
 #x=threading.Thread(target=timer, args=())
 #*to turn a normal thread into a daemon thread we set the flags to daemon to true:
 x=threading.Thread(target=timer, args=(),daemon=True)
-x.start()
+#x.start()
 
-answer=input("please enter your credentials: ")
+#answer=input("please enter your credentials: ")
 
 #!Multiprocessing 
 #*running tasks in parallele on different cpu cores, bypass gil for thread
+#*better for cpu bound tasks
+def counter(number):
+    count=0
+    while count<number:
+        count+=1
+
+def main():
+    print(cpu_count())
+    
+    a = Process(target=counter, args=(250000000,))
+    b = Process(target=counter, args=(250000000,))
+    c = Process(target=counter, args=(250000000,))
+    d = Process(target=counter, args=(250000000,))
+    
+    a.start()
+    b.start()
+    c.start()
+    d.start()
+    
+    a.join()
+    b.join()
+    c.join()
+    d.join()
+    
+    print("finished in: ",time.perf_counter(),"seconds")
+
+if __name__=="__main__":
+    main()
