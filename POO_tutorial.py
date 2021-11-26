@@ -241,10 +241,10 @@ print(Priceless1.getName)
 #*To do that we need to import ABC, and abstractmethod from abc. An abstract class is a class that contains one or more abstract methods
 #*Let's say that we want to abstract the calculate_total_price() method, Item must inherit from ABC and we just put the @abstractmethod decorator to that
 
-#*Polymorphism is a very important concept in programming, it refers to use a single type of entity to represent different types 
-#*in differents scenarios. It is the ability to have different scenarios when we call the exact same entity(an entity could be a function)
-#*For example the len() built function knows how to handle different kinds of objects that it receives as an argument 
-#*and returns a result accordingly:
+#?Polymorphism is a very important concept in programming, it refers to use a single type of entity to represent different types 
+#?in differents scenarios. It is the ability to have different scenarios when we call the exact same entity(an entity could be a function)
+#?For example the len() built function knows how to handle different kinds of objects that it receives as an argument 
+#?and returns a result accordingly:
 
-#*name="Jim",print(len(name)) will return the number of letters of the name (3)
-#*whereas : some_list=["some","name"],print(len(some_list)) will return the number of objects in the list
+#?name="Jim",print(len(name)) will return the number of letters of the name (3)
+#?whereas : some_list=["some","name"],print(len(some_list)) will return the number of objects in the list
