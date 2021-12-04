@@ -79,6 +79,60 @@ l = jjj.pop("jan")
 print(jjj)
 print(l)
 
+#!2D dictionary
+test = {
+    'input': {
+        'cards': [13, 11, 10, 7, 4, 3, 1, 0],
+        'query': 7
+    },
+    'output': 3
+}
+
+test2={
+    'input': {
+        'cards': [13, 11, 10, 7, 4, 3, 1, 0],
+        'query': 1
+    },
+    'output': 6
+}
+
+test3 = {
+    'input': {
+        'cards': [3, -1, -9, -127],
+        'query': -127
+    },
+    'output': 3
+},
+
+test4 = {
+    'input': {
+        'cards': [4, 2, 1, -1],
+        'query': 4
+    },
+    'output': 0
+}
+print(test["input"]["cards"])
+tests=[]
+tests.append(test)
+tests.append(test2)
+tests.append(test3)
+tests.append(test4)
+print(tests)
+
+
+def locate_card(cards, query):
+    position = 0
+    while True:
+        if cards[position] == query:
+            return position
+
+        position += 1
+        if position == len(cards):
+            return -1
+
+
+result = locate_card(test['input']['cards'], test['input']['query'])
+print(result)
 #!Sets
 #*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
 #*and we can't have duplicate values

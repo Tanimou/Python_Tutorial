@@ -1,5 +1,6 @@
 from operator import index
 from tkinter import *
+from tkinter import messagebox,colorchooser
 
 #!GUI: Graphical User Interface in python
 #*this part requires tkinter
@@ -21,6 +22,8 @@ icon=PhotoImage(file="zeref.png")
 #windows.config(background="white")
 #windows.config(background="#5cfcff")
 
+#windows.mainloop()
+
 #!labels
 #*an area widget that holds text and/or an image within a window
 #windows=Tk()
@@ -41,6 +44,8 @@ label=Label(windows,
 
 #label.pack()
 #label.place(x=20,y=0)
+
+#windows.mainloop()
 
 #!buttons
 #windows=Tk()
@@ -65,6 +70,7 @@ button=Button(windows,
               )
 #button.pack()
 
+#windows.mainloop()
 
 #!Entry box
 #*textbox that accepts a single line of user input
@@ -106,8 +112,11 @@ delete = Button(windows, text="delete", command=delete)
 backspace = Button(windows, text="backspace", command=backspace)
 #backspace.pack(side=RIGHT)
 
+#windows.mainloop()
+
 #!checkbox
 #windows=Tk()
+
 def display():
     if(x.get()==1):
         print("you checked this")
@@ -128,6 +137,8 @@ check_button=Checkbutton(windows,
                          )
 
 #check_button.pack()
+
+#windows.mainloop()
 
 #!radio buttons
 #*similar to checkbox but you can only select one from a group
@@ -162,6 +173,9 @@ for k,v in food.items():
                               width=375,#set width of radio buttons
                               )
 #    radiobutton.pack(anchor=W) #to place radio buttons to the left
+
+#windows.mainloop()
+
 #!scale
 #windows=Tk()
 def submit():
@@ -179,6 +193,7 @@ button=Button(windows,text="submit",command=submit)
 #scale.pack()
 #button.pack()
 
+#windows.mainloop()
 #!listbox
 #*a listing of selectable text items within its own container
 #windows=Tk()
@@ -211,15 +226,55 @@ listbox.insert(1,"pizza")
 listbox.insert(2, "pizza")
 listbox.insert(3, "pizza")
 
-
 entrybox=Entry(windows)
 add=Button(windows,text="add",command=add)
 delete = Button(windows, text="delete", command=delete)
 submit=Button(windows, text="submit", command=submit)
+#windows.mainloop()
 
+'''
 listbox.pack()
 entrybox.pack()
 add.pack()
 delete.pack()
 submit.pack()
+''' 
+#!message box
+#windows=Tk()
+def click():
+  #  messagebox.showinfo(title="info",message="you clicked me")
+   #messagebox.showwarning(title="Attention", message="A virus has been detected")
+   # messagebox.showerror(title="Error", message="Something went wrong")
+  '''
+  if messagebox.askokcancel(title="ask", message="Are you sure about that?"):
+      print("got it")
+  else:
+      print("canceling")
+  ''' 
+  '''
+  if messagebox.askretrycancel(title="ask", message="Are you sure about that?"):
+      print("got it")
+  else:
+      print("canceling")
+  ''' 
+  '''
+  if messagebox.askyesno(title="ask", message="Are you sure about that?"):
+      print("got it")
+  else:
+      print("canceling")
+  ''' 
+  #print(messagebox.askquestion(title="question", message="Are you sure about that?"))
+  print(messagebox.askyesnocancel(title="question",
+        message="Are you sure about that?"))
+  
+    
+clickme=Button(windows, text="click me", command=click)
+#clickme.pack()
+
+#windows.mainloop()
+
+#!color chooser
+#windows=Tk()
+windows.geometry("420x420")
+
 windows.mainloop()  # create a windows on computer screen, listen for events
