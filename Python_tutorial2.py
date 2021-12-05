@@ -1,9 +1,16 @@
 # here i can import a specific element from another python file
-import re,turtle,calendar,datetime as dt,inc_dec,pytz
-from collections import namedtuple,Counter
-from POO_tutorial import Item, Phone
-from pathlib import Path
+import calendar
+import datetime as dt
+import re
+import turtle
+from collections import Counter, namedtuple
 from functools import reduce
+from pathlib import Path
+
+import pytz
+
+import inc_dec
+from POO_tutorial import Item, Phone
 
 #!simplifying counting with get()
 #*this code:
@@ -79,7 +86,7 @@ l = jjj.pop("jan")
 print(jjj)
 print(l)
 
-#!2D dictionary
+#!2D dictionary, Binary search
 test = {
     'input': {
         'cards': [13, 11, 10, 7, 4, 3, 1, 0],
@@ -102,7 +109,7 @@ test3 = {
         'query': -127
     },
     'output': 3
-},
+}
 
 test4 = {
     'input': {
@@ -111,28 +118,47 @@ test4 = {
     },
     'output': 0
 }
-print(test["input"]["cards"])
+#print(test["input"]["cards"])
 tests=[]
 tests.append(test)
 tests.append(test2)
 tests.append(test3)
 tests.append(test4)
-print(tests)
+#print(tests)
 
+def binary_search(lo, hi, condition):
+    """TODO - add docs"""
+    while lo <= hi:
+        mid = (lo + hi) // 2
+        result = condition(mid)
+        if result == 'found':
+            return mid
+        elif result == 'left':
+            hi = mid - 1
+        else:
+            lo = mid + 1
+    return -1
 
 def locate_card(cards, query):
-    position = 0
-    while True:
-        if cards[position] == query:
-            return position
 
-        position += 1
-        if position == len(cards):
-            return -1
+    def condition(mid):
+        if cards[mid] == query:
+            if mid > 0 and cards[mid-1] == query:
+                return 'left'
+            else:
+                return 'found'
+        elif cards[mid] < query:
+            return 'left'
+        else:
+            return 'right'
 
+    return binary_search(0, len(cards) - 1, condition)
 
-result = locate_card(test['input']['cards'], test['input']['query'])
+card2=tests[2]["input"]["cards"]
+query2 = tests[2]["input"]["query"]
+result = locate_card(card2,query2)
 print(result)
+
 #!Sets
 #*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
 #*and we can't have duplicate values
