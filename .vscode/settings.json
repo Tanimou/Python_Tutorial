@@ -6,5 +6,6 @@
   "AREPL.skipLandingPage": true,
   "AREPL.printResultPlacement": "bottom",
   "AREPL.delay": 100,
-  "AREPL.keepPreviousVars": true
+  "AREPL.keepPreviousVars": true,
+  "jupyter.jupyterServerType": "local"
 }
