@@ -1,77 +1,3 @@
-class TreeNode():
-    def __init__(self, key):
-        self.key, self.left, self.right = key, None, None
-    
-    def __str__(self):
-        return "BinaryTree <{}>".format(self.to_tuple())
-
-    def __repr__(self):
-        return "BinaryTree <{}>".format(self.to_tuple())
-    
-    def height(self):
-        if self is None:
-            return 0
-        return 1 + max(TreeNode.height(self.left), TreeNode.height(self.right))
-
-    def size(self):
-        if self is None:
-            return 0
-        return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)
-
-    def traverse_in_order(self):
-        if self is None:
-            return []
-        return (TreeNode.traverse_in_order(self.left) +
-                [self.key] +
-                TreeNode.traverse_in_order(self.right))
-
-    def traverse_pre_order(self):
-        if self is None:
-            return []
-        return ([self.key] +
-                TreeNode.traverse_pre_order(self.left) +
-                TreeNode.traverse_pre_order(self.right))
-    
-    def traverse_post_order(self):
-        if self is None:
-            return []
-        return (TreeNode.traverse_post_order(self.right) +
-                [self.key] +
-                TreeNode.traverse_post_order(self.left))
-
-    def display_keys(self, space='\t', level=0):
-        # If the node is empty
-        if self is None:
-            print(space*level + '∅')
-            return
-        # If the node is a leaf
-        if self.left is None and self.right is None:
-            print(space*level + str(self.key))
-            return
-        # If the node has children
-        TreeNode.display_keys(self.right, space, level+1)
-        print(space*level + str(self.key))
-        TreeNode.display_keys(self.left, space, level+1)
-    # Tree to tuple
-    def to_tuple(self):
-        if self is None:
-            return None
-        if self.left is None and self.right is None:
-            return self.key
-        return TreeNode.to_tuple(self.left),  self.key, TreeNode.to_tuple(self.right)
-    # Tuple to tree
-    @staticmethod
-    def parse_tuple(data):
-        if data is None:
-            node = None
-        elif isinstance(data, tuple) and len(data) == 3:
-            node = TreeNode(data[1])
-            node.left = TreeNode.parse_tuple(data[0])
-            node.right = TreeNode.parse_tuple(data[2])
-        else:
-            node = TreeNode(data)
-        return node
-
 
 """
 QUESTION 1: As a senior backend engineer, you are tasked with developing a fast in-memory data structure to manage profile information (username, name and email) for 100 million users. It should allow the following operations to be performed efficiently:
@@ -84,8 +10,6 @@ QUESTION 1: As a senior backend engineer, you are tasked with developing a fast 
 You can assume that usernames are unique.
 """
 #*A Python class would be a great way to represent the information for a user
-
-
 class User:
     def __init__(self, username, name, email):
         self.username = username
@@ -123,8 +47,6 @@ The various functions can be implemented as follows:
 3.Update: Loop through the list, find the user object matching the query and update the details
 4.List: Return the list of user objects.
 """
-
-
 class UserDatabase:
     def __init__(self):
         self.users = []
@@ -149,7 +71,6 @@ class UserDatabase:
 
     def list_all(self):
         return self.users
-
 
 database = UserDatabase()
 database.insert(hemanth)
@@ -182,12 +103,106 @@ It's apparent that a sorted list of users might not be the best data structure t
 We can limit the number of iterations required for common operations like find, insert 
 and update by organizing our data in the following structure, called a BINARY TREE
 """
+class TreeNode():
+    def __init__(self, key):
+        self.key, self.left, self.right = key, None, None
 
+    def __str__(self):
+        return "BinaryTree <{}>".format(self.to_tuple())
+
+    def __repr__(self):
+        return "BinaryTree <{}>".format(self.to_tuple())
+    #!Height of a binary tree
+    #*The height/depth of a binary tree is defined as the length of the longest path from its root node to a leaf.
+    #*It can be computed recursively, as follows:
+    def height(self):
+        if self is None:
+            return 0
+        return 1 + max(TreeNode.height(self.left), TreeNode.height(self.right))
+    
+    #!size of a binary tree
+    #*it's the number of node in a tree
+    def size(self):
+        if self is None:
+            return 0
+        return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)
+    #!traversing a binary tree
+    #*Inorder traversal:
+    #*1.Traverse the left subtree recursively inorder.
+    #*2.Traverse the current node.
+    #*3.Traverse the right subtree recursively inorder.
+    def traverse_in_order(self):
+        if self is None:
+            return []
+        return (TreeNode.traverse_in_order(self.left) +
+                [self.key] +
+                TreeNode.traverse_in_order(self.right))
+        
+    #!traversing a binary tree
+    #*Preorder traversal:
+    #*1.Traverse the current node.
+    #*2.Traverse the left subtree recursively preorder.
+    #*3.Traverse the right subtree recursively preorder.
+    def traverse_pre_order(self):
+        if self is None:
+            return []
+        return ([self.key] +
+                TreeNode.traverse_pre_order(self.left) +
+                TreeNode.traverse_pre_order(self.right))
+        
+    #!traversing a binary tree
+    #*Postorder traversal:
+    #*1.Traverse the right subtree recursively postorder.
+    #*2.Traverse the current node.
+    #*3.Traverse the left subtree recursively postorder.
+    def traverse_post_order(self):
+        if self is None:
+            return []
+        return (TreeNode.traverse_post_order(self.right) +
+                [self.key] +
+                TreeNode.traverse_post_order(self.left))
+    
+    #!display the tree
+    def display_tree(self, space='\t', level=0):
+        # If the node is empty
+        if self is None:
+            print(space*level + '∅')
+            return
+        # If the node is a leaf
+        if self.left is None and self.right is None:
+            print(space*level + str(self.key))
+            return
+        # If the node has children
+        TreeNode.display_tree(self.right, space, level+1)
+        print(space*level + str(self.key))
+        TreeNode.display_tree(self.left, space, level+1)
+    
+    #!convert a binary tree into tuple
+    def to_tuple(self):
+        if self is None:
+            return None
+        if self.left is None and self.right is None:
+            return self.key
+        return TreeNode.to_tuple(self.left),  self.key, TreeNode.to_tuple(self.right)
+    
+    #!convert a tuple into binary tree
+    @staticmethod
+    def parse_tuple(data):
+        if data is None:
+            node = None
+        elif isinstance(data, tuple) and len(data) == 3:
+            node = TreeNode(data[1])
+            node.left = TreeNode.parse_tuple(data[0])
+            node.right = TreeNode.parse_tuple(data[2])
+        else:
+            node = TreeNode(data)
+        return node
 
 #*we can represent a binary tree to a tuple
 tree_tuple = ((1, 3, None), 2, ((None, 3, 4), 5, (6, 7, 8)))
 
-#!convert a tuple into binary tree
+
+'''
 def tuple_to_tree(data):
    # print(data)
     if isinstance(data, tuple) and len(data) == 3:
@@ -201,8 +216,11 @@ def tuple_to_tree(data):
     return node
 
 tree2 = tuple_to_tree(tree_tuple)
+''' 
+tree2=TreeNode.parse_tuple(tree_tuple)
 
-#!convert a binary tree into tuple
+
+'''
 def tree_to_tuple(node):
     tree_left = None if node.left is None else tree_to_tuple(node.left)
     tree_right = None if node.right is None else tree_to_tuple(node.right)
@@ -212,8 +230,11 @@ def tree_to_tuple(node):
     else:
        return (tree_left, node.key,tree_right)
 print(tree_to_tuple(tree2))
+''' 
+print(TreeNode.to_tuple(tree2))
 
-#!display the tree
+
+'''
 def display_tree(node, space='\t', level=0):
     # print(node.key if node else None, level)
 
@@ -232,12 +253,10 @@ def display_tree(node, space='\t', level=0):
     print(space*level + str(node.key))
     display_tree(node.left, space, level+1)
 display_tree(tree2," ")
+''' 
+TreeNode.display_tree(tree2, " ")
 
-#!traversing a binary tree
-#*Inorder traversal:
-#*1.Traverse the left subtree recursively inorder.
-#*2.Traverse the current node.
-#*3.Traverse the right subtree recursively inorder.
+'''
 def traverse_in_order(node):
     if node is None:
         return []
@@ -245,11 +264,10 @@ def traverse_in_order(node):
            [node.key] +
            traverse_in_order(node.right))
 print(traverse_in_order(tree2))
+''' 
+print(TreeNode.traverse_in_order(tree2))
 
-#*Preorder traversal:
-#*1.Traverse the current node.
-#*2.Traverse the left subtree recursively preorder.
-#*3.Traverse the right subtree recursively preorder.
+'''
 def traverse_pre_order(node):
     if node is None:
         return []
@@ -257,11 +275,10 @@ def traverse_pre_order(node):
             traverse_pre_order(node.left) +
            traverse_pre_order(node.right))
 print(traverse_pre_order(tree2))
+''' 
 
-#*Postorder traversal:
-#*1.Traverse the right subtree recursively postorder.
-#*2.Traverse the current node.
-#*3.Traverse the left subtree recursively postorder.
+
+'''
 def traverse_post_order(node):
     if node is None:
         return []
@@ -269,21 +286,24 @@ def traverse_post_order(node):
            [node.key]  +
            traverse_post_order(node.left))
 print(traverse_post_order(tree2))
+''' 
 
-#!Height of a binary tree
-#*The height/depth of a binary tree is defined as the length of the longest path from its root node to a leaf. 
-#*It can be computed recursively, as follows:
+
+'''
 def tree_height(node):
     if node is None:
         return 0
     return 1 + max(tree_height(node.left), tree_height(node.right))
+''' 
+print(tree2.height())
 
-#!size of a binary tree
-#*it's the number of node in a tree
+'''
 def tree_size(node):
     if node is None:
         return 0
     return 1 + tree_size(node.left) + tree_size(node.right)
+''' 
+print(tree2.size())
 
 #!Binary search Tree or BST
 ## Binary Search Tree (BST)
