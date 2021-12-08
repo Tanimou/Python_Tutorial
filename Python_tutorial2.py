@@ -23,7 +23,7 @@ from POO_tutorial import Item, Phone
 ##  counts[name] += 1
 
 #*can be simplified with get() and become:
-counts = dict()
+counts = {}
 names = ["csev", "cwen", "csev", "zqian", "cwen"]
 for name in names:
    # *if name in counts:counts[name]=counts[name]+1 else: counts[name] =0+1=1
@@ -119,11 +119,7 @@ test4 = {
     'output': 0
 }
 #print(test["input"]["cards"])
-tests=[]
-tests.append(test)
-tests.append(test2)
-tests.append(test3)
-tests.append(test4)
+tests = [test, test2, test3, test4]
 #print(tests)
 
 def binary_search(lo, hi, condition):
@@ -162,8 +158,7 @@ print(result)
 #!Sets
 #*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
 #*and we can't have duplicate values
-s = {"blueberry", "raspberry"}
-s.add("strawberry")
+s = {'blueberry', 'raspberry', 'strawberry'}
 print(s)
 s.add("blueberry")
 print("s: ", s)
@@ -215,9 +210,7 @@ for k, v in sorted(d.items()):
     print(k, v)
 print("\n")
 #*sorting by values in descending order
-tmp = []  # this is an empty list
-for k, v in d.items():
-    tmp.append((v, k))
+tmp = [(v, k) for k, v in d.items()]
 print(tmp)
 for k, v in sorted(tmp, reverse=True):
     print(k, v)
@@ -243,14 +236,10 @@ print(newp)
 print(newp._fields)
 print("\n")
 
-#!regular expressions or regex
-#*need to import re, very useful when we want to search in a file
-
-hand = open("mbox.txt")
-for line in hand:
-    line = line.rstrip()
-print(line) if re.search("^From", line) else print("Not found")
-hand.close()
+with open("mbox.txt") as hand:
+   for line in hand:
+       line = line.rstrip()
+   print(line) if re.search("^From", line) else print("Not found")
 #*greedy matching
 ##the repeat characters(*and+) push outward in both directions to match the largest possible string
 

@@ -51,7 +51,7 @@ def count_rotations_binary(nums):
     hi = len(nums)-1
     n=0
     while lo <= hi:
-        mid = int((lo+hi)/2)
+        mid = int((lo+hi)//2)
         mid_number = nums[mid]
 
         # Uncomment the next line for logging the values and fixing errors.
