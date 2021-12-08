@@ -126,6 +126,7 @@ class TreeNode():
         if self is None:
             return 0
         return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)
+    
     #!traversing a binary tree
     #*Inorder traversal:
     #*1.Traverse the left subtree recursively inorder.
@@ -217,6 +218,7 @@ def tuple_to_tree(data):
 
 tree2 = tuple_to_tree(tree_tuple)
 ''' 
+print()
 tree2=TreeNode.parse_tuple(tree_tuple)
 
 
@@ -231,7 +233,8 @@ def tree_to_tuple(node):
        return (tree_left, node.key,tree_right)
 print(tree_to_tuple(tree2))
 ''' 
-print(TreeNode.to_tuple(tree2))
+print()
+print(tree2.to_tuple())
 
 
 '''
@@ -254,6 +257,7 @@ def display_tree(node, space='\t', level=0):
     display_tree(node.left, space, level+1)
 display_tree(tree2," ")
 ''' 
+print()
 TreeNode.display_tree(tree2, " ")
 
 '''
@@ -265,7 +269,8 @@ def traverse_in_order(node):
            traverse_in_order(node.right))
 print(traverse_in_order(tree2))
 ''' 
-print(TreeNode.traverse_in_order(tree2))
+print()
+print(tree2.traverse_in_order())
 
 '''
 def traverse_pre_order(node):
@@ -295,6 +300,7 @@ def tree_height(node):
         return 0
     return 1 + max(tree_height(node.left), tree_height(node.right))
 ''' 
+print()
 print(tree2.height())
 
 '''
@@ -303,6 +309,7 @@ def tree_size(node):
         return 0
     return 1 + tree_size(node.left) + tree_size(node.right)
 ''' 
+print()
 print(tree2.size())
 
 #!Binary search Tree or BST
@@ -315,5 +322,25 @@ A binary search tree or BST is a binary tree that satisfies the following condit
 
 It follows from the above conditions that every subtree of a binary search tree must also be a binary search tree.
 ''' 
+#!check if a tree is a binary search tree and give us the min and max values of the tree
+def remove_none(nums):
+    return [x for x in nums if x is not None]
 
 
+def is_bst(node):
+    if node is None:
+        return True, None, None
+
+    is_bst_l, min_l, max_l = is_bst(node.left)
+    is_bst_r, min_r, max_r = is_bst(node.right)
+
+    is_bst_node = (is_bst_l and is_bst_r and
+                   (max_l is None or node.key > max_l) and
+                   (min_r is None or node.key < min_r))
+
+    min_key = min(remove_none([min_l, node.key, min_r]))
+    max_key = max(remove_none([max_l, node.key, max_r]))
+
+    # print(node.key, min_key, max_key, is_bst_node)
+
+    return is_bst_node, min_key, max_key
