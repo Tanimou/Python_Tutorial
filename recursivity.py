@@ -1,4 +1,5 @@
 #https://www.youtube.com/watch?v=IJDJ0kBx2LM&list=PLyZB5ywlnsu9zio01i5zViNFqQunOxrw5&index=33&ab_channel=freeCodeCamp.org
+from binary_tree import TreeNode
 #!strign reversal
 #*input: the simple engineer
 #*output:reenigne elpmis eht
@@ -170,16 +171,22 @@ class node():
         
 
 n1 = node(1)
-n2 = node(2)
-n3 = node(3)
-n4 = node(4)
-n5 = node(5)
-n6 = node(6)
+n2 = node(8)
+n3 = node(22)
+n4 = node(40)
+
+n5 = node(4)
+n6 = node(11)
+n7 = node(16)
+n8 = node(20)
 n1.next = n2
 n2.next = n3
 n3.next = n4
-n4.next = n5
+
 n5.next = n6
+n6.next = n7
+n7.next = n8
+
 
 def reverseList(node):
     if node.head is None or node.next is None:
@@ -199,3 +206,69 @@ def printlist(list):
 
 printlist(n1)
 printlist(reverseList(n1))
+
+#!merge two sorted linked lists
+#*in a ordered way
+def SortedMerge(a,b):
+    
+    if a is None:
+        return b
+    if b is None:
+        return a
+    print("a:", a.head, "", "b:", b.head)
+    if a.head<b.head:
+      
+        a.next=SortedMerge(a.next,b)
+        return a 
+    else:
+        #print("a:", a.head, "", "b:", b.head)
+        b.next=SortedMerge(a,b.next)
+        return b
+#printlist(n1)
+#printlist(n5)
+#printlist(SortedMerge(n1,n5))
+
+#!trees
+#*Add a node in the tree recursively
+def InsertNode(head,data):
+    #*base case
+    if head is None:
+        head=TreeNode(data)
+        return head
+    #*small amount of work in each iteration
+    if(head.key<data):
+        head.right=InsertNode(head.right,data)
+    else:
+        head.left=InsertNode(head.left,data)
+    return head
+
+
+tree_tuple = (((30,50,60), 80, (85,90,95)), 100, ((None, 110, 115), 120, (None, 140, 150)))
+tree2 = TreeNode.parse_tuple(tree_tuple)
+tree2.display_tree("  ")
+print()
+tree3=InsertNode(tree2,108)
+tree3.display_tree("  ")
+print()
+tree3 = InsertNode(tree2, 20)
+tree3.display_tree("  ")
+print()
+tree3 = InsertNode(tree2, 135)
+tree3.display_tree("  ")
+print()
+
+#*print all leaf nodes
+def printleaves(head):
+    #*base case
+    if head is None:
+        return
+    if head.left is None and head.right is None:
+        print(head.key,", ",end="")
+        return
+    #*small amount of work in each iteration
+    if head.left is not None:
+        printleaves(head.left)
+    if head.right is not None:
+        printleaves(head.right)
+
+printleaves(tree3)

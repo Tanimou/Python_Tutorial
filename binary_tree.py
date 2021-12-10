@@ -198,6 +198,17 @@ class TreeNode():
         else:
             node = TreeNode(data)
         return node
+    
+    def InsertNode(self,data):
+    #*base case
+        if self is None:
+            return TreeNode(data)
+        #*small amount of work in each iteration
+        if(self.key<data):
+           self.right=TreeNode.InsertNode(self.right,data)
+        else:
+            self.left=TreeNode.InsertNode(self.left,data)
+        return self
 
 #*we can represent a binary tree to a tuple
 tree_tuple = ((1, 3, None), 2, ((None, 3, 4), 5, (6, 7, 8)))
@@ -258,8 +269,8 @@ def display_tree(node, space='\t', level=0):
 display_tree(tree2," ")
 ''' 
 print()
-TreeNode.display_tree(tree2, " ")
-
+#TreeNode.display_tree(tree2, " ")
+tree2.display_tree(" ")
 '''
 def traverse_in_order(node):
     if node is None:
@@ -311,7 +322,8 @@ def tree_size(node):
 ''' 
 print()
 print(tree2.size())
-
+tree3=tree2.InsertNode(40)
+tree3.display_tree(" ")
 #!Binary search Tree or BST
 ## Binary Search Tree (BST)
 '''
