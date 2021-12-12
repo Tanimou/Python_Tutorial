@@ -5,7 +5,7 @@ test5 = {
     },
     'output': 5
 }
- 
+
 
 test = {
     'input': {
@@ -21,8 +21,10 @@ Further, it is the only number in the list which is smaller than the number befo
 Thus, we simply need to check for each number in the list whether it is smaller than the number that comes before it (if there is a number before it). 
 Then, our answer i.e. the number of rotations is simply the position of this number is . If we cannot find such a number, then the list wasn't rotated at all.
 """
+
+
 def count_rotations_linear(nums):
-    b=0
+    b = 0
     for position in range(len(nums)):
         if (
             position > 0
@@ -33,11 +35,11 @@ def count_rotations_linear(nums):
             if nums[hh] > nums[position]:
                 return position
             else:
-                b=1
+                b = 1
 
-    if  b==0:
+    if b == 0:
         return 0
-    elif b==1:
+    elif b == 1:
         return len(nums)
 
 
@@ -45,11 +47,12 @@ def count_rotations_linear(nums):
 If the middle element of the list is smaller than 
 the last element of the range, then the answer lies to the left of it. 
 Otherwise, the answer lies to the right."""
-    
+
+
 def count_rotations_binary(nums):
     lo = 0
     hi = len(nums)-1
-    n=0
+    n = 0
     while lo <= hi:
         mid = int((lo+hi)//2)
         mid_number = nums[mid]
@@ -57,8 +60,8 @@ def count_rotations_binary(nums):
         # Uncomment the next line for logging the values and fixing errors.
         print("lo:", lo, ", hi:", hi, ", mid:",
               mid, ", mid_number:", mid_number)
-        if hi==lo+1 :
-            if nums[lo]<nums[hi]:
+        if hi == lo+1:
+            if nums[lo] < nums[hi]:
                 return lo
             else:
               return hi
@@ -75,11 +78,11 @@ def count_rotations_binary(nums):
         elif nums[mid] < nums[hi]:
             # Answer lies in the left half
             hi = mid - 1
-            n+=1
+            n += 1
         else:
             # Answer lies in the right half
             lo = mid + 1
 
+
 print(count_rotations_binary(test['input']['nums']))
 # [19, 25, 29, 35, 50, 67, 72, 9, 11, 14]
-

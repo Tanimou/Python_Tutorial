@@ -1,4 +1,5 @@
-import requests,pandas as pd
+import requests
+import pandas as pd
 from bs4 import BeautifulSoup
 
 #!In this tutorial we're gonna learn how to retrieve some informations from a website
@@ -26,12 +27,11 @@ find_class = soup.find(class_="docs-subnavbar-container")
 print()
 
 
-
 ## will return the fourth element of the list of li tag
 #ul = find_class.find_all("ul")
 
-li=find_class.find_all("li")
-list_of_li=[lii.get_text() for lii in li]
+li = find_class.find_all("li")
+list_of_li = [lii.get_text() for lii in li]
 a = find_class.find_all("a")
 list_of_a = [lii.get_text() for lii in a]
 
@@ -39,9 +39,9 @@ list_of_a = [lii.get_text() for lii in a]
 print()
 #print(list_of_a)
 
-listt=pd.DataFrame({
-    "listli":list_of_li,
-    "lista":list_of_a
+listt = pd.DataFrame({
+    "listli": list_of_li,
+    "lista": list_of_a
 })
 print(listt)
 listt.to_csv("result.csv")

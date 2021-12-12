@@ -95,7 +95,7 @@ test = {
     'output': 3
 }
 
-test2={
+test2 = {
     'input': {
         'cards': [13, 11, 10, 7, 4, 3, 1, 0],
         'query': 1
@@ -122,6 +122,7 @@ test4 = {
 tests = [test, test2, test3, test4]
 #print(tests)
 
+
 def binary_search(lo, hi, condition):
     """TODO - add docs"""
     while lo <= hi:
@@ -134,6 +135,7 @@ def binary_search(lo, hi, condition):
         else:
             lo = mid + 1
     return -1
+
 
 def locate_card(cards, query):
 
@@ -150,9 +152,10 @@ def locate_card(cards, query):
 
     return binary_search(0, len(cards) - 1, condition)
 
-card2=tests[2]["input"]["cards"]
+
+card2 = tests[2]["input"]["cards"]
 query2 = tests[2]["input"]["query"]
-result = locate_card(card2,query2)
+result = locate_card(card2, query2)
 print(result)
 
 #!Sets
@@ -295,8 +298,12 @@ print("\n")
 
 #!map function()
 li = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+
 def func(x):
     return x**2
+
+
 print(list(map(func, li)))
 #*we can do this with list comprehension
 print([func(x) for x in li])
@@ -304,11 +311,16 @@ print("\n")
 
 #! filter function
 li = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+
 def isOdd(x):
     return x % 2 != 0
 
+
 def add7(x):
     return x+7
+
+
 print(list(filter(isOdd, li)))
 c = list(map(add7, filter(isOdd, li)))
 print(c)
@@ -321,22 +333,39 @@ c = reduce(lambda x, y: x*y, c)
 print(c)
 
 #!lambda function or anonymous function like in javascript
-func2=lambda x:x+5# similar to func2=function(x){return x+5} or func2= x =>x+5 in javascript
+
+
+# similar to func2=function(x){return x+5} or func2= x =>x+5 in javascript
+def func2(x): return x+5
+
+
 print(func2(9))
+
 
 def funcc(x):
     return func2(x)+85
+
+
 print(funcc(9))
 
 #*without parameter
-afficher=lambda :"hey there"
+
+
+def afficher(): return "hey there"
+
+
 print(afficher())
 
 #*with multiple parameters
-calculer=lambda x,y,z:x+y*z
+
+
+def calculer(x, y, z): return x+y*z
+
+
 print(calculer(2, 3, 4))
 print("\n")
-newList = list(map(lambda x: x+5, li))# like newList=li.map( x =>x+5) in javascript
+# like newList=li.map( x =>x+5) in javascript
+newList = list(map(lambda x: x+5, li))
 newList1 = list(filter(lambda x: x % 2 == 0, li))
 print(newList)
 print(newList1)
@@ -347,17 +376,25 @@ print("\n")
 ##the *args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
 ##this allows us to pass any function that takes any arguments
 #* *args: parameter that will pack all arguments into a tuple
+
+
 def add(*args):
     return sum(args)
+
+
 print(add(12, 1, 45, 75))
 #* **kwargs: parameter that will pack all arguments into a dictionary
+
+
 def hello(**kwargs):
     print("hello", end=" ")
     for value in kwargs.values():
         # with end keyword we can print all values in one line
         print(value, end=" ")
 
+
 hello(title="Mr.", firstname="Cisse", middlename="Amadou", lastname="Tanimou")
+
 
 def func(f):
     def wrapper(*args, **kwargs):
@@ -366,15 +403,18 @@ def func(f):
         print("Ended")
     return wrapper
 
+
 @func  # this a decorator. with that we don't need to write func2=func(func2)
 def func2(*args):
     print("i am ", args[0], "and i am ", args[1], "yers old")
+
 
 @func
 def func3(**b):
     # we need to casting the dictionary of values to a list because we don't know the keys of the dictionary since it is created when calling the function
     f = list(b.values())
     print("i am ", f[0], " and my profession is ", f[1])
+
 
 #*we can avoid writing this code by putting a decorator above func3()
 #func2=func(func2)
@@ -396,6 +436,8 @@ for file in path.glob("*.py"):
 
 #!Turtle
 #*we need to import tutrle library
+
+
 def square():
     turtl = turtle.Turtle()
     turtl.forward(100)
@@ -406,6 +448,7 @@ def square():
     turtl.right(90)
     turtl.forward(100)
 #square()
+
 
 #!calendar stuff
 print(calendar.weekheader(2))
@@ -456,8 +499,12 @@ print(dt.datetime.strptime("November 13, 2021", "%B %d, %Y"))
 #!Assignment with the walrus operator ":="
 #*assigns values to variables as part of a larger expression
 print(x := 12)
+
+
 def cub(num):
     return num*3
+
+
 num_list = [1, 2, 3, 4, 5]
 print(ttt := [y for x in num_list if(y := cub(x)) < 14])
 

@@ -1,6 +1,8 @@
 
-import random,os,shutil
-from collections import deque## in order to use collections's features
+import random
+import os
+import shutil
+from collections import deque  # in order to use collections's features
 
 ##!we can ask python what type something is by using the type() function
 print(type("hello"))
@@ -10,31 +12,31 @@ print(type("hello"))
 #!the format function
 #*optional method that gives users more control when displaying output
 
-animal="cow"
-item="moon"
+animal = "cow"
+item = "moon"
 print("the {} jumped over the {}".format(animal, item))
 
 #!Random function
-x=random.randint(1,6)#will print a random number between 1 and 6
+x = random.randint(1, 6)  # will print a random number between 1 and 6
 print(x)
-mylist=["rock","paper","scissors"]
-z=random.choice(mylist)#will choose between rock, paper and scissors
+mylist = ["rock", "paper", "scissors"]
+z = random.choice(mylist)  # will choose between rock, paper and scissors
 print(z)
-cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
 random.shuffle(cards)
 print(cards)
 
-animal="cow"
-item="moon"
+animal = "cow"
+item = "moon"
 print("the {} jumped over the {}".format(animal, item))
 
 #!Random function
-x=random.randint(1,6)#will print a random number between 1 and 6
+x = random.randint(1, 6)  # will print a random number between 1 and 6
 print(x)
-mylist=["rock","paper","scissors"]
-z=random.choice(mylist)#will choose between rock, paper and scissors
+mylist = ["rock", "paper", "scissors"]
+z = random.choice(mylist)  # will choose between rock, paper and scissors
 print(z)
-cards=[1,2,3,4,5,6,7,8,9,"j","Q","K","A"]
+cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
 random.shuffle(cards)
 print(cards)
 #! if statement
@@ -69,15 +71,15 @@ elif x < 20:
 print("all done.")
 
 #!advanced if else statement with or operator
-is_snowing=True
-is_raining=False
-is_cold=is_raining or is_snowing
+is_snowing = True
+is_raining = False
+is_cold = is_raining or is_snowing
 print(is_cold)
 
 #!While loop
-i=1
-while(i!=10):
-    i+=1
+i = 1
+while(i != 10):
+    i += 1
     print(i)
 print("Done")
 
@@ -132,9 +134,12 @@ print_lyrics()
 def greet():
     return"hello"
 
+
 print(greet(), "Tanimou")
 
 #*Nested function:
+
+
 def func(x):
     if x == 1:
         def rv():
@@ -144,14 +149,20 @@ def func(x):
             print("x is not equal to 1")
     return rv
 
-new_func=func(1)##now new_func becomes a new function
+
+new_func = func(1)  # now new_func becomes a new function
 new_func()
 
 #*keyword argument
-def greet_user(firstname,lastname):
+
+
+def greet_user(firstname, lastname):
     print(f"hi {firstname} {lastname}")
     print("welcome aboard")
-greet_user(lastname="smith",firstname="Jim")##lastname and firstname here are what it's called keyword argument
+
+
+# lastname and firstname here are what it's called keyword argument
+greet_user(lastname="smith", firstname="Jim")
 
 #! Loop and iteration
 #*definite loop
@@ -186,8 +197,8 @@ print(s[:2])
 print(s[8:])
 
 #*we can specify the stephen
-print(s[::2])##meaning go through s with the step of 2, the result will be: Mnypto
-print(s[2::2])##meaning start from the second letter till the end with a step of 2
+print(s[::2])  # meaning go through s with the step of 2, the result will be: Mnypto
+print(s[2::2])  # meaning start from the second letter till the end with a step of 2
 #! using in as a logical operator
 fruit = "mango"
 if "a" in fruit:
@@ -210,7 +221,7 @@ print(data[atpos+1:sppot])
 #!Detection of file
 #*we need to import os first
 #*we specify the path where we want to check the existence of the file
-path="C:\\Users\\tanim\\Desktop\\procuration.docx"
+path = "C:\\Users\\tanim\\Desktop\\procuration.docx"
 if os.path.exists(path):
     print("the location exists")
     if os.path.isdir(path):
@@ -229,7 +240,7 @@ else:
 #?handle=open(filename,mode)
 ##file name is a string
 ##mode is optional and should be "r" if we're planning to read the file and "w if to write"
-fhand = open("mbox.txt")#*we can also say: with open("mbox.txt") as fhand:
+fhand = open("mbox.txt")  # *we can also say: with open("mbox.txt") as fhand:
 print(fhand)
 print("\n")
 
@@ -269,39 +280,42 @@ fhanddd.close()
 
 #!Write in the file
 #with open("mbox.txt","a") as fhand: ## "a" means we want to write at the end of the file. "a" stands for "append"
- #   fhand.write("\nwatashi wa")
-  #  fhand.close()
+#   fhand.write("\nwatashi wa")
+#  fhand.close()
 
 #* "w" overwrite an existing file or create a new file.
-#*int this way we can create different files  in different formats using python 
+#*int this way we can create different files  in different formats using python
 with open("index.html", "w") as fhand:
     fhand.write("<p>Hey there</p>")
     fhand.close()
- 
+
  #! Copying a file
- #*there is 3 ways of copying a file but we need to import shutil first   
+ #*there is 3 ways of copying a file but we need to import shutil first
  ##copyfile()= copies contents of a file
  ##copy()= copyfile() + permission mode + destination can be a directory
  ##copy2()= copy() + copies metadata (file's creation and modification times)
 
-shutil.copyfile("mbox.txt", "mbox2.txt")##will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
+# will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
+shutil.copyfile("mbox.txt", "mbox2.txt")
 
 #!Moving a file
 #* need to import os
-source="mbox2.txt"
-destination="C:\\Users\\tanim\\Desktop\\mbox2.docx" #At the end we specify the name of the new file. we can move a directory as well
+source = "mbox2.txt"
+# At the end we specify the name of the new file. we can move a directory as well
+destination = "C:\\Users\\tanim\\Desktop\\mbox2.docx"
 if os.path.exists(destination):
     print("there is already a file there")
 else:
-    os.replace(source,destination)
+    os.replace(source, destination)
     print("{} was moved".format(source))
 
 #! Deletiong a file
 if os.path.exists(source):
-     os.remove(source)##if the file is in the same directory just specify the name, otherwise must specify the path
+    # if the file is in the same directory just specify the name, otherwise must specify the path
+    os.remove(source)
 else:
     print("there is no file to delete")
-    
+
 #*to remove an empty directory (folder): os.rmdir(name_directory or path_to_the_directory)
 #* to delete an unempty folder: shutil.rmtree(name_directory or path_to_the_directory) must import shutil first
 
@@ -311,16 +325,17 @@ else:
 #? Using range function
 #* the range function returns a list of numbers that range from 0 to one less than the parameter. It actually gives an array of indexes, simply put
 print(range(4))
-friends = ["Joseph", "Glenn","Glenn","Glenn", "Gill"]
+friends = ["Joseph", "Glenn", "Glenn", "Glenn", "Gill"]
 print(range(len(friends)))
 for friend_ in friends:
     print("happy new year:", friend_)
 
 #*in Python we have negatif indexes that allow us to iterate from the end of the list
 friends = ["Joseph", "Kanna", "Shinozaki", "Glenn", "Gill"]
-print(friends[-len(friends)])##if we want to iterate from the end, the index =-1
+# if we want to iterate from the end, the index =-1
+print(friends[-len(friends)])
 
-print(friends[::-2])##gonna print elements from the end with a step of 2
+print(friends[::-2])  # gonna print elements from the end with a step of 2
 
 #*we can count the number of an element in the list with count()
 friends = ["Joseph", "Glenn", "Glenn", "Glenn", "Gill"]
@@ -331,12 +346,12 @@ friends.sort()
 print(friends)
 
 #*we can append another list to a list with extend()
-friends.extend([4,8,15,16,23])
+friends.extend([4, 8, 15, 16, 23])
 print(friends)
 
 #*to insert a value inside of a list at any position we use insert()
 friends.insert(1, "tanimou")
-print(friends) 
+print(friends)
 
 #*append() is used to add at the end of the list a value
 friends.append("hey")
@@ -354,7 +369,7 @@ print(friends)
 #*to remove the last element of a list we use pop()
 print(friends.pop())
 
-#*or even clear a list 
+#*or even clear a list
 friends.clear()
 print(friends)
 
@@ -367,11 +382,11 @@ print(stuff)
 #!Average using list
 #numlist = []
 #while True:
- #   inp = input("Enter a number: ")
-  #  if inp == "done":
-   #     break
-    #value = float(inp.strip())
-    #numlist.append(value)
+#   inp = input("Enter a number: ")
+#  if inp == "done":
+#     break
+#value = float(inp.strip())
+#numlist.append(value)
 #print("Average:", sum(numlist)/len(numlist))
 
 #!split() function
@@ -382,19 +397,19 @@ print(line.split())
 print(len(line.split()))
 ## we can specify what delimiter character to use in the splitting
 print(line.split(";"))
-l=line.split(";")
+l = line.split(";")
 print(len(l))
 print("\n")
 
 #!Join() function
-joined=" and ".join(l)
+joined = " and ".join(l)
 print(joined)
 print("\n")
 #!Another type of list:Deque(Double-ended queue)
 #*Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
 #*with approximately the same performance in either direction
 #*Deque is faster than a list in terms of adding retrieving elements
-d=deque("hello")
+d = deque("hello")
 print(d)
 d.append("4")
 d.appendleft("pf")
@@ -408,9 +423,9 @@ d.extend("456")
 print(d)
 d.extendleft("olleh")
 print(d)
-d.rotate(-5)#rotate from the left 5 times
+d.rotate(-5)  # rotate from the left 5 times
 print(d)
-c=deque("yahoo",maxlen=5)
+c = deque("yahoo", maxlen=5)
 print(c)
 c.append(1)
 print(c)
@@ -460,9 +475,11 @@ print(jjj)
 print(jjj.get("chuck"))  # this is an old way. Same as print(jjj["chuck"])
 print(jjj.get("frad"))
 print("\n")
-cities_in_farenheit={'new york':32,"Boston":75,"los angeles":100}
-cities_in_celsius={key:round((value-32)*(5/9)) for (key,value) in cities_in_farenheit.items() if value!=100}
-desc_cities={key:("warm" if value >= 45 else "cold") for (key,value) in cities_in_farenheit.items()}
+cities_in_farenheit = {'new york': 32, "Boston": 75, "los angeles": 100}
+cities_in_celsius = {key: round((value-32)*(5/9))
+                     for (key, value) in cities_in_farenheit.items() if value != 100}
+desc_cities = {key: ("warm" if value >= 45 else "cold")
+               for (key, value) in cities_in_farenheit.items()}
 print(cities_in_celsius)
 #*it's an error to reference a key which is not in the dictionary
 #*we can use the in operator to see if a key is in the dictionary
@@ -476,7 +493,7 @@ print("names's counting:")
 counts = dict()
 names = ["csev", "cwen", "csev", "zqian", "cwen"]
 for name in names:
-    if name not in counts: 
+    if name not in counts:
         counts[name] = 1
     else:
         counts[name] += 1

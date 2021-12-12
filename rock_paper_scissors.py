@@ -1,29 +1,29 @@
 from random import choice
 
-choices=["rock","paper","scissors"]
-computer=choice(choices)
-player=None
+choices = ["rock", "paper", "scissors"]
+computer = choice(choices)
+player = None
 while player not in choices:
-    player= input("rock, paper, or scissors?:").lower()
+    player = input("rock, paper, or scissors?:").lower()
 
-print("computer:",computer)
-print("player:",player)
+print("computer:", computer)
+print("player:", player)
 
-if player==computer:
+if player == computer:
     print("Tie")
-    
-elif player=="rock":
-    if computer=="paper":
+
+elif player == "rock":
+    if computer == "paper":
         print("you lose!")
-    if computer=="scissors":
+    if computer == "scissors":
         print("you win!")
-elif player=="scissors":
-    if computer=="rock":
+elif player == "scissors":
+    if computer == "rock":
         print("you lose!")
-    if computer=="paper":
+    if computer == "paper":
         print("you win!")
-elif player=="paper":
-    if computer=="scissors":
+elif player == "paper":
+    if computer == "scissors":
         print("you lose!")
-    if computer=="rock":
+    if computer == "rock":
         print("you win!")

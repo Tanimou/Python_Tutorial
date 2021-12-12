@@ -9,7 +9,9 @@ QUESTION 1: As a senior backend engineer, you are tasked with developing a fast 
 
 You can assume that usernames are unique.
 """
-#*A Python class would be a great way to represent the information for a user
+# *A Python class would be a great way to represent the information for a user
+
+
 class User:
     def __init__(self, username, name, email):
         self.username = username
@@ -37,8 +39,8 @@ vishal = User('vishal', 'Vishal Goel', 'vishal@example.com')
 
 users = [aakash, biraj, hemanth, jadhesh, siddhant, sonaksh, vishal]
 
-#*We can also express our desired data structure as a Python class UserDatabase
-#*with four methods: insert, find, update and list_all.
+# *We can also express our desired data structure as a Python class UserDatabase
+# *with four methods: insert, find, update and list_all.
 """
 The various functions can be implemented as follows:
 
@@ -47,6 +49,8 @@ The various functions can be implemented as follows:
 3.Update: Loop through the list, find the user object matching the query and update the details
 4.List: Return the list of user objects.
 """
+
+
 class UserDatabase:
     def __init__(self):
         self.users = []
@@ -72,6 +76,7 @@ class UserDatabase:
     def list_all(self):
         return self.users
 
+
 database = UserDatabase()
 database.insert(hemanth)
 database.insert(aakash)
@@ -82,7 +87,7 @@ print(user)
 print()
 print(database.list_all())
 print()
-#*Let's verify that a new user is inserted into the correct position.
+# *Let's verify that a new user is inserted into the correct position.
 database.insert(biraj)
 print(database.list_all())
 
@@ -103,6 +108,8 @@ It's apparent that a sorted list of users might not be the best data structure t
 We can limit the number of iterations required for common operations like find, insert 
 and update by organizing our data in the following structure, called a BINARY TREE
 """
+
+
 class TreeNode():
     def __init__(self, key):
         self.key, self.left, self.right = key, None, None
@@ -113,56 +120,57 @@ class TreeNode():
     def __repr__(self):
         return "BinaryTree <{}>".format(self.to_tuple())
     #!Height of a binary tree
-    #*The height/depth of a binary tree is defined as the length of the longest path from its root node to a leaf.
-    #*It can be computed recursively, as follows:
+    # *The height/depth of a binary tree is defined as the length of the longest path from its root node to a leaf.
+    # *It can be computed recursively, as follows:
+
     def height(self):
         if self is None:
             return 0
         return 1 + max(TreeNode.height(self.left), TreeNode.height(self.right))
-    
+
     #!size of a binary tree
-    #*it's the number of node in a tree
+    # *it's the number of node in a tree
     def size(self):
         if self is None:
             return 0
         return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)
-    
+
     #!traversing a binary tree
-    #*Inorder traversal:
-    #*1.Traverse the left subtree recursively inorder.
-    #*2.Traverse the current node.
-    #*3.Traverse the right subtree recursively inorder.
+    # *Inorder traversal:
+    # *1.Traverse the left subtree recursively inorder.
+    # *2.Traverse the current node.
+    # *3.Traverse the right subtree recursively inorder.
     def traverse_in_order(self):
         if self is None:
             return []
         return (TreeNode.traverse_in_order(self.left) +
                 [self.key] +
                 TreeNode.traverse_in_order(self.right))
-        
+
     #!traversing a binary tree
-    #*Preorder traversal:
-    #*1.Traverse the current node.
-    #*2.Traverse the left subtree recursively preorder.
-    #*3.Traverse the right subtree recursively preorder.
+    # *Preorder traversal:
+    # *1.Traverse the current node.
+    # *2.Traverse the left subtree recursively preorder.
+    # *3.Traverse the right subtree recursively preorder.
     def traverse_pre_order(self):
         if self is None:
             return []
         return ([self.key] +
                 TreeNode.traverse_pre_order(self.left) +
                 TreeNode.traverse_pre_order(self.right))
-        
+
     #!traversing a binary tree
-    #*Postorder traversal:
-    #*1.Traverse the right subtree recursively postorder.
-    #*2.Traverse the current node.
-    #*3.Traverse the left subtree recursively postorder.
+    # *Postorder traversal:
+    # *1.Traverse the right subtree recursively postorder.
+    # *2.Traverse the current node.
+    # *3.Traverse the left subtree recursively postorder.
     def traverse_post_order(self):
         if self is None:
             return []
         return (TreeNode.traverse_post_order(self.right) +
                 [self.key] +
                 TreeNode.traverse_post_order(self.left))
-    
+
     #!display the tree
     def display_tree(self, space='\t', level=0):
         # If the node is empty
@@ -177,7 +185,7 @@ class TreeNode():
         TreeNode.display_tree(self.right, space, level+1)
         print(space*level + str(self.key))
         TreeNode.display_tree(self.left, space, level+1)
-    
+
     #!convert a binary tree into tuple
     def to_tuple(self):
         if self is None:
@@ -185,7 +193,7 @@ class TreeNode():
         if self.left is None and self.right is None:
             return self.key
         return TreeNode.to_tuple(self.left),  self.key, TreeNode.to_tuple(self.right)
-    
+
     #!convert a tuple into binary tree
     @staticmethod
     def parse_tuple(data):
@@ -198,19 +206,29 @@ class TreeNode():
         else:
             node = TreeNode(data)
         return node
-    
-    def InsertNode(self,data):
-    #*base case
+
+    def InsertNode(self, data):
+        # *base case
         if self is None:
             return TreeNode(data)
-        #*small amount of work in each iteration
-        if(self.key<data):
-           self.right=TreeNode.InsertNode(self.right,data)
+        # *small amount of work in each iteration
+        if(self.key < data):
+            self.right = TreeNode.InsertNode(self.right, data)
         else:
-            self.left=TreeNode.InsertNode(self.left,data)
+            self.left = TreeNode.InsertNode(self.left, data)
         return self
 
-#*we can represent a binary tree to a tuple
+    def find(self, key):
+        if self is None:
+            return None
+        if key == self.key:
+            return self
+        if key < self.key:
+            return TreeNode.find(self.left, key)
+        if key > self.key:
+            return TreeNode.find(self.right, key)
+        
+# *we can represent a binary tree to a tuple
 tree_tuple = ((1, 3, None), 2, ((None, 3, 4), 5, (6, 7, 8)))
 
 
@@ -228,9 +246,9 @@ def tuple_to_tree(data):
     return node
 
 tree2 = tuple_to_tree(tree_tuple)
-''' 
+'''
 print()
-tree2=TreeNode.parse_tuple(tree_tuple)
+tree2 = TreeNode.parse_tuple(tree_tuple)
 
 
 '''
@@ -243,7 +261,7 @@ def tree_to_tuple(node):
     else:
        return (tree_left, node.key,tree_right)
 print(tree_to_tuple(tree2))
-''' 
+'''
 print()
 print(tree2.to_tuple())
 
@@ -267,7 +285,7 @@ def display_tree(node, space='\t', level=0):
     print(space*level + str(node.key))
     display_tree(node.left, space, level+1)
 display_tree(tree2," ")
-''' 
+'''
 print()
 #TreeNode.display_tree(tree2, " ")
 tree2.display_tree(" ")
@@ -279,7 +297,7 @@ def traverse_in_order(node):
            [node.key] +
            traverse_in_order(node.right))
 print(traverse_in_order(tree2))
-''' 
+'''
 print()
 print(tree2.traverse_in_order())
 
@@ -291,7 +309,7 @@ def traverse_pre_order(node):
             traverse_pre_order(node.left) +
            traverse_pre_order(node.right))
 print(traverse_pre_order(tree2))
-''' 
+'''
 
 
 '''
@@ -302,7 +320,7 @@ def traverse_post_order(node):
            [node.key]  +
            traverse_post_order(node.left))
 print(traverse_post_order(tree2))
-''' 
+'''
 
 
 '''
@@ -310,7 +328,7 @@ def tree_height(node):
     if node is None:
         return 0
     return 1 + max(tree_height(node.left), tree_height(node.right))
-''' 
+'''
 print()
 print(tree2.height())
 
@@ -319,13 +337,15 @@ def tree_size(node):
     if node is None:
         return 0
     return 1 + tree_size(node.left) + tree_size(node.right)
-''' 
+'''
 print()
 print(tree2.size())
-tree3=tree2.InsertNode(40)
+tree3 = tree2.InsertNode(40)
 tree3.display_tree(" ")
+
+
 #!Binary search Tree or BST
-## Binary Search Tree (BST)
+# Binary Search Tree (BST)
 '''
 A binary search tree or BST is a binary tree that satisfies the following conditions:
 
@@ -333,11 +353,12 @@ A binary search tree or BST is a binary tree that satisfies the following condit
 2. The right subtree of any node only contains nodes with keys greater than the node's key
 
 It follows from the above conditions that every subtree of a binary search tree must also be a binary search tree.
-''' 
+'''
 #!check if a tree is a binary search tree and give us the min and max values of the tree
+
+
 def remove_none(nums):
     return [x for x in nums if x is not None]
-
 
 def is_bst(node):
     if node is None:
@@ -356,3 +377,111 @@ def is_bst(node):
     # print(node.key, min_key, max_key, is_bst_node)
 
     return is_bst_node, min_key, max_key
+
+
+tree2 = TreeNode.parse_tuple(
+    (('aakash', 'biraj', 'hemanth'), 'jadhesh', ('siddhant', 'sonaksh', 'vishal')))
+
+print(is_bst(tree2))
+class BSTNode():
+    def __init__(self, key, value=None):
+        self.key = key
+        self.value = value
+        self.left = None
+        self.right = None
+        self.parent = None
+        
+    """
+    ### Insertion into BST
+
+    Write a function to insert a new node into a BST.
+
+    We use the BST-property to perform insertion efficiently: 
+
+    1. Starting from the root node, we compare the key to be inserted with the current node's key
+    2. If the key is smaller, we recursively insert it in the left subtree (if it exists) or attach it as as the left child if no left subtree exists.
+    3. If the key is larger, we recursively insert it in the right subtree (if it exists) or attach it as as the right child if no right subtree exists.
+
+    Here's a recursive implementation of `insert`.
+    """
+    def insert(self, key, value):
+        if self is None:
+            self = BSTNode(key, value)
+        elif key < self.key:
+            self.left = BSTNode.insert(self.left, key, value)
+            self.left.parent = self
+        elif key > self.key:
+            self.right = BSTNode.insert(self.right, key, value)
+            self.right.parent = self
+        return self
+    
+    def find(self, key):
+        if self is None:
+            return None
+        if key == self.key:
+            return self
+        if key < self.key:
+            return TreeNode.find(self.left, key)
+        if key > self.key:
+            return TreeNode.find(self.right, key)
+
+    def update(self, key, value):
+        target = BSTNode.find(self, key)
+        if target is not None:
+            target.value = value
+            
+    """
+    ### List the nodes
+
+    Write a function to retrieve all the key-values pairs stored in a BST in the sorted order of keys.
+
+    The nodes can be listed in sorted order by performing an inorder traversal of the BST.
+    """
+    def list_all(self):
+        if self is None:
+            return []
+        return BSTNode.list_all(self.left) + [(self.key, self.value)] + BSTNode.list_all(self.right)
+    
+    
+'''
+def insert(node, key, value):
+    if node is None:
+        node = BSTNode(key, value)
+    elif key < node.key:
+        node.left = insert(node.left, key, value)
+        node.left.parent = node
+    elif key > node.key:
+        node.right = insert(node.right, key, value)
+        node.right.parent = node
+    return node
+''' 
+
+'''
+def find(node, key):
+    if node is None:
+        return None
+    if key == node.key:
+        return node
+    if key < node.key:
+        return find(node.left, key)
+    if key > node.key:
+        return find(node.right, key)
+''' 
+    
+# *let's use this to recreate our tree
+# *to recreate the first node, we can use the insert function with None as the target tree
+tree = BSTNode.insert(None, jadhesh.username, jadhesh)
+BSTNode.insert(tree, biraj.username, biraj)
+BSTNode.insert(tree, sonaksh.username, sonaksh)
+BSTNode.insert(tree, aakash.username, aakash)
+BSTNode.insert(tree, hemanth.username, hemanth)
+BSTNode.insert(tree, siddhant.username, siddhant)
+BSTNode.insert(tree, vishal.username, siddhant)
+TreeNode.display_tree(tree, "   ")
+found=tree.find("hemanth")
+#found=find(tree, "hemanth")
+print(found.key,found.value)
+tree.update('hemanth', User('hemanth', 'Hemanth J', 'hemanthj@example.com'))
+found = tree.find("hemanth")
+print(found.key, found.value)
+print(tree.list_all())
