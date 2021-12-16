@@ -1,5 +1,5 @@
 #https://www.youtube.com/watch?v=IJDJ0kBx2LM&list=PLyZB5ywlnsu9zio01i5zViNFqQunOxrw5&index=33&ab_channel=freeCodeCamp.org
-from binary_tree import TreeNode
+from Tree import TreeNode
 from collections import deque
 import math
 #!strign reversal
@@ -399,8 +399,6 @@ def DepthSearchRec(head, target):
 
 
 #!Tree min value
-
-
 
 def TreeMinValue(head):
     
