@@ -15,7 +15,7 @@ windows=Tk()#instanciate an object of a windows from the class Tk
 #windows.title("Graphical User Interface in Python")
 
 #*Changing the titlebar icon of the windows(works only with png images)
-icon=PhotoImage(file="zeref.png")
+icon=PhotoImage(file="images/zeref.png")
 #windows.iconphoto(True,icon)
 
 #*changing the background of the windows
@@ -28,7 +28,7 @@ icon=PhotoImage(file="zeref.png")
 #*an area widget that holds text and/or an image within a window
 #windows=Tk()
 
-photo1 = PhotoImage(file="midoriya.png")
+photo1 = PhotoImage(file="images/midoriya.png")
 label=Label(windows,
             text="hey there",
             font=("Arial",40,"bold"),
@@ -124,7 +124,7 @@ def display():
         print("you unchecked this")
     
 x= IntVar()#create an in variable but not setted
-photo = PhotoImage(file="python2.png")
+photo = PhotoImage(file="images/python2.png")
 check_button=Checkbutton(windows, 
                          text="check this button",
                          variable=x,
@@ -145,9 +145,9 @@ check_button=Checkbutton(windows,
 #windows=Tk()
 
 food=["pizza","hamburger","hotdog"]
-pizzaImage=PhotoImage(file="pizza.png")
-hamburgerImage=PhotoImage(file="hamburger.png")
-hotdogImage=PhotoImage(file="hotdog.png")
+pizzaImage=PhotoImage(file="images/pizza.png")
+hamburgerImage=PhotoImage(file="images/hamburger.png")
+hotdogImage=PhotoImage(file="images/hotdog.png")
 foodImages=[pizzaImage,hamburgerImage,hotdogImage]
 food = dict(zip(food, foodImages))
 x=StringVar()
