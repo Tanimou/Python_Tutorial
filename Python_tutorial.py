@@ -373,7 +373,25 @@ print(friends.pop())
 friends.clear()
 print(friends)
 
+#!creating a list of empty lists
+#*with this method the same object (here an empty list) is duplicated 10 times
+l1=[[]]*10
+print(l1)
+#*that's why eventhough we just modify the first element of our list
+#*all elements get modified with the same value 1
+l1[0].append(1)
+print(l1)
 
+#*to remediate to that problem we use the for loop method
+##when we don't use a variable in a for loop we can simply replace it by "_"
+l2=[[] for _ in range(10)]
+print(l2)
+l2[0].append(1)
+print(l2)
+
+#! enumerate function
+for i,val in enumerate([5,3,4,1]):
+    print(i,val)
 #!Building a list from Scratch
 #*we can create a empty list and then add elements using the append method
 stuff = ['book', 99, 'cookie']

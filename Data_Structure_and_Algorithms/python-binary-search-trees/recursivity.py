@@ -1,4 +1,5 @@
 # https://www.youtube.com/watch?v=IJDJ0kBx2LM&list=PLyZB5ywlnsu9zio01i5zViNFqQunOxrw5&index=33&ab_channel=freeCodeCamp.org
+# https: // www.youtube.com/watch?v = fAAZixBzIAI & list = PLyZB5ywlnsu9zio01i5zViNFqQunOxrw5 & index = 34 & ab_channel = freeCodeCamp.org
 import math
 from collections import deque
 
@@ -67,7 +68,7 @@ def binarySearch(A, left, right, x):
 
 
 
-#!reverse a linked list recursively
+#!reverse a single linked list recursively
 '''
 class node():
     def __init__(self,data=None):
@@ -152,7 +153,7 @@ n8 = node(20)
 n1.next = n2
 n2.next = n3
 n3.next = n4
-
+n4.next = n5
 n5.next = n6
 n6.next = n7
 n7.next = n8
@@ -168,28 +169,66 @@ def reverseList(node):
     return p
 
 
-def printlist(list):
+def printliste(list):
     if list.next is None:
         print(list.head)
     if list.next != None:
         print(list.head, "-> ", end="")
-        printlist(list.next)
+        printliste(list.next)
 
 
-printlist(n1)
-printlist(reverseList(n1))
+#printliste(n1)
+#printliste(reverseList(n1))
 
-#!merge two sorted linked lists
+#!Summ of a list
+#*a function that return the sum of a dll/sll
+def sumlist(list):
+    if list is None:
+        return 0
+    return list.head+sumlist(list.next)
+
+#print(sumlist(n1))
+
+#!Merge sort on single linked lists:
+#*sort a sll using merge method
+class Nodee():
+    def __init__(self, data):
+        self.head = data
+        self.next = None
+
+
+class Linkedlist:
+    def __init__(self):
+        self.head = None
+    #*add new_value at the end of our single linked list
+
+    def append(self, new_value):
+        #allocate new node
+        new_node = Nodee(new_value)
+
+        # if head is None, initialize it to new node
+        if self.head is None:
+            self.head = new_node
+            return
+        curr_node = self.head
+
+        while curr_node.next is not None:
+            curr_node = curr_node.next
+
+        # Append the new node at the end
+        # of the linked list
+        curr_node.next = new_node
+        
+#!merge two sorted single linked lists
 # *in a ordered way
-
-
+#*this function merge 2 differents sorted single linked lists
 def SortedMerge(a, b):
 
     if a is None:
         return b
     if b is None:
         return a
-    print("a:", a.head, "", "b:", b.head)
+   # print("a:", a.head, "", "b:", b.head)
     if a.head < b.head:
 
         a.next = SortedMerge(a.next, b)
@@ -198,9 +237,197 @@ def SortedMerge(a, b):
         #print("a:", a.head, "", "b:", b.head)
         b.next = SortedMerge(a, b.next)
         return b
-# printlist(n1)
-# printlist(n5)
-# printlist(SortedMerge(n1,n5))
+
+#*transform a linked list (single or double) into a simple list
+
+
+def transformlist(node):
+    liste = []
+    while(node is not None):
+        liste.append(node.head)
+        node = node.next
+    return liste
+
+ # Split a DLL or a SLL into two DLLs or SLLs
+    # of half sizes
+
+
+def split(tempHead):
+    fast = slow = tempHead
+    while(True):
+         if fast.next is None:
+              break
+         if fast.next.next is None:
+              break
+         fast = fast.next.next
+         slow = slow.next
+
+    temp = slow.next
+    slow.next = None
+    return temp
+
+
+def mergeSort(liste):
+
+     if isinstance(liste, list):
+          liste0 = Linkedlist()
+          for i in range(len(liste)):
+               liste0.append(liste[i])
+          tempHead = liste0.head
+     else:
+          tempHead = liste
+
+     if tempHead is None or tempHead.next is None:
+          return tempHead
+
+     #*in order to use ourge merge function we need to split our ddl into 2 differents ddl
+     second = split(tempHead)
+
+      # Recur for left and right halves
+     left = mergeSort(tempHead)
+     right = mergeSort(second)
+        # Merge the two sorted halves
+     return SortedMerge(left, right)
+
+
+printliste(n1)
+list1 = transformlist(n1)
+list00 = mergeSort(list1)
+printliste(list00)
+
+
+#!Merge sort on doubly linked list
+# Program for merge sort on doubly linked list
+
+# A node of the doubly linked list
+class Node:
+
+    # Constructor to create a new node
+    def __init__(self, data):
+        self.head = data
+        self.next = None
+        self.prev = None
+
+
+class DoublyLinkedList:
+
+    # Constructor for empty Doubly Linked List
+    def __init__(self):
+        self.head = None
+    #*add new_data to the beginning of our ddl
+
+    def push(self, new_data):
+	# 1. Allocates node
+	# 2. Put the data in it
+        new_node = Node(new_data)
+
+	# 3. Make next of new node as head and
+	# previous as None (already None)
+        new_node.next = self.head
+
+	# 4. change prev of head node to new_node
+        if self.head is not None:
+            self.head.prev = new_node
+
+	# 5. move the head to point to the new node
+        self.head = new_node
+
+# Function to merge two linked list
+
+
+def merge(first, second):
+    #*this is the same as our SortedMerge() function but since we're dealing with a double linked list
+    #*we have to nullify the previous pointer like in the reverselist() function
+        # If first linked list is empty
+    if first is None:
+         return second
+
+          # If second linked list is empty
+    if second is None:
+         return first
+
+          # Pick the smaller value
+    if first.head < second.head:
+         first.next = merge(first.next, second)
+         first.next.prev = first
+         first.prev = None
+         return first
+    else:
+         second.next = merge(first, second.next)
+         second.next.prev = second
+         second.prev = None
+         return second
+
+# Function to do merge sort
+
+
+def MSDList(liste):
+
+      if isinstance(liste, list):
+           liste0 = DoublyLinkedList()
+           for i in range(len(liste)):
+                liste0.push(liste[i])
+           tempHead = liste0.head
+      else:
+           tempHead = liste
+
+      if tempHead is None:
+           return tempHead
+      if tempHead.next is None:
+           return tempHead
+       #*in order to use ourge merge function we need to split our ddl into 2 differents ddl
+      second = split(tempHead)
+
+       # Recur for left and right halves
+      tempHead = MSDList(tempHead)
+      second = MSDList(second)
+         # Merge the two sorted halves
+      return merge(tempHead, second)
+
+
+test0 = {
+    'input': {
+        'liste': [2, 4, 8, 10, 15]
+    },
+    'output': [2, 4, 8, 10, 15]
+}
+test1 = {
+    'input': {
+        'liste': [24, 4, 8, 150, 1]
+    },
+    'output': [1, 4, 8, 24, 150]
+}
+test2 = {
+    'input': {
+        'liste': []
+    },
+    'output': []
+}
+test3 = {
+    'input': {
+        'liste': [20, 4, 2, 10, 15]
+    },
+    'output': [2, 4, 10, 15, 20]
+}
+test4 = {
+    'input': {
+        'liste': [20, 15, 10, 4, 3]
+    },
+    'output': [3, 4, 10, 15, 20]
+}
+
+
+list0 = DoublyLinkedList()
+list0.push(15)
+list0.push(10)
+list0.push(8)
+list0.push(4)
+list0.push(2)
+printliste(list0.head)
+sortedlist0 = transformlist(list0.head)
+list00 = MSDList(sortedlist0)
+printliste(list00)
+print("sum:",sumlist(list0.head))
 
 #!trees
 # *Add a node in the tree recursively
@@ -340,8 +567,6 @@ def breadthSearch(head, target):
 # print(breadthSearch(tree2,9))
 
 #!with depth recursive method
-
-
 def DepthSearchRec(head, target):
     # *Base case
     if head is None:
