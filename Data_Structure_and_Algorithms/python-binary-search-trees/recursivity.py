@@ -67,9 +67,8 @@ def binarySearch(A, left, right, x):
 # print(binarySearch([-1,0,1,2,3,4,7,9,10,20],0,9,10))
 
 
-
-#!reverse a single linked list recursively
 '''
+#!reverse a dll recursively
 class node():
     def __init__(self,data=None):
         self.head=data
@@ -134,7 +133,7 @@ printlist(n1)
 printlist(reverse(n1))
 '''
 
-
+#!reverse a single linked list recursively
 class node():
     def __init__(self, data=None):
         self.head = data
@@ -168,6 +167,13 @@ def reverseList(node):
     node.next = None
     return p
 
+##another way of Recursion
+def reverselistere2(head,prev=None):
+    if head is None:
+        return prev
+    next=head.next
+    head.next=prev
+    return reverselistere2(next,head)
 
 def printliste(list):
     if list.next is None:
@@ -180,6 +186,19 @@ def printliste(list):
 #printliste(n1)
 #printliste(reverseList(n1))
 
+##the iterative way
+def reverselistee(node):
+    prev=None
+    current=node
+    while current is not None:
+        next=current.next
+        current.next = prev
+        prev=current
+        current = next
+    return prev
+
+#printliste(n1)
+#printliste(reverselistee(n1))
 #!Summ of a list
 #*a function that return the sum of a dll/sll
 def sumlist(list):
@@ -188,6 +207,7 @@ def sumlist(list):
     return list.head+sumlist(list.next)
 
 #print(sumlist(n1))
+
 
 #!Merge sort on single linked lists:
 #*sort a sll using merge method

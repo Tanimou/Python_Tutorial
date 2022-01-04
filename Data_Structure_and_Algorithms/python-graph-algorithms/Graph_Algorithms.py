@@ -20,6 +20,7 @@ class Graph():
 #print(graph1)
 
 #!BreadhFirstSearch
+#*search in every direction
 #*we're gonna represent our graph as a queue using the breadth first search algorithm
 def bfs(graph,head):
     queue=[]
@@ -52,6 +53,7 @@ def bfs(graph,head):
 #print(bfs(graph1,2))
 
 #!DepthFirstSearch
+#*search in one direction only
 def dfs(graph,head):
     stack=[]
     result=[]
@@ -106,7 +108,7 @@ class DWGraph():
 #graph2=DWGraph(num_nodes5,edges5,False,True)
 #print(graph2)
 
-#!shortest path in a graph-Dijkstra's algorithm
+#!shortest path in a graph-Dijkstra's algorithm applied to a directed weighted graph
 """
 1.Mark all nodes unvisited. Create a set of all the unvisited nodes called the unvisited set.
 
@@ -150,7 +152,7 @@ def pick_next_node(graph,current,distance, visited):
     min_distance = float('inf')
     min_node = None
     neighbors = graph.data[current]
-    for  node in enumerate(neighbors):
+    for  node in neighbors:
         if not visited[node] and distance[node] < min_distance:
             min_node = node
             min_distance = distance[node]
@@ -181,12 +183,58 @@ def shortest_path(graph, source, dest):
             queue.append(next_node)
         idx += 1
 
-    return distance[dest], distance, parent,queue
+    return distance[dest],queue
 
 
 num_nodes7 = 6
 edges7 = [(0, 1, 4), (0, 2, 2), (1, 2, 5), (1, 3, 10),
           (2, 4, 3), (4, 3, 4), (3, 5, 11)]
 graph7 = DWGraph(num_nodes7, edges7, directed=True,weighted=True)
-#print(graph7)
+print(graph7)
 print(shortest_path(graph7, 0, 5))
+
+##another way for shortest path using BreadhFirstSearch applied in an undirected unweighted graph
+
+def SPBFS(graph, src, dest):
+    visited = [False] * len(graph.data)
+    visited[src] = True
+    parent = [None] * len(graph.data)
+    queue = [(src, 0)]
+    idx = 0
+    while idx < len(queue) and not visited[dest]:
+        (node, distance) = queue[idx]
+
+        if node == dest:
+            return queue
+        for neighbor in graph.data[node]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append((neighbor, distance+1))
+                parent[neighbor] = node
+        idx += 1
+    if visited[dest]:
+        path = [dest]
+        idx = parent[dest]
+        path.append(idx)
+        while parent[idx] is not None:
+            idx = parent[idx]
+            path.append(idx)
+        path.reverse()
+        for node, dist in enumerate(queue):
+            if dist[0] == dest:
+              return path, queue[node]
+
+    return -1
+
+
+num_nodes8 = 5
+edges8 = [(0, 1), (0, 3), (1, 2), (2, 4), (3, 4)]
+num_nodes9 = 6
+edges9 = [(0, 1), (0, 2), (1, 2), (1, 3),
+          (2, 4), (4, 3), (3, 5)]
+#graph8 = Graph(num_nodes8, edges8)
+graph9 = Graph(num_nodes9, edges9)
+print(graph9)
+print(SPBFS(graph9, 0, 5))
+
+

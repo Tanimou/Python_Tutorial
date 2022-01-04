@@ -1,6 +1,6 @@
 from operator import index
 from tkinter import *
-from tkinter import messagebox,colorchooser
+from tkinter import messagebox,colorchooser,filedialog
 
 #!GUI: Graphical User Interface in python
 #*this part requires tkinter
@@ -275,6 +275,104 @@ clickme=Button(windows, text="click me", command=click)
 
 #!color chooser
 #windows=Tk()
-windows.geometry("420x420")
+def click(): 
+  windows.config(bg=colorchooser.askcolor()[1])
 
-windows.mainloop()  # create a windows on computer screen, listen for events
+windows.geometry("420x420")
+button=Button(text="click me",command = click)
+#button.pack()
+#windows.mainloop()  # create a windows on computer screen, listen for events
+
+#!Text widget
+#*functions like a text area, you can enter multiple line of text
+#windows=Tk()
+def submit():
+    input=text.get("1.0",END)
+    print(input)
+text=Text(windows,
+          bg="light yellow",
+          font=("Ink Free",25),
+          height=8,
+          width=20,
+          padx=20,
+          pady=20,
+          fg="purple",)
+#text.pack()
+button=Button(text="submit",command = submit)
+#button.pack()
+#windows.mainloop()
+
+#!File dialog
+#windows=Tk()
+#*open a file
+def openFile():
+    filepath=filedialog.askopenfilename(title="open a file",
+                                        filetypes=(("text files","*.txt"),("all files","*.*"))
+                                        )
+    with open(filepath,"r") as file:
+        print(file.read())
+button = Button(text="open", command=openFile)
+#button.pack()
+
+#*save a file
+def Save():
+    file = filedialog.asksaveasfile(initialdir="C:\\Users\\tanim\\Programmation projects\\Tutorials\\Python_Tutorial",
+                                    defaultextension=".txt",
+                                    filetypes=(("Text file",".txt"),
+                                                ("PDF document",".pdf"),
+                                                ("Html file",".html"),
+                                                ("all files",".*"))           
+                                  )
+    filetext=str(text.get("1.0",END))
+    file.write(filetext)
+    file.close()
+button1 = Button(text="save", command=Save)
+#button1.pack()
+text=Text(windows)
+#text.pack()
+#windows.mainloop() 
+
+#!Menu bar
+#windows=Tk()
+def cut():
+    pass
+def copy():
+    pass
+def paste():
+    pass
+
+menubar=Menu(windows)
+windows.config(menu=menubar)
+
+#*to add a file menu to our menubar
+fileMenu=Menu(menubar,tearoff=0)
+#*to have a dropdown menu effect to our file menu
+menubar.add_cascade(label="File",menu=fileMenu)
+#*to add command to our dropdown fileMenu
+fileMenu.add_command(label="Open",command=openFile)
+fileMenu.add_command(label="Save",command=Save)
+#*to add a separator
+fileMenu.add_separator()
+fileMenu.add_command(label="Exit",command=quit)
+
+#*to add an edit menu to our menubar
+editMenu=Menu(menubar,tearoff=0)
+#*to have a dropdown menu effect to our edit menu
+menubar.add_cascade(label="Edit", menu=editMenu)
+#*to add command to our dropdown editMenu
+editMenu.add_command(label="Cut", command=cut)
+editMenu.add_command(label="Copy", command=copy)
+editMenu.add_command(label="Paste", command=paste)
+
+text = Text(windows,
+            bg="light yellow",
+            font=("Ink Free", 25),
+            height=8,
+            width=20,
+            padx=20,
+            pady=20,
+            fg="purple",)
+#text.pack()
+#windows.mainloop()
+
+#!Frame
