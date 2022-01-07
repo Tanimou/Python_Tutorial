@@ -1,6 +1,8 @@
 from operator import index
+from textwrap import wrap
 from tkinter import *
-from tkinter import messagebox,colorchooser,filedialog
+from tkinter import messagebox,colorchooser,filedialog,ttk
+
 
 #!GUI: Graphical User Interface in python
 #*this part requires tkinter
@@ -79,7 +81,7 @@ button=Button(windows,
 def submit():
     username=entry.get()
     #*disable the entry box after typing some text
-    entry.config(state=DISABLED)
+    #entry.config(state=DISABLED)
     print("hello "+username)
     
 def delete():
@@ -90,7 +92,7 @@ def backspace():
 
 #*this is a constructor of our entry box
 entry=Entry(windows,
-            font=("Arial",50),
+            font=("Arial",10),
             fg="green",
             #bg="black",
             show="*"#instead of showing the text that are typing, "*" will be shown. Very useful for hidding password for example
@@ -206,7 +208,7 @@ def delete():
     for index in reversed(listbox.curselection()):
         listbox.delete(index)
     listbox.config(height=listbox.size())
-
+    
 def submit():
         food=[]
         for index in listbox.curselection():
@@ -230,15 +232,16 @@ entrybox=Entry(windows)
 add=Button(windows,text="add",command=add)
 delete = Button(windows, text="delete", command=delete)
 submit=Button(windows, text="submit", command=submit)
+
+
+#listbox.pack()
+#entrybox.pack()
+#add.pack()
+#delete.pack()
+#submit.pack()
+
 #windows.mainloop()
 
-'''
-listbox.pack()
-entrybox.pack()
-add.pack()
-delete.pack()
-submit.pack()
-''' 
 #!message box
 #windows=Tk()
 def click():
@@ -334,6 +337,7 @@ text=Text(windows)
 
 #!Menu bar
 #windows=Tk()
+'''
 def cut():
     pass
 def copy():
@@ -372,7 +376,53 @@ text = Text(windows,
             padx=20,
             pady=20,
             fg="purple",)
-#text.pack()
+text.pack()
+windows.mainloop()
+''' 
+#!Frame
+#windows=Tk()
+#frame=Frame(windows)
+#frame.pack(fill=BOTH,expand=1)
+ 
 #windows.mainloop()
 
-#!Frame
+
+#!scrollbar
+#windows=Tk()
+#frame=Frame(windows)
+#frame.pack()
+
+#label=Label(frame, text="Scroll Bar")
+#label.pack()
+
+#yscrollbar=Scrollbar(frame,orient=VERTICAL)
+#yscrollbar.pack(side=RIGHT,fill=Y)
+
+#xscrollbar=Scrollbar(frame,orient=HORIZONTAL)
+#xscrollbar.pack(side=BOTTOM,fill=X)
+
+#listbox=Listbox(frame,width=30,yscrollcommand=yscrollbar.set)
+#for val in range(100):
+ #   listbox.insert(END,"Value: "+str(val))
+#listbox.pack(pady=5)
+#yscrollbar.config(command=listbox.yview)
+
+#text=Text(frame,yscrollcommand=yscrollbar.set,
+ #         xscrollcommand=xscrollbar.set,
+  #        wrap=NONE)
+#text.pack()
+
+#yscrollbar.config(command=text.yview)
+#xscrollbar.config(command=text.xview)
+#windows.mainloop()
+
+#!combo box
+#windows=Tk()
+frame=Frame(windows,width=200,height=200)
+frame.pack()
+viewlist=["option1","option2","option3","option4"]
+combo=ttk.Combobox(frame,values=viewlist)
+#*put some default value
+combo.set("option1")
+combo.place(x=30,y=50)
+windows.mainloop()
