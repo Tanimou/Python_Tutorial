@@ -1,15 +1,8 @@
 # here i can import a specific element from another python file
-import calendar
-import datetime as dt
-import re
-import turtle
+import calendar,re,turtle,pytz,inc_dec,datetime as dt
 from collections import Counter, namedtuple
 from functools import reduce
 from pathlib import Path
-
-import pytz
-
-import inc_dec
 from POO_tutorial import Item, Phone
 
 #!simplifying counting with get()
@@ -229,16 +222,19 @@ print("\n")
 #*Named tuples assign meaning to each position in a tuple and allow for more readable, self documenting code
 #*They can be used wherever regular tuples are used and they add ability to access fields by the name
 #*instead of position index
+#*need to import namedtuple from collections
 Point = namedtuple("Point", "x y z")  # we named the tuple (x,y,z) Point
 newP = Point(3, 4, 5)
 print(newP)
 print(newP.x, newP.y, newP.z)  # we can access field by their name
 print(newP._asdict())
+#*with namedtuple we can modify fields
 newp = newP._replace(y=6)
 print(newp)
 print(newp._fields)
 print("\n")
 
+#!Regex (regular expression)
 with open("mbox.txt") as hand:
    for line in hand:
        line = line.rstrip()
@@ -312,14 +308,12 @@ print("\n")
 #! filter function
 li = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 
-
 def isOdd(x):
     return x % 2 != 0
 
 
 def add7(x):
     return x+7
-
 
 print(list(filter(isOdd, li)))
 c = list(map(add7, filter(isOdd, li)))
@@ -334,22 +328,17 @@ print(c)
 
 #!lambda function or anonymous function like in javascript
 
-
 # similar to func2=function(x){return x+5} or func2= x =>x+5 in javascript
 def func2(x): return x+5
 
-
 print(func2(9))
-
 
 def funcc(x):
     return func2(x)+85
 
-
 print(funcc(9))
 
 #*without parameter
-
 
 def afficher(): return "hey there"
 
@@ -361,7 +350,6 @@ print(afficher())
 
 def calculer(x, y, z): return x+y*z
 
-
 print(calculer(2, 3, 4))
 print("\n")
 # like newList=li.map( x =>x+5) in javascript
@@ -371,20 +359,16 @@ print(newList)
 print(newList1)
 print("\n")
 
-#!Decorators
-
+#! *args and **kwargs
 ##the *args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
 ##this allows us to pass any function that takes any arguments
 #* *args: parameter that will pack all arguments into a tuple
 
-
 def add(*args):
     return sum(args)
 
-
 print(add(12, 1, 45, 75))
 #* **kwargs: parameter that will pack all arguments into a dictionary
-
 
 def hello(**kwargs):
     print("hello", end=" ")
@@ -392,10 +376,9 @@ def hello(**kwargs):
         # with end keyword we can print all values in one line
         print(value, end=" ")
 
-
 hello(title="Mr.", firstname="Cisse", middlename="Amadou", lastname="Tanimou")
 
-
+#!Decorators
 def func(f):
     def wrapper(*args, **kwargs):
         print("started")
@@ -529,10 +512,10 @@ print(happy := True)
 #numlist = []
 #while (inp := input("Enter a number: "))!="done":
 # value = float(inp.strip())
-#numlist.append(value)
+# numlist.append(value)
 #print("Average:", sum(numlist)/len(numlist))
 
 #inputs = []
-#while (current = input ("Input data: "))!="ennd":
+#while (current := input ("Input data: "))!="ennd":
 #inputs.append(current)
 #print(inputs)

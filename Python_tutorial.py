@@ -26,19 +26,7 @@ cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
 random.shuffle(cards)
 print(cards)
 
-animal = "cow"
-item = "moon"
-print("the {} jumped over the {}".format(animal, item))
 
-#!Random function
-x = random.randint(1, 6)  # will print a random number between 1 and 6
-print(x)
-mylist = ["rock", "paper", "scissors"]
-z = random.choice(mylist)  # will choose between rock, paper and scissors
-print(z)
-cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
-random.shuffle(cards)
-print(cards)
 #! if statement
 x = 30
 if x < 10:
@@ -97,7 +85,7 @@ except:
 
 astr = "123"
 try:
-    istr = (astr)  # here, no probleme, python's gonna skip the except block
+    istr = int(astr)  # here, no probleme, python's gonna skip the except block
     print("yeah. no error. Here is istr's value:", istr)
 except:
     print('An exception occurred')
@@ -162,6 +150,7 @@ def greet_user(firstname, lastname):
 
 
 # lastname and firstname here are what it's called keyword argument
+# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, ensure-file-closed, list-literal, merge-dict-assign, merge-list-append, remove-redundant-slice-index
 greet_user(lastname="smith", firstname="Jim")
 
 #! Loop and iteration
@@ -198,7 +187,7 @@ print(s[8:])
 
 #*we can specify the stephen
 print(s[::2])  # meaning go through s with the step of 2, the result will be: Mnypto
-print(s[2::2])  # meaning start from the second letter till the end with a step of 2
+print(s[2::2])  # meaning start from the third letter till the end with a step of 2
 #! using in as a logical operator
 fruit = "mango"
 if "a" in fruit:
@@ -309,10 +298,11 @@ else:
     os.replace(source, destination)
     print("{} was moved".format(source))
 
-#! Deletiong a file
+#! Deleting a file
 if os.path.exists(source):
     # if the file is in the same directory just specify the name, otherwise must specify the path
-    os.remove(source)
+   os.remove(source)
+   pass
 else:
     print("there is no file to delete")
 
@@ -327,8 +317,8 @@ else:
 print(range(4))
 friends = ["Joseph", "Glenn", "Glenn", "Glenn", "Gill"]
 print(range(len(friends)))
-for friend_ in friends:
-    print("happy new year:", friend_)
+for friend in friends:
+    print("happy new year:", friend)
 
 #*in Python we have negatif indexes that allow us to iterate from the end of the list
 friends = ["Joseph", "Kanna", "Shinozaki", "Glenn", "Gill"]
@@ -427,6 +417,7 @@ print("\n")
 #*Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
 #*with approximately the same performance in either direction
 #*Deque is faster than a list in terms of adding retrieving elements
+#*must import it from collections
 d = deque("hello")
 print(d)
 d.append("4")
@@ -499,6 +490,7 @@ cities_in_celsius = {key: round((value-32)*(5/9))
 desc_cities = {key: ("warm" if value >= 45 else "cold")
                for (key, value) in cities_in_farenheit.items()}
 print(cities_in_celsius)
+print(desc_cities)
 #*it's an error to reference a key which is not in the dictionary
 #*we can use the in operator to see if a key is in the dictionary
 ccc = dict()
@@ -526,4 +518,4 @@ if name in counts:
 else:
     x = 0
 #*instead of doing that we can simply do:
-x = counts.get(name, 0)  # *0 is the default balue if name not in counts
+x = counts.get(name, 0)  # *0 is the default value if name not in counts

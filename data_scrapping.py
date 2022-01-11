@@ -1,278 +1,451 @@
-
-from pyxlsb import open_workbook
 from tkinter import *
-from tkinter import filedialog,ttk
-from collections import Counter
+from tkinter import filedialog, ttk
+import threading
+from pyxlsb import open_workbook
+from datetime import date, timedelta
+# from collections import Counter
 
 windows = Tk()
-windows.geometry("800x800")
+windows.geometry("1300x800")
+
 
 def scrapping():
-    filepath = filedialog.askopenfilename(title="open a file",filetypes=(("xlsb files", "*.xlsb"), ("all files", "*.*")))
-    with open_workbook(filepath) as wb:
-     
-        Prospect_list={}
-        Week_list = []
-        last_list = []
-        Despatched_list = {}
-        Assayed_list={}
-        
-        with wb.get_sheet("Samples Data") as sheet1:
-            liste1=list(sheet1.rows())
-            #!getting the list of prospect and the number of samples
-            for col in range(len(liste1[0])):
-                r,c,v=liste1[0][col]
-                if v =="PROSPECT":
-                    liste2 = liste1[1:]
-                     #*despnum
-                    i = c+6
-                        #*assaymonth
-                    s=c+16
-                    for item in liste2:
-                        v = item[c][2]
-                        f = item[i][2]
-                        g=item[s][2]
-                        
-                        if v is None:
-                            continue
-                        else:
-                            v=v.upper()
-                            Prospect_list[v] = Prospect_list.get(v, 0)+1
-                        #!getting the number of samples per prospect in the samples data sheet
-                        if f is None:
-                                continue
-                        else:
-                            
-                                Despatched_list[v] = Despatched_list.get(v, 0)+1
-                        #!getting the number of sample assayed
-                        if g=="":
-                            
-                            continue
-                        else:
-                        
-                                Assayed_list[v] =Assayed_list.get(v, 0)+1
-            print(Despatched_list)
-            print()
-            print(Assayed_list)
+    filepath = filedialog.askopenfilename(title="open a file", filetypes=(
+        ("xlsb files", "*.xlsb"), ("all files", "*.*")))
+    Prospect_list, Week_list, Despatched_list, Assayed_list, ASS_Pending_list, var, var2, var3, var4, str, str1 = Openexcelfile(
+        filepath)
 
-        var = StringVar(second_frame, value=Prospect_list[list(Prospect_list)[0]])   
-        var2 = StringVar(second_frame, value=Despatched_list[list(Despatched_list)[0]])
-        var3 = StringVar(second_frame, value=Assayed_list[list(Assayed_list)[0]])
-        
-           
-        with wb.get_sheet("Setup") as sheet1:
-            liste1 = list(sheet1.rows())
-            
-            for col in range(len(liste1[0])):
-                    r, c, v = liste1[0][col]
-                    if v == "Prospect_Name":
-                        liste2=liste1[1:]
-                        for item in liste2:
-                            r, g, v = item[c]
-                            if v is None:
-                                continue
-                            else:
-                                last_list.append(v)
-                    #!getting the week
-                    if v == "Month":
-                        for item in liste1:
-                            r, g, v = item[c]
-                            if v is None:
-                                continue
-                            else:
-                                Week_list.append(v)
+    # def update():
 
-       
-        for name in last_list:
-            Prospect_list[name] = 0 if name not in list(Prospect_list) else Prospect_list[name]
-            Despatched_list[name] = 0 if name not in list(Despatched_list) else Despatched_list[name]
-            Assayed_list[name] = 0 if name not in list(Assayed_list) else Assayed_list[name]
-   
-        str = StringVar(second_frame, value=list(Prospect_list)[0])
-        #!getting the number of sample despatched per prospect in the samples data sheet
-        #for name in Prospect_list:
-            #counts[name] = 0 if name not in counts else counts[name]
-            
-    #def update():
     def update(value):
-              
+        
         var.set(Prospect_list[value])
         var2.set(Despatched_list[value])
         if value not in Assayed_list:
-            Assayed_list[value]=0
+            Assayed_list[value] = 0
+            ASS_Pending_list[value] = Despatched_list[value] - Assayed_list[value]
         var3.set(Assayed_list[value])
+        var4.set(ASS_Pending_list[value])
+        create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
 
+    def update2(value):
+      
+        create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
     
-    combo = OptionMenu(second_frame,str,*list(Prospect_list),command=update)
+    x = threading.Thread(target=create_components, args=(var, var2, var3, var4, Prospect_list, update, str, str1, Week_list, update2))
+    x.start()
+    #create_components(var, var2, var3, var4, var5, Prospect_list, update, str, str1, Week_list, update2)
+    
+
+
+#!Auxiliary functions
+
+def Openexcelfile(filepath):
+    with open_workbook(filepath) as wb:
+        Prospect_list = {}
+        Week_list = {}
+        last_list = []
+        Despatched_list = {}
+        Assayed_list = {}
+       
+        scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list)
+        
+        #!getting assays pending
+        ASS_Pending_list = { vv: (Despatched_list[vv]-Assayed_list[vv]) for vv in Assayed_list}
+        z = threading.Thread(target=scrapping_setup,
+                             args=(wb, Week_list, last_list))
+        z.start()
+        z.join()
+       # scrapping_setup(wb, Week_list, last_list)
+       
+        var = StringVar(
+            second_frame, value=Prospect_list[list(Prospect_list)[0]])
+        var2 = StringVar(
+            second_frame, value=Despatched_list[list(Despatched_list)[0]])
+        var3 = StringVar(
+            second_frame, value=Assayed_list[list(Assayed_list)[0]])
+        var4 = StringVar(
+            second_frame, value=ASS_Pending_list[list(ASS_Pending_list)[0]])
+    
+
+        # Adding akkakro allekran cma
+        y = threading.Thread(target=Adding_lefted_prospect, args=(
+            Prospect_list, last_list, Despatched_list, Assayed_list, ASS_Pending_list))
+        y.start()
+        #Adding_lefted_prospect(Prospect_list, last_list, Despatched_list, Assayed_list, ASS_Pending_list)
+    
+        str = StringVar(second_frame, value=list(Prospect_list)[0])
+        str1 = StringVar(second_frame, value=list(Week_list)[0])
+    return Prospect_list, Week_list, Despatched_list, Assayed_list, ASS_Pending_list, var, var2, var3, var4, str, str1
+
+
+def Adding_lefted_prospect(*args):
+#def Adding_lefted_prospect(Prospect_list, last_list, Despatched_list, Assayed_list, ASS_Pending_list):
+    '''
+    for name in last_list:
+        Prospect_list[name] = 0 if name not in list(
+            Prospect_list) else Prospect_list[name]
+        Despatched_list[name] = 0 if name not in list(
+            Despatched_list) else Despatched_list[name]
+        Assayed_list[name] = 0 if name not in list(
+            Assayed_list) else Assayed_list[name]
+        ASS_Pending_list[name] = 0 if name not in list(
+            ASS_Pending_list) else ASS_Pending_list[name]
+    ''' 
+        
+    for name in args[1]:
+       args[0][name] = 0 if name not in list(
+            args[0]) else args[0][name]
+       args[2][name] = 0 if name not in list(
+           args[2]) else args[2][name]
+       args[3][name] = 0 if name not in list(
+           args[3]) else args[3][name]
+       args[4][name] = 0 if name not in list(
+           args[4]) else args[4][name]
+
+
+def scrapping_setup(wb, Week_list, last_list):
+    with wb.get_sheet("Setup") as sheet1:
+        liste1 = list(sheet1.rows())
+
+        for col in range(len(liste1[0])):
+            r, c, v = liste1[0][col]
+            if v == "Prospect_Name":
+                liste2 = liste1[1:]
+                for item in liste2:
+                    #  r, g, v = item[c][2]
+                    if item[c][2] is None:
+                        continue
+                    last_list.append(item[c][2])
+                #!getting the week
+            if v == "Month":
+                liste2 = liste1[1:]
+                datefrom =  date(2020, 12, 27)
+                dateto = datefrom+timedelta(days=6)
+                Week_list[liste2[0][c][2]]={"Date From":str(datefrom),"Date To":str(dateto)}
+                for item in liste2[1:]:
+                    # r, g, v = item[c]
+                    if item[c][2] is None:
+                        continue
+                    datefrom = dateto+timedelta(days=1)
+                    dateto = datefrom+timedelta(days=6)
+                    Week_list[item[c][2]] = {"Date From": str(datefrom),
+                                             "Date To": str(dateto)}
+ #   print(Week_list)
+              
+def scrapping_prospect(*args):
+#def scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list):
+    with args[0].get_sheet("Samples Data") as sheet1:
+        liste1 = list(sheet1.rows())
+        #!getting the list of prospect and the number of samples
+        for col in range(len(liste1[0])):
+            r, c, v = liste1[0][col]
+            if v == "PROSPECT":
+                liste2 = liste1[1:]
+
+                for item in liste2:
+                    v = item[c][2]
+                    f = item[c+6][2]
+                    g = item[c+16][2]
+
+                    if v is None:
+                        continue
+                    v = v.upper()
+                    args[1][v] = args[1].get(v, 0)+1
+                    #!getting the number of sample despatched per prospect in the samples data sheet
+                    if f is None:
+                        continue
+                    args[2][v] = args[2].get(v, 0)+1
+                        
+                    #!getting the number of sample assayed
+                    if g == "":
+                        continue
+                    args[3][v] = args[3].get(v, 0)+1
+
+                    
+                    
+                    
+        '''
+        print(Despatched_list)
+        print()
+        print(Assayed_list)
+        print()     
+        print(ASS_Pending_list)
+            '''
+
+
+def create_table(**kwargs):
+    f=list(kwargs.values())
+    #!Create table
+    Table = ttk.Treeview(second_frame)
+    Table["columns"] = ("DrillType",
+                        "WeekID",
+                        "Date From",
+                        "Date To",
+                        "Holes Drilled",
+                        "Samp Total",
+                        "Depth Total",
+                        "Samp Desp",
+                        "Assays received",
+                        f"Assays pending to {f[1].get()}")
+
+    # *formate our columns
+    Table.column("#0", width=0, stretch=NO)
+    Table.column("DrillType", anchor=W, width=90, minwidth=25)
+    Table.column("WeekID", anchor=W, width=90, minwidth=25)
+    Table.column("Date From", anchor=W, width=90, minwidth=25)
+    Table.column("Date To", anchor=W, width=90, minwidth=25)
+    Table.column("Holes Drilled", anchor=W, width=90, minwidth=25)
+    Table.column("Samp Total", anchor=W, width=90, minwidth=25)
+    Table.column("Depth Total", anchor=W, width=90, minwidth=25)
+    Table.column("Samp Desp", anchor=W, width=90, minwidth=25)
+    Table.column("Assays received", anchor=W, width=90, minwidth=25)
+    Table.column(f"Assays pending to {f[1].get()}",
+                 anchor=W, width=170, minwidth=25)
+
+    # *create heading
+    Table.heading("#0", text="", anchor=W)
+    Table.heading("DrillType", text="DrillType",
+                  anchor=W)
+
+    Table.heading("WeekID", text="WeekID",
+                  anchor=W)
+
+    Table.heading("Date From", text="Date From",
+                  anchor=W)
+
+    Table.heading("Date To", text="Date To", anchor=W)
+
+    Table.heading("Holes Drilled", text="Holes Drilled",
+                  anchor=W)
+
+    Table.heading("Samp Total", text="Samp Total",
+                  anchor=W)
+
+    Table.heading("Depth Total", text="Depth Total",
+                  anchor=W)
+
+    Table.heading("Samp Desp", text="Samp Desp",
+                  anchor=W)
+
+    Table.heading("Assays received", text="Assays received",
+                  anchor=W)
+
+    Table.heading(f"Assays pending to {f[1].get()}",
+                  text=f"Assays pending to {f[1].get()}", anchor=W)
+
+    # *add data
+    Table.insert(parent="", index="end", iid=0, text="", values=(
+        "AC", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.insert(parent="", index="end", iid=1, text="", values=(
+        "RAB", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.insert(parent="", index="end", iid=2, text="", values=(
+        "AUG", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.insert(parent="", index="end", iid=3, text="", values=(
+        "RC", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.insert(parent="", index="end", iid=4, text="", values=(
+        "DD", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.insert(parent="", index="end", iid=5, text="", values=(
+        "GEOCHEM", f[1].get(), f[2]["Date From"], f[2]["Date To"], "1", "1", "1", "1", "1", "1"))
+    Table.grid(row=300, columnspan=4000, pady=50)
+      
+
+def create_components(var, var2, var3, var4, Prospect_list, update, str, str1, Week_list, update2):
+ 
+    combo = OptionMenu(second_frame, str, *
+                       list(Prospect_list), command=update)
    # combo = ttk.Combobox(second_frame, values=Prospect_list, state="readonly")
-    combo1 = ttk.Combobox(second_frame, values=Week_list, state="readonly")
-    #*put some default value
-    #combo.set(Prospect_list[1])
-    combo1.set(Week_list[1])
-    #*place with grid
-    combo.grid(row=300,column=300)
-    combo1.grid(row=300,column=600,padx=30,pady=30)
-    #str.set(counts[combo.get()])
-    
-         
-    #to get the value of the combo: combo.get()
+    combo1 = OptionMenu(second_frame, str1, *list(Week_list), command=update2)
+    # *put some default value
+    # combo.set(Prospect_list[1])
+    # combo1.set(Week_list[1])
 
+    # str.set(counts[combo.get()])
+
+    # to get the value of the combo: combo.get()
+    #!samples number
     sampleNumber_label = Label(second_frame,
                                text="Samples Number",
                                font=("Arial", 10, "bold"),
-                               fg="red",  # fg stands for forground
-                               bg="White",  # bg stands for background
-
-                               bd=5,  # bd is for amount of border
-                               # is for padding on the x axis(horizontal)
+                               fg="red",  
+                               bg="White", 
+                               bd=5,  
                                padx=5,
-                               pady=5  # is for padding on the y axis(vetical)
-
+                               pady=5
                                )
 
     SamplesData_label = Label(second_frame,
                               textvariable=var,
                               font=("Arial", 10, "bold"),
-                              fg="white",  # fg stands for forground
-                              bg="red",  # bg stands for background
-
-                              bd=5,  # bd is for amount of border
-                              # is for padding on the x axis(horizontal)
-                              padx=5,
-                              pady=5  # is for padding on the y axis(vetical)
-                              # image=photo1,
-                              #compound="bottom",#compound will place the image a the bottom, top, left or right of the text
+                              fg="white",  
+                              bg="red",  
+                              bd=5,                   
+                              padx=5,                   
+                              pady=5
                               )
-    
 
+    #!samples despatched
     sampleDespatched_label = Label(second_frame,
-                               text="Samples Despatched",
-                               font=("Arial", 10, "bold"),
-                               fg="red",  # fg stands for forground
-                               bg="White",  # bg stands for background
-
-                               bd=5,  # bd is for amount of border
-                               # is for padding on the x axis(horizontal)
-                               padx=5,
-                               pady=5  # is for padding on the y axis(vetical)
-                              
-                               )
-    
-    SamplesDespaNumber_label = Label(second_frame,
-                              textvariable=# str,
-                              var2,
-                              font=("Arial", 10, "bold"),
-                              fg="white",  # fg stands for forground
-                              bg="red",  # bg stands for background
-
-                              bd=5,  # bd is for amount of border
-                              # is for padding on the x axis(horizontal)
-                              padx=5,
-                              pady=5  # is for padding on the y axis(vetical)
-                              # image=photo1,
-                              #compound="bottom",#compound will place the image a the bottom, top, left or right of the text
-                              )
-    sampleAssayed_label = Label(second_frame,
-                                   text="SamplesAssayed",
+                                   text="Samples Despatched",
                                    font=("Arial", 10, "bold"),
-                                   fg="red",  # fg stands for forground
-                                   bg="White",  # bg stands for background
-
-                                   bd=5,  # bd is for amount of border
-                                   # is for padding on the x axis(horizontal)
+                                   fg="red", 
+                                   bg="White",  
+                                   bd=5,               
                                    padx=5,
-                                   # is for padding on the y axis(vetical)
                                    pady=5
-
                                    )
 
-    SamplesAssayNumber_label = Label(second_frame,
-                                     textvariable=  # str,
-                                     var3,
+    SamplesDespaNumber_label = Label(second_frame,
+                                     textvariable= var2,
                                      font=("Arial", 10, "bold"),
-                                     fg="white",  # fg stands for forground
-                                     bg="red",  # bg stands for background
-
-                                     bd=5,  # bd is for amount of border
-                                     # is for padding on the x axis(horizontal)
-                                     padx=5,
-                                     # is for padding on the y axis(vetical)
+                                     fg="white", 
+                                     bg="red",  
+                                     bd=5,                        
+                                     padx=5,                        
                                      pady=5
-                                     # image=photo1,
-                                     #compound="bottom",#compound will place the image a the bottom, top, left or right of the text
                                      )
-    
-    week_label = Label(second_frame,
-                   text="Weekly Stats",
-                   font=("Arial", 10, "bold"),
-                   fg="red",  # fg stands for forground
-                   bg="White",  # bg stands for background
+    #!samples assayed
+    sampleAssayed_label = Label(second_frame,
+                                text="Samples Assayed",
+                                font=("Arial", 10, "bold"),
+                                fg="red",  
+                                bg="White", 
+                                bd=5, 
+                                padx=5, 
+                                pady=5
+                                )
 
-                   bd=5,  # bd is for amount of border
-                   padx=5,  # is for padding on the x axis(horizontal)
-                   pady=5  # is for padding on the y axis(vetical)
-                   
-                   )
+    SamplesAssayNumber_label = Label(second_frame,
+                                     textvariable= var3,
+                                     font=("Arial", 10, "bold"),
+                                     fg="white",
+                                     bg="red",  
+                                     bd=5, 
+                                     padx=5,
+                                     pady=5
+                                     )
+
+    #!Assays pending
+    sampleAssayedP_label = Label(second_frame,
+                                 text="Assays pending",
+                                 font=("Arial", 10, "bold"),
+                                 fg="red",  
+                                 bg="White",  
+                                 bd=5, 
+                                 padx=5,
+                                 pady=5
+                                 )
+
+    SamplesAssayNumberP_label = Label(second_frame,
+                                      textvariable=  
+                                      var4,
+                                      font=("Arial", 10, "bold"),
+                                      fg="white", 
+                                      bg="red",  
+                                      bd=5,                        
+                                      padx=5,                          
+                                      pady=5    
+                                      )
+    #!weeks
+    week_label = Label(second_frame,
+                       text="Weekly Stats",
+                       font=("Arial", 10, "bold"),
+                       fg="red",  
+                       bg="White",  
+                       bd=5, 
+                       padx=5,  
+                       pady=5  
+                       )
+
+    week_label.grid(row=0, column=50)
+    combo.grid(row=200, column=0)
+    combo1.grid(row=200, column=100)
+
+    sampleNumber_label.grid(row=0, column=1000, pady=50, padx=10)
+    SamplesData_label.grid(row=200, column=1000)
     
-    sampleNumber_label.grid(row=250,column=900,pady=50)
-    SamplesData_label.grid(row=300,column=900,pady=50)
-   # SamplesData_label.pack()
-   
-    sampleDespatched_label.grid(row=250,column=1080,padx=10,pady=50)
-    SamplesDespaNumber_label.grid(row=300,column=1080,pady=50)
-    
-    sampleAssayed_label.grid(row=250, column=2080, padx=10, pady=50)
-    SamplesAssayNumber_label.grid(row=300, column=2080, pady=50)
-    
-    week_label.grid(row=250,column=400,pady=50)
-    #week_label.place(x=470, y=250)
-    
-    
-    
-#*main frame
+    sampleDespatched_label.grid(row=0, column=1900, pady=50, padx=10)
+    SamplesDespaNumber_label.grid(row=200, column=1900)
+
+    sampleAssayed_label.grid(row=0, column=3500, pady=50, padx=10)
+    SamplesAssayNumber_label.grid(row=200, column=3500)
+
+    sampleAssayedP_label.grid(row=0, column=3900, pady=50, padx=10)
+    SamplesAssayNumberP_label.grid(row=200, column=3900)
+
+    create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
+
+
+#!MAIN PROGRAM
+# *main frame
 frame = Frame(windows)
 
 label = Label(frame,
               text="Data Scrapping",
               font=("Arial", 40, "bold"),
-              fg="green",  # fg stands for forground
-              bg="White",  # bg stands for background
-
-              bd=10,  # bd is for amount of border
-              padx=20,  # is for padding on the x axis(horizontal)
-              pady=20,  # is for padding on the y axis(vetical)
-              
+              fg="green",  
+              bg="White",  
+              bd=10,  
+              padx=20,  
+              pady=20,  
               )
-frame.pack(fill=BOTH,expand=1)
+
+frame.pack(fill=BOTH, expand=1)
 label.pack()
 button = Button(frame, text="open a file for scrapping", command=scrapping)
 button.pack()
 
-#!scrollbar   
-#canvas=Canvas(frame)
-#canvas.pack(side=LEFT,fill=BOTH,expand=1)
+#!scrollbar
+# canvas=Canvas(frame)
+# canvas.pack(side=LEFT,fill=BOTH,expand=1)
 
 #yscrollbar = Scrollbar(frame, orient=VERTICAL,command=canvas.yview)
-yscrollbar=Scrollbar(frame,orient=VERTICAL)
-yscrollbar.pack(side=RIGHT,fill=Y)
+yscrollbar = Scrollbar(frame, orient=VERTICAL)
+yscrollbar.pack(side=RIGHT, fill=Y)
 
 #xscrollbar = Scrollbar(frame, orient=HORIZONTAL,command=canvas.xview)
-xscrollbar=Scrollbar(frame,orient=HORIZONTAL)
-xscrollbar.pack(side=BOTTOM,fill=X)
+xscrollbar = Scrollbar(frame, orient=HORIZONTAL)
+xscrollbar.pack(side=BOTTOM, fill=X)
 
-#canvas.configure(yscrollcommand=yscrollbar.set)
-#canvas.configure(xscrollcommand=xscrollbar.set)
+# canvas.configure(yscrollcommand=yscrollbar.set)
+# canvas.configure(xscrollcommand=xscrollbar.set)
 #canvas.bind("<Configure>",lambda e:canvas.configure(scrollregion=canvas.bbox("all")))
-canvas=Canvas(frame,scrollregion=(0,0,1920,1080),xscrollcommand=xscrollbar.set,yscrollcommand=yscrollbar.set)
-canvas.pack(side=LEFT,fill=BOTH,expand=1)
+canvas = Canvas(frame, scrollregion=(0, 0, 3920, 3080),
+                xscrollcommand=xscrollbar.set, yscrollcommand=yscrollbar.set)
+canvas.pack(side=LEFT, fill=BOTH, expand=1)
 
 yscrollbar.config(command=canvas.yview)
 xscrollbar.config(command=canvas.xview)
 
-second_frame=Frame(canvas)
+second_frame = Frame(canvas)
 
-canvas.create_window((0,5),window=second_frame,anchor="nw")
-text=Text(second_frame)
-
+canvas.create_window((0, 5), window=second_frame, anchor="nw")
+'''
+IF(
+    IF(
+            (
+                COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        
+        ) < 0, 0,
+        
+        COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+      )=0, "", 
+   
+   IF(
+       
+        (
+            COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        
+        ) < 0, 0,
+        
+        COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
+      
+      )
+   )
+'''
 
 windows.mainloop()

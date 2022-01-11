@@ -12,6 +12,7 @@ login_date = ["1/1/2021", "1/2/2021", "1/3/2021"]
 users = zip(usernames, passwords)
 usersfull = zip(usernames, passwords, login_date)
 
+'''
 for i in users:
     print(i)
 print(list(zip(usernames, passwords)))
@@ -20,6 +21,7 @@ for key, value in userdict.items():
     print(key, ":", value)
 for i in usersfull:
     print(i)
+''' 
 
 #!Threads
 #*a flow of execution. Like a separate order of instructions.
@@ -90,7 +92,7 @@ z = threading.Thread(target=study, args=())
 #*your program will not wait for daemon threads to complete before existing
 #*daemon thread are killed as soon as the main thread complete its task(complete the main program)
 #*non-daemon threads cannot be normally killed, stay alive till task is finished
-#*usuallu used for background tasks
+#*usually used for background tasks
 
 
 def timer():
@@ -104,7 +106,7 @@ def timer():
 
 #* this normal thread will still running  even if after the main thread has completed its task
 #x=threading.Thread(target=timer, args=())
-#*to turn a normal thread into a daemon thread we set the flags to daemon to true:
+#*to turn a normal thread into a daemon thread we set the flags daemon to true:
 x = threading.Thread(target=timer, args=(), daemon=True)
 #x.start()
 
@@ -134,10 +136,10 @@ def main():
     c.start()
     d.start()
 
-    a.join()
-    b.join()
-    c.join()
-    d.join()
+   # a.join()
+    #b.join()
+    #c.join()
+    #d.join()
 
     print("finished in: ", time.perf_counter(), "seconds")
 

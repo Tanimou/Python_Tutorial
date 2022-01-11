@@ -77,10 +77,12 @@ class Item(ABC):
     def __repr__(self):
         return f"{self.__class__.__name__}('{self.__name}', {self.__price}, {self.__quantity})"
     
-    #*read data from csv file and create insta'nces of Item from csv file
+    
+    #!class method
     #*cls is as self but it's the class itself rather than the object that is going to be passed as a parameter
     #*we should have cls for a classmethod
     ##here is how we specify that this method will be a class method
+    #*read data from csv file and create insta'nces of Item from csv file
     @classmethod
     def instantiate_from_csv(cls):
         with open("items.csv", "r") as fhand:
@@ -131,7 +133,6 @@ class Item(ABC):
 #*instead of using the "extends" keyword like in javascript    
 class Phone(Item):
     listphone=[]
-
     
     def __init__(self, name:str, price:float, quantity=0,broken_phones=0):
         ##it's very like in javascript or java, for the child class we use the super().__init__() function in python
@@ -153,7 +154,7 @@ class Phone(Item):
 class Priceless:
     def pricy(self):
         print("this item is priceless")
-#*Now we can create our touchscreen class that will inherit Item and Priceless classes
+#*Now we can create our touchscreen class that will inherit Phone and Priceless classes
 class Touchscreen(Phone,Priceless):
     listpriceless=[]
     def __init__(self, name, price, quantity=0):
