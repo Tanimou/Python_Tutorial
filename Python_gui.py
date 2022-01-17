@@ -2,6 +2,10 @@ from operator import index
 from textwrap import wrap
 from tkinter import *
 from tkinter import messagebox,colorchooser,filedialog,ttk
+#from tkinter.ttk import *
+import time
+from ball import Ball
+
 
 
 #!GUI: Graphical User Interface in python
@@ -31,6 +35,7 @@ icon=PhotoImage(file="images/zeref.png")
 #windows=Tk()
 
 photo1 = PhotoImage(file="images/midoriya.png")
+
 label=Label(windows,
             text="hey there",
             font=("Arial",40,"bold"),
@@ -42,7 +47,8 @@ label=Label(windows,
             pady=20,#is for padding on the y axis(vetical)
            # image=photo1,
             #compound="bottom",#compound will place the image a the bottom, top, left or right of the text
-            ) 
+            )
+  
 
 #label.pack()
 #label.place(x=20,y=0)
@@ -419,10 +425,176 @@ windows.mainloop()
 #!combo box
 #windows=Tk()
 frame=Frame(windows,width=200,height=200)
-frame.pack()
+#frame.pack()
 viewlist=["option1","option2","option3","option4"]
-combo=ttk.Combobox(frame,values=viewlist)
+#combo=ttk.Combobox(frame,values=viewlist)
 #*put some default value
-combo.set("option1")
-combo.place(x=30,y=50)
+#combo.set("option1")
+#combo.place(x=30,y=50)
+#windows.mainloop()
+
+#!New window
+def create_window():
+    #*Toplevel(): a new window "on top" of other windows, linked to a "bottom" window
+    #*different to Tk() which creates a new window that is not linked
+    new_window=Toplevel()
+    #new_window=Tk()
+    #windows.destroy()
+#windows=Tk()
+#button=Button(windows,text="create a new window",command=create_window).pack()
+#windows.mainloop()
+
+#!Windows Tab
+#*need to import ttk library from tkinter
+#windows=Tk()
+#*Notebook: a widget that manages a collection of windows/displays
+#notebook=ttk.Notebook(windows)
+#tab1=Frame(notebook)
+#tab2=Frame(notebook)
+#notebook.add(tab1,text="Tab 1")
+#notebook.add(tab2,text="Tab 2")
+#notebook.pack(expand=True,fill="both")
+
+#Label(tab1,text="hello this is tab1",width=50,height=25).pack()
+#Label(tab2,text="hello this is tab2",width=50,height=25).pack()
+
+#windows.mainloop()
+
+#!Progress bar
+#*need to import ttk library from tkinter like this:from tkinter.ttk import *
+#*and also time
+def start():
+    for x, _ in enumerate(range(100), start=1): 
+        time.sleep(0.05)
+        bar["value"]+=(1/100)*100
+        percent.set(str(int((x/100)*100))+"%")
+        windows.update_idletasks()#to update, refresh the window
+#windows=Tk()
+percent=StringVar()
+bar=ttk.Progressbar(windows,orient=HORIZONTAL,length=300)
+#bar.pack(pady=10)
+percentLbel=Label(windows,textvariable=percent).pack()
+#button = Button(windows, text="Download",command=start).pack()
+#windows.mainloop()
+
+#!key event
+def dosomething(event):
+    print("you taped "+event.keysym)
+#windows=Tk()
+#*when tapping any key
+#windows.bind("<Key>",dosomething)
+#windows.mainloop()
+
+#!Mouse events
+def do_click(event):
+    print("you left clicked ")
+#windows=Tk()
+#*when left click on a mouse button
+#windows.bind("<Button-1>",do_click)
+#*when clicked on the scroll wheel  of the mouse
+#windows.bind("<Button-2>", do_click)
+#*when right click on a mouse button
+#windows.bind("<Button-3>", do_click)
+#*when release a button on a mouse  
+#windows.bind("<ButtonRelease>", do_click)
+#*when entering the window
+#windows.bind("<Enter>", do_click)
+#*when leaving the window
+#windows.bind("<Leave>", do_click)
+#*when moving the mouse
+#windows.bind("<Motion>",do_click)
+#windows.mainloop()
+
+#!Drag and Drop
+def drag_start(event):
+    #*make the function compatible with any widget
+    widget=event.widget
+    widget.startX=event.x
+    widget.startY=event.y
+
+def drag_motion(event):
+    widget = event.widget
+    x=widget.winfo_x()-widget.startX+event.x
+    y = widget.winfo_y()-widget.startY+event.y
+    widget.place(x=x, y=y)
+#windows=Tk()
+label=Label(windows,bg="red",width=18,height=5)
+#label.place(x=0,y=0)
+
+label2=Label(windows,bg="blue",width=18,height=5)
+#label2.place(x=100,y=100)
+
+#label.bind("<Button-1>",drag_start)
+#*when holding the left mouse button and dragging
+#label.bind("<B1-Motion>", drag_motion)
+
+#label2.bind("<Button-1>", drag_start)
+#*when holding the left mouse button and dragging
+#label2.bind("<B1-Motion>", drag_motion)
+#windows.mainloop()
+
+#!moving image/widget with keys
+def move_up(event):
+    label.place(x=label.winfo_x(), y=label.winfo_y()-1)
+    
+def move_down(event):
+    label.place(x=label.winfo_x(), y=label.winfo_y()+1)
+
+def move_left(event):
+    label.place(x=label.winfo_x()-1, y=label.winfo_y())
+
+def move_right(event):
+    label.place(x=label.winfo_x()+1, y=label.winfo_y())
+#windows=Tk()
+#windows.geometry("500x500")
+#windows.bind("<z>",move_up)
+#windows.bind("<s>",move_down)
+#windows.bind("<q>",move_left)
+#windows.bind("<d>", move_right)
+#label=Label(windows,bg="red",width=18,height=5)
+#label.place(x=0,y=0)
+#windows.mainloop()
+
+#!multiple animation
+#*we're going to create a class for simplicity in another file
+#windows=Tk()
+WIDTH=500
+HEIGHT=500
+"""
+canvas=Canvas(windows,width=WIDTH,height=HEIGHT)
+canvas.pack()
+volley=Ball(canvas,0,0,100,1,1,"red")
+tennis=Ball(canvas,0,0,50,4,3,"yellow")
+basket=Ball(canvas,0,0,30,6,6,"blue")
+yoyo=Ball(canvas,0,0,150,0.5,0.5,"green")
+black=Ball(canvas,0,0,20,8,8,"black")
+while True:
+    volley.move()
+    tennis.move()
+    basket.move()
+    yoyo.move()
+    black.move()
+    windows.update()
+    time.sleep(0.01)
 windows.mainloop()
+"""
+#!clock program
+def update():
+    time_string=time.strftime("%I:%M:%S %p")
+    time_label.config(text=time_string)
+    time_label.after(1000,update)
+#windows=Tk()
+time_label=Label(windows,font=("Arial,50"),fg="red",bg="black")
+#time_label.pack()
+#update()
+#windows.mainloop()
+
+#!py to exe
+#*install pyinstaller: pip install pyinstaller
+#*create a folder and add any relevant files you need to create the programm(.py files, images ...)
+#*open a command prompt and navigate to that folder 
+#*execute this: pyinstaller -F -w -i (name of the image).ico (name of the python file.py)
+#*the image must be in ico format when using -i option for icon
+
+#!calculator 
+

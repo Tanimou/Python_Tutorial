@@ -3,8 +3,8 @@ from tkinter import filedialog, ttk
 import threading
 from pyxlsb import open_workbook
 from datetime import date, timedelta
-# from collections import Counter
 
+#itilscrum
 windows = Tk()
 windows.geometry("1300x800")
 
@@ -27,16 +27,15 @@ def scrapping():
         var3.set(Assayed_list[value])
         var4.set(ASS_Pending_list[value])
         create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
-
+        #windows.update()
     def update2(value):
-      
+       # windows.update()
         create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
     
     x = threading.Thread(target=create_components, args=(var, var2, var3, var4, Prospect_list, update, str, str1, Week_list, update2))
     x.start()
     #create_components(var, var2, var3, var4, var5, Prospect_list, update, str, str1, Week_list, update2)
     
-
 
 #!Auxiliary functions
 
@@ -47,15 +46,21 @@ def Openexcelfile(filepath):
         last_list = []
         Despatched_list = {}
         Assayed_list = {}
-       
-        scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list)
+        AssaysPen_toweek={}
         
-        #!getting assays pending
-        ASS_Pending_list = { vv: (Despatched_list[vv]-Assayed_list[vv]) for vv in Assayed_list}
         z = threading.Thread(target=scrapping_setup,
                              args=(wb, Week_list, last_list))
         z.start()
         z.join()
+        
+        str1 = StringVar(second_frame, value=list(Week_list)[0])
+        listweek=list(Week_list)
+        #print(listweek)
+        scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list,listweek,AssaysPen_toweek)
+        
+        #!getting assays pending
+        ASS_Pending_list = { vv: (Despatched_list[vv]-Assayed_list[vv]) for vv in Assayed_list}
+        
        # scrapping_setup(wb, Week_list, last_list)
        
         var = StringVar(
@@ -75,7 +80,7 @@ def Openexcelfile(filepath):
         #Adding_lefted_prospect(Prospect_list, last_list, Despatched_list, Assayed_list, ASS_Pending_list)
     
         str = StringVar(second_frame, value=list(Prospect_list)[0])
-        str1 = StringVar(second_frame, value=list(Week_list)[0])
+        
     return Prospect_list, Week_list, Despatched_list, Assayed_list, ASS_Pending_list, var, var2, var3, var4, str, str1
 
 
@@ -117,21 +122,21 @@ def scrapping_setup(wb, Week_list, last_list):
                     if item[c][2] is None:
                         continue
                     last_list.append(item[c][2])
-                #!getting the week
+            #!getting the week
             if v == "Month":
                 liste2 = liste1[1:]
                 datefrom =  date(2020, 12, 27)
                 dateto = datefrom+timedelta(days=6)
                 Week_list[liste2[0][c][2]]={"Date From":str(datefrom),"Date To":str(dateto)}
                 for item in liste2[1:]:
-                    # r, g, v = item[c]
+                   
                     if item[c][2] is None:
                         continue
                     datefrom = dateto+timedelta(days=1)
                     dateto = datefrom+timedelta(days=6)
                     Week_list[item[c][2]] = {"Date From": str(datefrom),
                                              "Date To": str(dateto)}
- #   print(Week_list)
+
               
 def scrapping_prospect(*args):
 #def scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list):
@@ -144,27 +149,75 @@ def scrapping_prospect(*args):
                 liste2 = liste1[1:]
 
                 for item in liste2:
+                    #*prospect column
                     v = item[c][2]
-                    f = item[c+6][2]
-                    g = item[c+16][2]
-
+                    #*sample type column
+                    g=item[c+4][2]
+                    print(g)
+                    #*samples despatched column
+                    i = item[c+6][2]
+                    #*Ass_week Numero column
+                    r=item[c+15][2]
+                   
+                    #*sample assayed column
+                    s = item[c+16][2]
+                    #*Desp_week Numero column
+                    x=item[c+21][2]
+                    
                     if v is None:
                         continue
                     v = v.upper()
                     args[1][v] = args[1].get(v, 0)+1
                     #!getting the number of sample despatched per prospect in the samples data sheet
-                    if f is None:
+                    if i is None:
                         continue
                     args[2][v] = args[2].get(v, 0)+1
                         
                     #!getting the number of sample assayed
-                    if g == "":
+                    if s == "":
                         continue
-                    args[3][v] = args[3].get(v, 0)+1
-
+                    args[3][v] = args[3].get(v, 0)+1 
                     
-                    
-                    
+                    #!getting the number of assays pending per week 
+                 
+                    '''
+                    AssaysPen_toweek={
+                                        Govisou:
+                                                 {AUG:{week 01:2, week 02:4},
+                                                  DD:{week 01:2, week 02:7},
+                                                  RC:{week 01:2, week 02:22}
+                                                  },
+                                        CMA:
+                                                {RC:{week 01:2,week 02:8},
+                                                 AUG:{week 01:2,week 02:},
+                                                DD:{week 01:2,week 02:}
+                                                },          
+                                        Antoinette:
+                                                    {
+                                                        RC:{week 01:2,week 02:4},
+                                                        DD:{week 01:2, week 02:1},
+                                                        AUG:{week 01:2,week 02:5}
+                                                    }
+                    ''' 
+                                                
+                    #scrapping_prospect(wb, Prospect_list, Despatched_list, Assayed_list,listweek,AssaysPen_toweek)
+                   # sumx={}
+                   #sumr=0
+                    #for i,nameweek in enumerate(args[4]) 
+                             #if x == "":
+                                #continue
+                             #elif x< i+1:
+                                #sumx[nameweek]=sumx.get(nameweek,0)+1
+                                
+                             #if r== "":
+                                #continue
+                             #elif r<i+1:
+                               #sumr+=1                 
+                        # args[5]={
+                            # v:
+                            # {g:{args[4][nameweek]:n}
+                            # }
+                            # }
         '''
         print(Despatched_list)
         print()
@@ -254,116 +307,91 @@ def create_components(var, var2, var3, var4, Prospect_list, update, str, str1, W
  
     combo = OptionMenu(second_frame, str, *
                        list(Prospect_list), command=update)
-   # combo = ttk.Combobox(second_frame, values=Prospect_list, state="readonly")
+  
     combo1 = OptionMenu(second_frame, str1, *list(Week_list), command=update2)
-    # *put some default value
-    # combo.set(Prospect_list[1])
-    # combo1.set(Week_list[1])
+ 
+    week_label, SamplesAssayNumber_label, sampleAssayed_label, SamplesAssayNumberP_label, sampleAssayedP_label, SamplesDespaNumber_label, sampleDespatched_label, sampleNumber_label, SamplesData_label = create_labels(
+        var, var2, var3, var4)
 
-    # str.set(counts[combo.get()])
+    place_labels(week_label, SamplesAssayNumber_label, sampleAssayed_label, SamplesAssayNumberP_label, sampleAssayedP_label, SamplesDespaNumber_label, sampleDespatched_label, sampleNumber_label, SamplesData_label,combo,combo1)
 
-    # to get the value of the combo: combo.get()
+    create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
+    
+
+def lab(frame, text):
+    return Label(frame, text=text,
+                 font=("Arial", 10, "bold"),
+                 fg="red",
+                 bg="White",
+                 bd=5,
+                 padx=5,
+                 pady=5
+                 )
+    
+def create_labels(var,var2,var3,var4):
+
     #!samples number
-    sampleNumber_label = Label(second_frame,
-                               text="Samples Number",
-                               font=("Arial", 10, "bold"),
-                               fg="red",  
-                               bg="White", 
-                               bd=5,  
-                               padx=5,
-                               pady=5
-                               )
+    sampleNumber_label = lab(second_frame,"Samples Number")
 
     SamplesData_label = Label(second_frame,
                               textvariable=var,
                               font=("Arial", 10, "bold"),
-                              fg="white",  
-                              bg="red",  
-                              bd=5,                   
-                              padx=5,                   
+                              fg="white",
+                              bg="red",
+                              bd=5,
+                              padx=5,
                               pady=5
                               )
 
     #!samples despatched
-    sampleDespatched_label = Label(second_frame,
-                                   text="Samples Despatched",
-                                   font=("Arial", 10, "bold"),
-                                   fg="red", 
-                                   bg="White",  
-                                   bd=5,               
-                                   padx=5,
-                                   pady=5
-                                   )
+    sampleDespatched_label = lab(second_frame, "Samples Despatched")
 
     SamplesDespaNumber_label = Label(second_frame,
-                                     textvariable= var2,
+                                     textvariable=var2,
                                      font=("Arial", 10, "bold"),
-                                     fg="white", 
-                                     bg="red",  
-                                     bd=5,                        
-                                     padx=5,                        
+                                     fg="white",
+                                     bg="red",
+                                     bd=5,
+                                     padx=5,
                                      pady=5
                                      )
     #!samples assayed
-    sampleAssayed_label = Label(second_frame,
-                                text="Samples Assayed",
-                                font=("Arial", 10, "bold"),
-                                fg="red",  
-                                bg="White", 
-                                bd=5, 
-                                padx=5, 
-                                pady=5
-                                )
+    sampleAssayed_label = lab(second_frame, "Samples Assayed")
 
     SamplesAssayNumber_label = Label(second_frame,
-                                     textvariable= var3,
+                                     textvariable=var3,
                                      font=("Arial", 10, "bold"),
                                      fg="white",
-                                     bg="red",  
-                                     bd=5, 
+                                     bg="red",
+                                     bd=5,
                                      padx=5,
                                      pady=5
                                      )
 
     #!Assays pending
-    sampleAssayedP_label = Label(second_frame,
-                                 text="Assays pending",
-                                 font=("Arial", 10, "bold"),
-                                 fg="red",  
-                                 bg="White",  
-                                 bd=5, 
-                                 padx=5,
-                                 pady=5
-                                 )
-
+    sampleAssayedP_label = lab(second_frame, "Assays pending")
     SamplesAssayNumberP_label = Label(second_frame,
-                                      textvariable=  
-                                      var4,
+                                      textvariable=var4,
                                       font=("Arial", 10, "bold"),
-                                      fg="white", 
-                                      bg="red",  
-                                      bd=5,                        
-                                      padx=5,                          
-                                      pady=5    
+                                      fg="white",
+                                      bg="red",
+                                      bd=5,
+                                      padx=5,
+                                      pady=5
                                       )
     #!weeks
-    week_label = Label(second_frame,
-                       text="Weekly Stats",
-                       font=("Arial", 10, "bold"),
-                       fg="red",  
-                       bg="White",  
-                       bd=5, 
-                       padx=5,  
-                       pady=5  
-                       )
+    week_label = lab(second_frame, "Weekly Stats")
+    return week_label,SamplesAssayNumber_label,sampleAssayed_label,SamplesAssayNumberP_label,sampleAssayedP_label,SamplesDespaNumber_label,sampleDespatched_label,sampleNumber_label,SamplesData_label
 
+
+def place_labels(week_label, SamplesAssayNumber_label, sampleAssayed_label, SamplesAssayNumberP_label, sampleAssayedP_label, SamplesDespaNumber_label, sampleDespatched_label, sampleNumber_label, SamplesData_label, combo, combo1):
     week_label.grid(row=0, column=50)
     combo.grid(row=200, column=0)
     combo1.grid(row=200, column=100)
 
     sampleNumber_label.grid(row=0, column=1000, pady=50, padx=10)
     SamplesData_label.grid(row=200, column=1000)
-    
+
     sampleDespatched_label.grid(row=0, column=1900, pady=50, padx=10)
     SamplesDespaNumber_label.grid(row=200, column=1900)
 
@@ -372,10 +400,7 @@ def create_components(var, var2, var3, var4, Prospect_list, update, str, str1, W
 
     sampleAssayedP_label.grid(row=0, column=3900, pady=50, padx=10)
     SamplesAssayNumberP_label.grid(row=200, column=3900)
-
-    create_table(prosp=str,weekly=str1,lw=Week_list[str1.get()])
-
-
+    
 #!MAIN PROGRAM
 # *main frame
 frame = Frame(windows)
@@ -420,32 +445,7 @@ xscrollbar.config(command=canvas.xview)
 second_frame = Frame(canvas)
 
 canvas.create_window((0, 5), window=second_frame, anchor="nw")
-'''
-IF(
-    IF(
-            (
-                COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        
-        ) < 0, 0,
-        
-        COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-      )=0, "", 
-   
-   IF(
-       
-        (
-            COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        
-        ) < 0, 0,
-        
-        COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-        -COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B7)
-      
-      )
-   )
-'''
+
+#IF((COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B9)-COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B9)) <= 0, "", COUNTIFS('Samples Data'!X: X, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B9)-COUNTIFS('Samples Data'!R: R, "<=" & (DashBoard!N$1), 'Samples Data'!C: C, DashBoard!G$1, 'Samples Data'!G: G, DashBoard!B9))
 
 windows.mainloop()

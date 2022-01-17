@@ -1,3 +1,4 @@
+import smtplib#(smtplib:simple mail transfert protocol library)
 import threading
 import time
 from multiprocessing import Process, cpu_count
@@ -142,7 +143,30 @@ def main():
     #d.join()
 
     print("finished in: ", time.perf_counter(), "seconds")
+    
+#if __name__ == "__main__":
+ #   main()
 
+#!send an email(only works with gmail adress for now)
+#*need to import smtplib
 
-if __name__ == "__main__":
-    main()
+sender = "tanimoucisse@gmail.com"
+receiver = "mahamadous22@gmail.com"
+password = "candyccove456789"
+subject = "Test with python"
+body = "this mail was sent from vscode with python"
+
+message = f"""From:{sender}
+To: {receiver}
+Subject: {subject}\n
+{body}
+"""
+server = smtplib.SMTP("smtp.gmail.com", 587)
+server.starttls()
+try:
+    server.login(sender, password)
+    print("loggin...")
+    server.sendmail(sender, receiver, message)
+    print("email has been sent successfully")
+except smtplib.SMTPAuthenticationError:
+    print("Failed to authenticate")

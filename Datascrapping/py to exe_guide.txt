@@ -1,0 +1,6 @@
+#!py to exe
+#*install pyinstaller: pip install pyinstaller
+#*create a folder and add any relevant files you need to create the programm(.py files, images ...)
+#*open a command prompt and navigate to that folder 
+#*execute this: pyinstaller -F -w -i (name of the image).ico (name of the python file.py)
+#*the image must be in ico format when using -i option for icon
