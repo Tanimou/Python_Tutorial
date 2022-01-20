@@ -152,8 +152,8 @@ result = locate_card(card2, query2)
 print(result)
 
 #!Sets
-#*unlike dictionary where we have key/value pairs pattern, a set is kind of dictionary with only values pattern
-#*and we can't have duplicate values
+#*unlike dictionary where we have key/value pairs pattern, a set is  kind of dictionary with only values pattern
+#*and we can't have duplicate values and values are unordered, mutable
 s = {'blueberry', 'raspberry', 'strawberry'}
 print(s)
 s.add("blueberry")
@@ -164,6 +164,11 @@ print("s union d: ", s.union(d))
 print("s inter d: ", s.intersection(d))
 print("s diff d: ", s.difference(d))
 print("d diff s: ", d.difference(s))
+#*will return both in set s and set d the difference
+print("diff between s and d :", s.symmetric_difference(d))
+
+#*to see if a set is a subset of another set
+print(d.issubset(s))
 #*we can convert a set to a list and vice-versa. this is called casting
 l = [1, 2, 3, 3, 4, 4, 4, 5, 8, 8, 6, ]
 s = set(l)  # casting the list to a set
@@ -171,11 +176,14 @@ l = list(s)  # casting back to a list
 print(s)
 print(l)
 
+#*we can create a immutable version of our set
+s=frozenset(s)
+#*s.add("hey")#this will raise an error
 #! Tuples
 #*Tuples are like lists except that they are immutable: we can't make change on tuples unlike lists
 #*And they have parenthesis instead2 of brackets
 x = [9, 5, 3]  # this is a list
-y = (5, 9, 2)  # this is a tuple
+y = (5, 9, 2)  # this is a tuple, we can also say: y=tuple(5,9,3)
 x[2] = 8  # ok!!!
 ##y[1]=4#error
 ##we can't use sort(), reverse() or append() on tuples
@@ -183,8 +191,20 @@ x[2] = 8  # ok!!!
 #!Tuples and assingment
 tuple = (4, "fred")
 (x, y) = tuple
+#y=tuple[-1] like with lists we can have negative indexes
 print(y)
 print("\n")
+
+#!tuples and functions
+my_tuple=("a","p","p","l","e","1","2","7","5","9","8")
+print(my_tuple.count("p"))
+print(my_tuple.index("p"))
+my_list=list(my_tuple)
+my_tuple2=tuple(my_list)
+b=my_tuple[2:5]##like with lists
+#*we can pack a subset of elements with "*" when assigning
+a,*c,f,h=my_tuple
+print(c)
 
 #!Tuples and dictionnaries
 #*the items() method in dictionaries returns a list of (key,value) tuples

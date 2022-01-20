@@ -9,6 +9,7 @@ print(type("hello"))
 
 #nam = input("who are you?")
 #print("welcome", nam)
+
 #!the format function
 #*optional method that gives users more control when displaying output
 
@@ -363,6 +364,15 @@ print(friends.pop())
 friends.clear()
 print(friends)
 
+#*when we assign a variable to a list, both refer to the same list adress
+friend2=friends
+#*that's why if we do something to friend2, changes will occurs to friends too
+friend2.append("lala")
+print(friend2)
+print(friends)
+#*to remediate to that we use some method like copy(), slicing
+#friend2=friends.copy()
+#friend2=friends[:]
 #!creating a list of empty lists
 #*with this method the same object (here an empty list) is duplicated 10 times
 l1=[[]]*10
@@ -470,7 +480,17 @@ print(ddd)
 ddd["age"] = 54
 print(ddd)
 print("\n")
+#delete an item of  list
+del ddd["age"]
+#*same thing like lists when we assigning a variable to a dictionary, both refer to the same dictionary address
+#fff=ddd
+#*so if we change fff's items, ddd's items will be changed as well
+#*to remedeiate e can use the copy method
 
+#*update 2 dictionaries
+fff={"name":"mary","age":30,"course":188}
+ddd.update(fff)
+print(ddd)
 #!Dictionnary literals
 #*Another way to declare a dictionary they are like objects in javascript
 #dictionary={key:expression for (key,value) in iterable}
