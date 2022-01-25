@@ -1,7 +1,5 @@
 
-import random
-import os
-import shutil
+import random,os,shutil,numpy as np
 from collections import deque  # in order to use collections's features
 
 ##!we can ask python what type something is by using the type() function
@@ -23,10 +21,20 @@ print(x)
 mylist = ["rock", "paper", "scissors"]
 z = random.choice(mylist)  # will choose between rock, paper and scissors
 print(z)
+mylist=list("ABCDEFGHIJ") 
+a=random.sample(mylist,3) #will pick 3 unique elements from mylist
+a=random.choices(mylist,k=3) #will pick 3 elements multiple times 
 cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
 random.shuffle(cards)
 print(cards)
-
+x = np.random.randint(1, 6, 3)  # will print an list of 3 numbers between 1 and 6
+x = np.random.randint(1, 6, (3, 4)) # will print 3 lists of 4 numbers between 1 and 6
+arr=np.array([1,2,3],[4,5,6],[7,8,9])
+print(arr)
+print()
+np.random.shuffle(arr)
+print(arr)
+print()
 
 #! if statement
 x = 30
@@ -91,6 +99,37 @@ try:
 except:
     print('An exception occurred')
 
+#*we can enforce an exception, similar to assert statement
+x=5
+if x<0:
+    raise Exception("x should be positive")
+
+#*we can have else statement and finally statement
+#*block of code within the else statement will run if no exception occurred
+#*block of code within the finally statement will run when either exception occurred or not
+astr = "123"
+try:
+    istr = int(astr)  # here, no probleme, python's gonna skip the except block
+    
+except:
+    print('An exception occurred')
+else:
+    print("yeah. no error. Here is istr's value:", istr)
+finally:
+    print("done")
+
+#!exception with class
+#*we create a class and we pass the exception as argument
+class ValueTooHighError(Exception):
+    pass
+def test(x):
+    if x > 100:
+        raise ValueTooHighError("value is too high")
+test(200)
+try:
+    test(200)
+except ValueTooHighError as e:
+    print(e)
 ##sample try/except
 
 #print("sample try/except")

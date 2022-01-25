@@ -1,6 +1,6 @@
 # here i can import a specific element from another python file
-import calendar,re,turtle,pytz,inc_dec,datetime as dt
-from collections import Counter, namedtuple
+import calendar,re,turtle,pytz,functools,inc_dec,datetime as dt
+from collections import Counter, namedtuple,OrderedDict,defaultdict
 from functools import reduce
 from pathlib import Path
 from POO_tutorial import Item, Phone
@@ -45,7 +45,9 @@ d = Counter(["a", "b", "b", "d", "b", "a"])
 print(c & d)
 #*Union : take the maximum common element
 print(c | d)
-
+a="aaaaaaaaaaabbbbbbbcccc"
+my_counter=Counter(a)
+print(list(my_counter.elements()))
 #!Counting pattern
 #print("Counting pattern")
 #line = input("enter a line of text: ")
@@ -151,6 +153,22 @@ query2 = tests[2]["input"]["query"]
 result = locate_card(card2, query2)
 print(result)
 
+#!Ordered dictionary
+#*create an ordered dictionary, must import OrderedDict from collections
+dr=OrderedDict()
+dr["a"]=2
+dr["b"]=5
+dr["f"]=10
+dr["g"]=24
+print(dr)
+
+#!defaul"c"t ##will print 0 as default value for integer as there is no key cdictionary
+#*set a default value if a key has not been set yet
+dd=defaultdict(int)##the default value of int is 0,for float it's 0.0 for a list it's []
+dd["a"]=2
+dd["b"]=4
+print(dd["a"])
+print(dd["c"])##will print 0 as default value for integer as there is no key c
 #!Sets
 #*unlike dictionary where we have key/value pairs pattern, a set is  kind of dictionary with only values pattern
 #*and we can't have duplicate values and values are unordered, mutable
@@ -398,8 +416,13 @@ def hello(**kwargs):
 
 hello(title="Mr.", firstname="Cisse", middlename="Amadou", lastname="Tanimou")
 
-#!Decorators
-def func(f):
+#! decorators
+#*Decorator is a function that takes another funcion as argument 
+#*and extends the behaviour of this function without explicitely modifying it
+#*in other words it allows you to add new functionality to an exisiting function
+
+##function decorator
+def funcc(f):
     def wrapper(*args, **kwargs):
         print("started")
         f(*args, **kwargs)
@@ -407,12 +430,12 @@ def func(f):
     return wrapper
 
 
-@func  # this a decorator. with that we don't need to write func2=func(func2)
+@funcc  # this a decorator. with that we don't need to write func2=func(func2)
 def func2(*args):
     print("i am ", args[0], "and i am ", args[1], "yers old")
 
 
-@func
+@funcc
 def func3(**b):
     # we need to casting the dictionary of values to a list because we don't know the keys of the dictionary since it is created when calling the function
     f = list(b.values())
@@ -426,6 +449,72 @@ func2("tanimou", 24)
 func3(name="affane", profession="developper javascript")
 print("\n")
 
+#*decorators with arguments
+def repeat(num_times):
+    def decorator_repeat(func):
+        @functools.wraps(func) #just to keep the identity of repeat()
+        def wrapper(*args,**kwargs):
+            for _ in range(num_times):
+                result=func(*args,**kwargs)
+            return result
+        return wrapper
+    return decorator_repeat
+
+@repeat(num_times=3) #it's like greet=repeat(num_times,greet)
+def greet(name):
+    print(f"hello {name}")
+
+greet("Alex")
+
+#*nested decorators with differents functions
+def start_end(func):
+    @functools.wraps(func)
+    def wrapper(*args,**kwargs):
+        print("start")
+        func(*args, **kwargs)
+        print("end")
+    return wrapper
+
+def debug(func):
+    @functools.wraps(func)
+    def wrapper(*args,**kwargs):
+        args_repr=[repr(a) for a in args]
+        kwargs_repr=[f"{k}:{v}" for k,v in kwargs.items()]
+        signature=", ".join(args_repr+kwargs_repr)
+        print(f"Calling {func.__name__} ({signature})")
+        func(*args, **kwargs)
+        print("end of debug")
+    return wrapper
+
+@debug#it's like we say start_end=debug(start_end)
+@start_end #it's like we say say_hello=start_end(say_hello)
+def say_hello(name):
+    print(f"hello {name}")
+    
+say_hello("Alex")
+
+##Class decorator
+class CountCalls:
+    def __init__(self,func):
+        self.func=func
+        self.num_calls=0
+    #*The __call__ method enables Python programmers to write classes 
+    #*where the instances behave like functions and can be called like a function.
+    #*When the instance is called as a function; if this method is defined, x(arg1, arg2, ...) is a shorthand for x.__call__(arg1, arg2, ...).
+    def __call__(self,*args,**kwargs):
+        #print("hi there")
+        self.num_calls+=1
+        print(f"this is executed {self.num_calls} times")
+        return self.func(*args,**kwargs)
+    
+#creating an instance of CountCalls 
+#cc=CountCalls(None)
+#instead of doing: cc.__call__(arg1, arg2, ...) we do simply cc(arg1, arg2, ...)
+#cc()
+@CountCalls #it's like we say say_hello=count_calls(say_hello). CountCalls is behaving like a function
+def say_hello(name):
+    print(f"hello {name}")
+    
 #!Creating a new package in python
 #*we can create a new package by creating a folder and inside it creating a python file called _init_.py.
 #*Python will treat automatically the folder as a package
