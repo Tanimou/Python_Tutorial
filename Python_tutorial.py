@@ -1,5 +1,5 @@
 
-import random,os,shutil,numpy as np
+import random,copy,os,shutil,numpy as np
 from collections import deque  # in order to use collections's features
 
 ##!we can ask python what type something is by using the type() function
@@ -190,7 +190,7 @@ def greet_user(firstname, lastname):
 
 
 # lastname and firstname here are what it's called keyword argument
-# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, ensure-file-closed, list-literal, merge-dict-assign, merge-list-append, remove-redundant-slice-index
+# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, ensure-file-closed, list-literal, merge-dict-assign, merge-list-append, remove-redundant-pass, remove-redundant-slice-index
 greet_user(lastname="smith", firstname="Jim")
 
 #! Loop and iteration
@@ -403,15 +403,62 @@ print(friends.pop())
 friends.clear()
 print(friends)
 
+#!shallow and deep copy
 #*when we assign a variable to a list, both refer to the same list adress
 friend2=friends
 #*that's why if we do something to friend2, changes will occurs to friends too
 friend2.append("lala")
 print(friend2)
 print(friends)
-#*to remediate to that we use some method like copy(), slicing
+#*to remediate to that we use the shallow copy that uses some method like copy(), slicing for one level deep lists
 #friend2=friends.copy()
 #friend2=friends[:]
+#*let's take an example for deep copy
+#*here we have a deep level list, a 2d list so the shallow copy wouldn't work
+#*we need to use methods like deepcopy( for deep level iterables) and import copy to do so
+
+org=[[0,1,2,3,4,5],[6,7,8,9,10]]
+#cpy=org.copy()
+cpy=copy.deepcopy(org)
+cpy[0][1]=-10
+print(org)
+print(cpy)
+
+##shallow copy for objects
+#*same things are valide to objects
+
+class Person:
+    def __init__(self,name,age):
+        self.name=name
+        self.age=age
+p1=Person("Alex",55)
+#p2=p1
+#*here p1.age will get get changed as well because p2=p1
+#p2.age=28
+#*to remediate to that we use the shallow copy, we use copy.copy() method
+p2 = copy.copy(p1)
+p2.age = 28
+#print(p2.age)
+#print(p1.age)
+
+##deep copy for objects
+class Company:
+    def __init__(self,boss,employe):
+        self.boss=boss
+        self.employe=employe
+# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, list-literal, merge-dict-assign, merge-list-append
+p3=Person("bob",24)
+
+company=Company(p1,p2)
+#company_clone=copy.copy(company)
+#*the age of the company will get changed as well eventhough we made a shallow copy
+#*this is because age is at the second level of deepness
+#company_clone.boss.age=57
+#*so we need a deep copy
+company_clone=copy.deepcopy(company)
+company_clone.boss.age = 57
+print(company_clone.boss.age)
+print(company.boss.age)
 #!creating a list of empty lists
 #*with this method the same object (here an empty list) is duplicated 10 times
 l1=[[]]*10

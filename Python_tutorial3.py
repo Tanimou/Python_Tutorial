@@ -1,10 +1,11 @@
 from multiprocessing import Process, Value,Lock,Pool
-import time,json,ssl,os,threading,smtplib#(smtplib:simple mail transfert protocol library)
+import time,json,ssl,os,smtplib#(smtplib:simple mail transfert protocol library)
 from multiprocessing import Process, Value,Array
 from itertools import accumulate, cycle, groupby, product,permutations,combinations, repeat
 from email.message import EmailMessage
 from json import JSONEncoder
 from threading import Thread,Lock
+from contextlib import contextmanager
 
 #! the zip function
 # *combines elements from two or more iterables(list,tuple,sets,etc)
@@ -246,6 +247,7 @@ if __name__ == "__main__":
     pool.close()
     pool.join()
     print(result)
+
 #!send an email(only works with gmail adress for now)
 #*need to import smtplib
 
@@ -286,14 +288,15 @@ html=f"""
     </body>
  </html>
 """
-#message.set_content(body)
-#*set this when sending an html email
+message.set_content(body)
+#*set this when sending an html email:
 #message.add_alternative(html,subtype="html")
 
 #context=ssl.create_default_context()
 #with smtplib.SMTP_SSL("smtp.gmail.com",465,context=context) as server:
  #   server.login(sender,password)
   #  server.sendmail(sender,receiver, message.as_string())
+  
 #!product from itertools
 #*pattern: product(*iterables, repeat=(number))
 #*Cartesian product of input iterables. Equivalent to nested for-loops
@@ -485,3 +488,43 @@ print(next(mygeneraor))
 print(next(mygeneraor))
 for i in mygeneraor:
     print(i)
+
+#!context managers
+#*great tool for resource management
+#*it's caracterized with "with" statement
+#*we can create our own context managers with class or functions
+
+##with class
+class ManagedFile:
+    def __init__(self, filename):
+      self.filename = filename
+    
+    #*the enter method will be executed as soon as we enter the with statement
+    def __enter__(self):
+        print("enter")
+        self.file=open(self.filename,"w")
+        return self.file
+    def __exit__(self,exc_type,exc_value,exc_traceback):
+        if self.file:
+            self.file.close()
+            print("exc: ",exc_type,exc_value)
+        print("exit")
+       
+
+with ManagedFile("notebook.txt") as f:
+    print("do some stuffs")
+    f.write("haha")
+    f.dosomething()
+print("continuing")
+
+##with function
+#*we need to import contextmanager from contextlib and use it as a decorator
+@contextmanager
+def open_manager(filename):
+    f=open(filename,"w")
+    try:
+        yield f
+    finally:
+        f.close()
+with open_manager("notebook.txt") as f:
+    f.write("hahahaha")

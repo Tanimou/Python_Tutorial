@@ -132,7 +132,7 @@ def find_column(wb,name_column,sheet):
     with wb.get_sheet(sheet) as sheet1:
         liste1 = list(sheet1.rows())
         #!look for all columns for the first row
-        for col in range(len(liste1[0])):
+    for col in range(len(liste1[0])):
             r, c, v = liste1[0][col]
             if v == name_column:
                 return liste1[1:],c

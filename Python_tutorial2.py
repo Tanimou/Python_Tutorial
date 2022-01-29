@@ -162,7 +162,7 @@ dr["f"]=10
 dr["g"]=24
 print(dr)
 
-#!defaul"c"t ##will print 0 as default value for integer as there is no key cdictionary
+#!default dict will print 0 as default value for integer as there is no key cdictionary
 #*set a default value if a key has not been set yet
 dd=defaultdict(int)##the default value of int is 0,for float it's 0.0 for a list it's []
 dd["a"]=2
@@ -397,6 +397,16 @@ print(newList)
 print(newList1)
 print("\n")
 
+#!local and global variable
+def foo():
+    #*every variable created inside a function are local variable
+    #*so if we want to access to the global variable number, we need to add this keywword: global
+    global number
+    number=3
+#*every variable created outside a function are global variable
+number=0
+foo()
+print(number)
 #! *args and **kwargs
 ##the *args and **kwargs(arguments and keyword arguments) means to take any arguments and keyword arguments that comes in
 ##this allows us to pass any function that takes any arguments
@@ -416,6 +426,37 @@ def hello(**kwargs):
 
 hello(title="Mr.", firstname="Cisse", middlename="Amadou", lastname="Tanimou")
 
+#!unpacking arguments
+#*the length of your iterable must match the length of parameters
+def foo(a,b,c):
+    print(a,b,c)
+mylist = [1,2,3]
+foo(*mylist)
+#*for dict,keys must have the same names as your parameters and must have the same length as the parameters's length
+mydict={"a":3,"b":4,"c":5}
+foo(**mydict)
+
+#!the * operator
+#*all parameters after * are keyword arguments
+#*if i want to print c
+def fooo(a,b,*,c):
+    print(a,b,c)
+#*if i want to print c I have to say c=3
+fooo(1,2,c=3)
+#*the unpacking function of the * operator will unpack elements into a list
+numbers=[1,2,3,4,5,6,7,8,9]
+*beginning,last=numbers
+#beginning,*last=numbers
+#beginning,*middle,last=numbers 
+print(beginning)
+print(last) 
+mytuple=(1,2,3)
+myset={4,5,6}
+print(newlist:=[*mytuple,*myset])
+#*unpack 2 dictionaries
+a={"a":5,"b":6,"c":7}
+b={"d":8,"e":10,"f":22}
+print(c:={**a,**b})
 #! decorators
 #*Decorator is a function that takes another funcion as argument 
 #*and extends the behaviour of this function without explicitely modifying it
