@@ -7,5 +7,21 @@
   "AREPL.printResultPlacement": "bottom",
   "AREPL.delay": 100,
   "AREPL.keepPreviousVars": true,
-  "jupyter.jupyterServerType": "local"
+  "jupyter.jupyterServerType": "local",
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "localhost",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "tanimou",
+      "database": "myshop2",
+      "username": "cisse",
+      "password": "password"
+    }
+  ],
+  "gitdoc.enabled": true
 }

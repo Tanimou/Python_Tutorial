@@ -29,7 +29,7 @@ random.shuffle(cards)
 print(cards)
 x = np.random.randint(1, 6, 3)  # will print an list of 3 numbers between 1 and 6
 x = np.random.randint(1, 6, (3, 4)) # will print 3 lists of 4 numbers between 1 and 6
-arr=np.array([1,2,3],[4,5,6],[7,8,9])
+arr=np.array([[1,2,3],[4,5,6],[7,8,9]])
 print(arr)
 print()
 np.random.shuffle(arr)

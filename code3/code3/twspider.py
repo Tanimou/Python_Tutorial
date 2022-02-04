@@ -1,5 +1,5 @@
 from urllib.request import urlopen
-import urllib.error
+
 import twurl
 import json
 import sqlite3
@@ -15,6 +15,8 @@ cur.execute('''
             (name TEXT, retrieved INTEGER, friends INTEGER)''')
 
 # Ignore SSL certificate errors
+#because python doesn't trust any certificate by default
+#eventhough these are good certificates
 ctx = ssl.create_default_context()
 ctx.check_hostname = False
 ctx.verify_mode = ssl.CERT_NONE
@@ -22,9 +24,13 @@ ctx.verify_mode = ssl.CERT_NONE
 while True:
     acct = input('Enter a Twitter account, or quit: ')
     if (acct == 'quit'): break
+    #if no twitter account is not entered, we're gonna randomnly select one
+    #where the account has not been retrieved yet
     if (len(acct) < 1):
         cur.execute('SELECT name FROM Twitter WHERE retrieved = 0 LIMIT 1')
         try:
+            #fetchone() means get the first row of the database
+            #and [0] means get the first column of that first row of the database
             acct = cur.fetchone()[0]
         except:
             print('No unretrieved Twitter accounts found')

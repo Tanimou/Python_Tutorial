@@ -15,6 +15,9 @@ for line in fh:
     if not line.startswith('From: '): continue
     pieces = line.split()
     email = pieces[1]
+    ##the "?" is kinda placeholder
+    ##this is a way to make sure that we don't allow sql injection
+    ##and we give a tuple(we put a comma to tell python that this is a tuple)
     cur.execute('SELECT count FROM Counts WHERE email = ? ', (email,))
     row = cur.fetchone()
     if row is None:
@@ -23,6 +26,7 @@ for line in fh:
     else:
         cur.execute('UPDATE Counts SET count = count + 1 WHERE email = ?',
                     (email,))
+    ##to write down to the disk the database
     conn.commit()
 
 # https://www.sqlite.org/lang_select.html

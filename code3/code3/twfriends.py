@@ -3,6 +3,7 @@ import twurl
 import json
 import sqlite3
 import ssl
+#https://www.youtube.com/watch?v=RZRAoBFIH6A&ab_channel=freeCodeCampConcepts
 
 TWITTER_URL = 'https://api.twitter.com/1.1/friends/list.json'
 
