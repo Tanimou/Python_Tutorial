@@ -23,5 +23,8 @@
       "password": "password"
     }
   ],
-  "gitdoc.enabled": true
+  "gitdoc.autoPush": "off",
+  "gitdoc.autoPull": "off",
+  "gitdoc.commitOnClose": false,
+  "gitdoc.enabled": false
 }
