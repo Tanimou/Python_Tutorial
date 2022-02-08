@@ -502,6 +502,7 @@ print(len(line.split()))
 ## we can specify what delimiter character to use in the splitting
 print(line.split(";"))
 l = line.split(";")
+
 print(len(l))
 print("\n")
 
