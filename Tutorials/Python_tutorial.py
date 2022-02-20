@@ -551,8 +551,7 @@ print(purse)
 ##List
 print("List:")
 lst = list()
-lst.append(21)
-lst.append(183)
+lst.extend((21, 183))
 print(lst)
 lst[0] = 23
 print(lst)

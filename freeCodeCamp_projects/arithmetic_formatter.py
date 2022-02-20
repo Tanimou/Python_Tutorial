@@ -40,6 +40,7 @@ sumx = ''
 lines = ""
 
 def formatter(problems, problem, first_operand, operator, second_operand):
+    # sourcery skip: use-fstring-for-concatenation
     global first, second, sumx, lines
     
     if operator == "+":
@@ -71,7 +72,7 @@ def formatter(problems, problem, first_operand, operator, second_operand):
         second += bottom + '    '# *same thing for all the operators and second operands in a single string
         lines += line + '    '  # *same thing for lines in a single string
         sumx += res + '    '
-    ## if we reached the end of the list
+    ## if we reached the end of the list,then we d'ont need to add anymore spaces
     else:
         first += top
         second += bottom

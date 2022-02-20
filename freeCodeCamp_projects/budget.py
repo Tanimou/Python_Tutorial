@@ -86,7 +86,7 @@ def getTotals(categ):
   total = 0
   breakdown = []
   for c in categ:
-    #*get tht total of withdrawls all categories
+    #*get the total of withdrawls of all categories
     total += c.get_withdrawls()
     breakdown.append(c.get_withdrawls())
  # print(total)
