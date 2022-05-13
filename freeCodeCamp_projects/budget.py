@@ -99,7 +99,7 @@ def create_spend_chart(categories):
   #*the variable totals will have the percentage of each category, already rounded down to the nearest 10
   totals = getTotals(categories)
   res = "Percentage spent by category\n"
-  
+
   #*we loop through 100 down to 0 with the step of 10
   #*and for each i, we're gonna create the line that represents the percentage for each category
   for i in range(100, -1, -10):
@@ -109,8 +109,8 @@ def create_spend_chart(categories):
       #*if the percentage line i is <= the percentage of the category total, then put o else put "   "(3 spaces)
       cat_spaces += "o  " if i <= total else "   "
     #*then we constituate the line to be printed
-    res += str(i).rjust(3)+"|"+cat_spaces+"\n"
-  
+    res += f"{str(i).rjust(3)}|{cat_spaces}" + "\n"
+
   x_axis = ""
   dashes = "-"+"---"*len(categories)
   #*we find the category that has the highest length
@@ -126,12 +126,12 @@ def create_spend_chart(categories):
       #*if we reach the end of name(if we finished printing each character of a category's  name but not for the others ),then print "  "
       #*else print each character of the category's name
       nameStr += "   " if x >= len(name) else f'{name[x]}  '
-      
+
     #*after that we return to the next line
     #*and we can only return to the next line as long as we haven't print yet the longest category name
     if (x != len(maxi)-1):
       nameStr += "\n"
-      
+
     #*and finally we constituate our line to be printed
     #*and we do that till we print all categories's name  
     x_axis += nameStr
@@ -183,7 +183,7 @@ class Category:
     for i in range(len(self.ledger)):
       linel = self.ledger[i]["description"]
       linel = linel[:23]
-      string2 += linel.ljust(23)+""
+      string2 += f"{linel.ljust(23)}"
 
       line = "{:.2f}".format(self.ledger[i]["amount"]).rjust(7)
       string2 += line+"\n"

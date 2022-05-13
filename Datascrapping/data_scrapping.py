@@ -3,8 +3,8 @@ from collections import Counter
 from datetime import date, timedelta
 from tkinter import *
 from tkinter import filedialog, ttk
-from pyxlsb import open_workbook
 
+from pyxlsb import open_workbook
 
 windows = Tk()
 windows.geometry("1300x800")

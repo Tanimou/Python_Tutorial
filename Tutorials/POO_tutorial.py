@@ -1,5 +1,6 @@
 import csv
-from abc import ABC,abstractmethod ## abc stands for abstract based class
+from abc import ABC, abstractmethod  # # abc stands for abstract based class
+
 
 #!Creation of class
 class Item(ABC):
@@ -53,7 +54,7 @@ class Item(ABC):
     
     #*if we still want anyway to change a property attribute we use the decorator setter like this:
     @getName.setter #! like setter in javascript
-    def setName(self, value):
+    def setName(self, value):  # sourcery skip: raise-specific-error
         #*we can write any code here as well as in the property decorator
         if len(value)>10:
             raise Exception("The name is too long")

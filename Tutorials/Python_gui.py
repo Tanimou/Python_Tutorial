@@ -1,13 +1,12 @@
+#from tkinter.ttk import *
+import time
 from heapq import heappush
 from operator import index
 from textwrap import wrap
 from tkinter import *
-from tkinter import messagebox,colorchooser,filedialog,ttk
-#from tkinter.ttk import *
-import time
+from tkinter import colorchooser, filedialog, messagebox, ttk
+
 from ball import Ball
-
-
 
 #!GUI: Graphical User Interface in python
 #*this part requires tkinter
@@ -89,7 +88,7 @@ def submit():
     username=entry.get()
     #*disable the entry box after typing some text
     #entry.config(state=DISABLED)
-    print("hello "+username)
+    print(f"hello {username}")
     
 def delete():
     entry.delete(0,END)
@@ -468,7 +467,7 @@ def start():
     for x, _ in enumerate(range(100), start=1): 
         time.sleep(0.05)
         bar["value"]+=(1/100)*100
-        percent.set(str(int((x/100)*100))+"%")
+        percent.set(f"{int((x/100)*100)}%")
         windows.update_idletasks()#to update, refresh the window
 #windows=Tk()
 percent=StringVar()
@@ -480,7 +479,7 @@ percentLbel=Label(windows,textvariable=percent).pack()
 
 #!key event
 def dosomething(event):
-    print("you taped "+event.keysym)
+    print(f"you taped {event.keysym}")
 #windows=Tk()
 #*when tapping any key
 #windows.bind("<Key>",dosomething)

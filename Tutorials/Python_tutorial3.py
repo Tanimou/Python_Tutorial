@@ -1,11 +1,15 @@
-from multiprocessing import Process, Value,Lock,Pool
-import time,json,ssl,os,smtplib#(smtplib:simple mail transfert protocol library)
-from multiprocessing import Process, Value,Array
-from itertools import accumulate, cycle, groupby, product,permutations,combinations, repeat
-from email.message import EmailMessage
-from json import JSONEncoder
-from threading import Thread,Lock
+import json
+import os
+import smtplib
+import ssl
+import time  # (smtplib:simple mail transfert protocol library)
 from contextlib import contextmanager
+from email.message import EmailMessage
+from itertools import (accumulate, combinations, cycle, groupby, permutations,
+                       product, repeat)
+from json import JSONEncoder
+from multiprocessing import Array, Lock, Pool, Process, Value
+from threading import Lock, Thread
 
 #! the zip function
 # *combines elements from two or more iterables(list,tuple,sets,etc)

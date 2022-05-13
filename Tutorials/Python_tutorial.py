@@ -1,6 +1,11 @@
 
-import random,copy,os,shutil,numpy as np
+import copy
+import os
+import random
+import shutil
 from collections import deque  # in order to use collections's features
+
+import numpy as np
 
 ##!we can ask python what type something is by using the type() function
 print(type("hello"))
@@ -125,7 +130,7 @@ class ValueTooHighError(Exception):
 def test(x):
     if x > 100:
         raise ValueTooHighError("value is too high")
-test(200)
+#test(200)
 try:
     test(200)
 except ValueTooHighError as e:
@@ -416,7 +421,7 @@ print(friends)
 #*let's take an example for deep copy
 #*here we have a deep level list, a 2d list so the shallow copy wouldn't work
 #*we need to use methods like deepcopy( for deep level iterables) and import copy to do so
-
+#import copy
 org=[[0,1,2,3,4,5],[6,7,8,9,10]]
 #cpy=org.copy()
 cpy=copy.deepcopy(org)
@@ -562,9 +567,9 @@ print("Dictionnary:")
 ddd = dict()
 ddd["age"] = 21
 ddd["course"] = 188
-print(ddd)
+#print(ddd)
 ddd["age"] = 54
-print(ddd)
+#print(ddd)
 print("\n")
 #delete an item of  list
 del ddd["age"]
@@ -574,8 +579,8 @@ del ddd["age"]
 #*to remedeiate e can use the copy method
 
 #*update 2 dictionaries
-fff={"name":"mary","age":30,"course":188}
-ddd.update(fff)
+fff={"name":"mary","age":30,"course":198}
+ddd |= fff #or ddd.update(fff)
 print(ddd)
 #!Dictionnary literals
 #*Another way to declare a dictionary they are like objects in javascript

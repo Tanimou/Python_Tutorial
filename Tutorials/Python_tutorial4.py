@@ -1,5 +1,7 @@
+import socket
 import urllib.request
-import socket,xml.etree.ElementTree as ET
+import xml.etree.ElementTree as ET
+
 #https://www.youtube.com/watch?v=8DvywoWv6fI&list=PLWKjhJtqVAbnqBxcdjVGgT3uVR10bzTEB&index=4
 #!Networked programs
 #*write a web browser using sockets

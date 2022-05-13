@@ -42,12 +42,12 @@ lines = ""
 def formatter(problems, problem, first_operand, operator, second_operand):
     # sourcery skip: use-fstring-for-concatenation
     global first, second, sumx, lines
-    
+
     if operator == "+":
             summ = str(int(first_operand) + int(second_operand))
     else:
             summ = str(int(first_operand) - int(second_operand))
-            
+
     ##formatting part
     # *because we have to have a space between operator and the longest operand,
     # *the length of the operation will be the length of the longest operand +2
@@ -60,13 +60,13 @@ def formatter(problems, problem, first_operand, operator, second_operand):
     ##because the operator will take one place, we do length-1
     bottom = operator + str(second_operand).rjust(length - 1)
 
-    res = str(summ).rjust(length)
+    res = summ.rjust(length)
     line = "".join("-" for _ in range(length))
 
     ## if we don't reach the end of the list
     if problem != problems[-1]:
         ## then we add 4 spaces between each operation
-        
+
         first += top + '    '# *first = first + top + "    ", we concatenate for each iteration the first operand in a single string,
                              # *then at the end we end up with all the first operands of list in a single string    
         second += bottom + '    '# *same thing for all the operators and second operands in a single string
@@ -78,7 +78,7 @@ def formatter(problems, problem, first_operand, operator, second_operand):
         second += bottom
         lines += line
         sumx += res
-        
+
     """at the end of the iteration we have:
             -all the first operands of list in first variable
             -all the operators and second operands of list in second variable
@@ -96,7 +96,7 @@ def handling_errors(problems, true_false):
         try:
             int(probleme[0])
             int(probleme[2])
-        except:
+        except Exception:
             return "Error: Numbers must only contain digits."
 
         probleme = problem.rstrip()
@@ -123,7 +123,7 @@ def arithmetic_arranger(problems, true_false=False):
 
 
 #print(arithmetic_arranger(["3333 + 8", "1 + 3801", "9999 + 9999", "5235 + 49", "523 + 34"],True))
-print(arithmetic_arranger(['3801 - 2', '123 + 49']))
+print(arithmetic_arranger(['3801 - 2', '123 + 49'],True))
 #print(arithmetic_arranger(['1 + 2', '1 - 9380'],True))
 #print(arithmetic_arranger(['3 + 855', '3801 - 2', '45 + 43', '123 + 49']))
 #print(arithmetic_arranger(['24 + 85215', '3801 - 2', '45 + 43', '123 + 49']))

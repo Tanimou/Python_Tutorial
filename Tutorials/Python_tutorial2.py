@@ -1,8 +1,15 @@
 # here i can import a specific element from another python file
-import calendar,re,turtle,pytz,functools,inc_dec,datetime as dt
-from collections import Counter, namedtuple,OrderedDict,defaultdict
+import calendar
+import datetime as dt
+import functools
+import re
+import turtle
+from collections import Counter, OrderedDict, defaultdict, namedtuple
 from functools import reduce
 from pathlib import Path
+
+import inc_dec
+import pytz
 from POO_tutorial import Item, Phone
 
 #!simplifying counting with get()
@@ -135,15 +142,12 @@ def binary_search(lo, hi, condition):
 def locate_card(cards, query):
 
     def condition(mid):
-        if cards[mid] == query:
-            if mid > 0 and cards[mid-1] == query:
-                return 'left'
-            else:
-                return 'found'
-        elif cards[mid] < query:
-            return 'left'
-        else:
-            return 'right'
+       if cards[mid] == query:
+          return 'left' if mid > 0 and cards[mid-1] == query else 'found'
+       elif cards[mid] < query:
+           return 'left'
+       else:
+          return 'right'
 
     return binary_search(0, len(cards) - 1, condition)
 
@@ -207,9 +211,9 @@ x[2] = 8  # ok!!!
 ##we can't use sort(), reverse() or append() on tuples
 
 #!Tuples and assingment
-tuple = (4, "fred")
-(x, y) = tuple
-#y=tuple[-1] like with lists we can have negative indexes
+tuplee = (4, "fred")
+(x, y) = tuplee
+#y=tuplee[-1] like with lists we can have negative indexes
 print(y)
 print("\n")
 
