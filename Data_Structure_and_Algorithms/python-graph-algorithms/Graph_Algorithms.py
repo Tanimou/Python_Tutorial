@@ -12,7 +12,7 @@ class Graph():
           self.data[n1].append(n2)
           self.data[n2].append(n1)
     def __repr__(self):
-        return "\n".join(["{}:{}".format(n,m) for n,m in enumerate(self.data)])
+        return "\n".join([f"{n}:{m}" for n,m in enumerate(self.data)])
     def __str__(self):
         return self.__repr__()
 
@@ -23,16 +23,15 @@ class Graph():
 #*search in every direction
 #*we're gonna represent our graph as a queue using the breadth first search algorithm
 def bfs(graph,head):
-    queue=[]
     #*we need a discovered list to memorize nodes that have been already discovered, to avoid rediscover them again
     #*and it must as the same length than the graph data
     discovered=[False for _ in range(len(graph.data))]
-    
+
     #*he head node is discovered
     #*note that here the indexes represent the nodes
     #*once discovered we add the node to the queue
     discovered[head] = True
-    queue.append(head)
+    queue = [head]
     parent=[None for _ in range(len(graph.data))]
     distance=[None for _ in range(len(graph.data))]
     distance[head]=0
@@ -55,10 +54,9 @@ def bfs(graph,head):
 #!DepthFirstSearch
 #*search in one direction only
 def dfs(graph,head):
-    stack=[]
     result=[]
     discovered=[False for _ in range(len(graph.data))]
-    stack.append(head)
+    stack = [head]
     while stack:
         current=stack.pop()
         if not discovered[current]:
@@ -67,7 +65,7 @@ def dfs(graph,head):
             for node in graph.data[current]:
                 if not discovered[node]:
                      stack.append(node)
-            
+
     return result
 #print(dfs(graph1,3))
 
@@ -93,7 +91,7 @@ class DWGraph():
                     self.data[node2].append(node1)
     def __repr__(self):
         return "".join(
-            "{}: {}\n".format(i, list(zip(self.data[i], self.weight[i])))
+            f"{i}: {list(zip(self.data[i], self.weight[i]))}\n"
             for i in range(len(self.data))
         )
 
@@ -164,10 +162,9 @@ def shortest_path(graph, source, dest):
     visited = [False] * len(graph.data)
     distance = [float('inf')] * len(graph.data)
     parent = [None] * len(graph.data)
-    queue = []
     idx = 0
 
-    queue.append(source)
+    queue = [source]
     distance[source] = 0
     visited[source] = True
 
@@ -176,7 +173,7 @@ def shortest_path(graph, source, dest):
         update_distances(graph, current, distance, parent)
 
         next_node = pick_next_node(graph,current,distance, visited)
-        
+
         if next_node is not None:
             visited[next_node] = True
           #  visited1 = visited[next_node:]

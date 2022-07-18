@@ -40,7 +40,7 @@ class TreeBuilderRegistry(object):
             # There are no builders at all.
             return None
 
-        if len(features) == 0:
+        if not features:
             # They didn't ask for any features. Give them the most
             # recently registered builder.
             return self.builders[0]
@@ -51,7 +51,7 @@ class TreeBuilderRegistry(object):
         features.reverse()
         candidates = None
         candidate_set = None
-        while len(features) > 0:
+        while features:
             feature = features.pop()
             we_have_the_feature = self.builders_for_feature.get(feature, [])
             if len(we_have_the_feature) > 0:
@@ -68,10 +68,10 @@ class TreeBuilderRegistry(object):
         # that's in candidate_set.
         if candidate_set is None:
             return None
-        for candidate in candidates:
-            if candidate in candidate_set:
-                return candidate
-        return None
+        return next(
+            (candidate for candidate in candidates if candidate in candidate_set),
+            None,
+        )
 
 # The BeautifulSoup class will take feature lists from developers and use them
 # to look up builders in this registry.
@@ -162,16 +162,7 @@ class TreeBuilder(object):
                     # value is a whitespace-separated list of
                     # values. Split it into a list.
                     value = attrs[attr]
-                    if isinstance(value, str):
-                        values = whitespace_re.split(value)
-                    else:
-                        # html5lib sometimes calls setAttributes twice
-                        # for the same tag when rearranging the parse
-                        # tree. On the second call the attribute value
-                        # here is already a list.  If this happens,
-                        # leave the value alone rather than trying to
-                        # split it again.
-                        values = value
+                    values = whitespace_re.split(value) if isinstance(value, str) else value
                     attrs[attr] = values
         return attrs
 
@@ -185,7 +176,7 @@ class SAXTreeBuilder(TreeBuilder):
         pass
 
     def startElement(self, name, attrs):
-        attrs = dict((key[1], value) for key, value in list(attrs.items()))
+        attrs = {key[1]: value for key, value in list(attrs.items())}
         #print "Start %s, %r" % (name, attrs)
         self.soup.handle_starttag(name, attrs)
 

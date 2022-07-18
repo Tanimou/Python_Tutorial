@@ -17,8 +17,8 @@ import cProfile
 
 def diagnose(data):
     """Diagnostic suite for isolating common problems."""
-    print("Diagnostic running on Beautiful Soup %s" % __version__)
-    print("Python version %s" % sys.version)
+    print(f"Diagnostic running on Beautiful Soup {__version__}")
+    print(f"Python version {sys.version}")
 
     basic_parsers = ["html.parser", "html5lib", "lxml"]
     for name in basic_parsers:
@@ -27,15 +27,13 @@ def diagnose(data):
                 break
         else:
             basic_parsers.remove(name)
-            print((
-                "I noticed that %s is not installed. Installing it may help." %
-                name))
+            print(f"I noticed that {name} is not installed. Installing it may help.")
 
     if 'lxml' in basic_parsers:
         basic_parsers.append(["lxml", "xml"])
         try:
             from lxml import etree
-            print("Found lxml version %s" % ".".join(map(str,etree.LXML_VERSION)))
+            print(f'Found lxml version {".".join(map(str,etree.LXML_VERSION))}')
         except ImportError as e:
             print (
                 "lxml is not installed or couldn't be imported.")
@@ -44,7 +42,7 @@ def diagnose(data):
     if 'html5lib' in basic_parsers:
         try:
             import html5lib
-            print("Found html5lib version %s" % html5lib.__version__)
+            print(f"Found html5lib version {html5lib.__version__}")
         except ImportError as e:
             print (
                 "html5lib is not installed or couldn't be imported.")
@@ -61,13 +59,13 @@ def diagnose(data):
     print()
 
     for parser in basic_parsers:
-        print("Trying to parse your markup with %s" % parser)
+        print(f"Trying to parse your markup with {parser}")
         success = False
         try:
             soup = BeautifulSoup(data, parser)
             success = True
         except Exception as e:
-            print("%s could not parse the markup." % parser)
+            print(f"{parser} could not parse the markup.")
             traceback.print_exc()
         if success:
             print("Here's what %s did with the markup:" % parser)
@@ -92,31 +90,31 @@ class AnnouncingParser(HTMLParser):
         print(s)
 
     def handle_starttag(self, name, attrs):
-        self._p("%s START" % name)
+        self._p(f"{name} START")
 
     def handle_endtag(self, name):
-        self._p("%s END" % name)
+        self._p(f"{name} END")
 
     def handle_data(self, data):
-        self._p("%s DATA" % data)
+        self._p(f"{data} DATA")
 
     def handle_charref(self, name):
-        self._p("%s CHARREF" % name)
+        self._p(f"{name} CHARREF")
 
     def handle_entityref(self, name):
-        self._p("%s ENTITYREF" % name)
+        self._p(f"{name} ENTITYREF")
 
     def handle_comment(self, data):
-        self._p("%s COMMENT" % data)
+        self._p(f"{data} COMMENT")
 
     def handle_decl(self, data):
-        self._p("%s DECL" % data)
+        self._p(f"{data} DECL")
 
     def unknown_decl(self, data):
-        self._p("%s UNKNOWN-DECL" % data)
+        self._p(f"{data} UNKNOWN-DECL")
 
     def handle_pi(self, data):
-        self._p("%s PI" % data)
+        self._p(f"{data} PI")
 
 def htmlparser_trace(data):
     """Print out the HTMLParser events that occur during parsing.
@@ -134,41 +132,38 @@ def rword(length=5):
     "Generate a random word-like string."
     s = ''
     for i in range(length):
-        if i % 2 == 0:
-            t = _consonants
-        else:
-            t = _vowels
+        t = _consonants if i % 2 == 0 else _vowels
         s += random.choice(t)
     return s
 
 def rsentence(length=4):
     "Generate a random sentence-like string."
-    return " ".join(rword(random.randint(4,9)) for i in range(length))
+    return " ".join(rword(random.randint(4,9)) for _ in range(length))
         
 def rdoc(num_elements=1000):
     """Randomly generate an invalid HTML document."""
     tag_names = ['p', 'div', 'span', 'i', 'b', 'script', 'table']
     elements = []
-    for i in range(num_elements):
+    for _ in range(num_elements):
         choice = random.randint(0,3)
         if choice == 0:
             # New tag.
             tag_name = random.choice(tag_names)
-            elements.append("<%s>" % tag_name)
+            elements.append(f"<{tag_name}>")
         elif choice == 1:
             elements.append(rsentence(random.randint(1,4)))
         elif choice == 2:
             # Close a tag.
             tag_name = random.choice(tag_names)
-            elements.append("</%s>" % tag_name)
+            elements.append(f"</{tag_name}>")
     return "<html>" + "\n".join(elements) + "</html>"
 
 def benchmark_parsers(num_elements=100000):
     """Very basic head-to-head performance benchmark."""
-    print("Comparative parser benchmark on Beautiful Soup %s" % __version__)
+    print(f"Comparative parser benchmark on Beautiful Soup {__version__}")
     data = rdoc(num_elements)
     print("Generated a large invalid HTML document (%d bytes)." % len(data))
-    
+
     for parser in ["lxml", ["lxml", "html"], "html5lib", "html.parser"]:
         success = False
         try:
@@ -177,7 +172,7 @@ def benchmark_parsers(num_elements=100000):
             b = time.time()
             success = True
         except Exception as e:
-            print("%s could not parse the markup." % parser)
+            print(f"{parser} could not parse the markup.")
             traceback.print_exc()
         if success:
             print("BS4+%s parsed the markup in %.2fs." % (parser, b-a))

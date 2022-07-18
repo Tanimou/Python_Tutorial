@@ -17,7 +17,7 @@ print(type("hello"))
 
 animal = "cow"
 item = "moon"
-print("the {} jumped over the {}".format(animal, item))
+print(f"the {animal} jumped over the {item}")
 
 #!Random function
 x = random.randint(1, 6)  # will print a random number between 1 and 6
@@ -348,7 +348,7 @@ if os.path.exists(destination):
     print("there is already a file there")
 else:
     os.replace(source, destination)
-    print("{} was moved".format(source))
+    print(f"{source} was moved")
 
 #! Deleting a file
 if os.path.exists(source):

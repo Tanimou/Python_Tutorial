@@ -61,18 +61,17 @@ def add_time(start, duration, day=None):
   count = 0
   add_h()
 
-  startt_m = "0"+str(start_m) if len(str(start_m)) == 1 else str(start_m)
+  startt_m = f"0{start_m}" if len(str(start_m)) == 1 else str(start_m)
   if day is None:
     if count == 0:
-      string = str(start_h)+":"+str(startt_m)+" "+str(timee)
+      string = f"{start_h}:{str(startt_m)} {str(timee)}"
     elif count == 1:
-      string = str(start_h)+":"+str(startt_m)+" "+str(timee)+" "+"(next day)"
+      string = f"{start_h}:{str(startt_m)} {str(timee)} (next day)"
     if count > 1:
-      string = str(start_h)+":"+str(startt_m)+" "+str(timee) + \
-          " "+"({} days later)".format(count)
+      string = (f"{str(start_h)}:{str(startt_m)} {str(timee)}" +
+                " ") + f"({count} days later)"
   else:
-    start_index = days_week.index(day.capitalize())
-    start_index += count
+    start_index = days_week.index(day.capitalize()) + count
     i = 0
     for _ in range(start_index):
      i += 1
@@ -82,14 +81,14 @@ def add_time(start, duration, day=None):
     day = days_week[i]
     #
     if count == 0:
-      string = str(start_h)+":"+str(startt_m)+" " + \
-          str(timee)+","+" "+day.capitalize()
+      string = (((f"{str(start_h)}:{str(startt_m)} " + str(timee)) + ",") +
+                " ") + day.capitalize()
     elif count == 1:
-      string = str(start_h)+":"+str(startt_m)+" "+str(timee) + \
-          ","+" "+day.capitalize()+" "+"(next day)"
+      string = (((f"{str(start_h)}:{str(startt_m)} {str(timee)}" + ",") + " ")
+                + day.capitalize() + " ") + "(next day)"
     if count > 1:
-      string = str(start_h)+":"+str(startt_m)+" "+str(timee)+"," + \
-          " "+day.capitalize()+" "+"({} days later)".format(count)
+      string = ((f"{str(start_h)}:{str(startt_m)} {str(timee)}," + " ") +
+                day.capitalize() + " ") + f"({count} days later)"
 
   return string
 

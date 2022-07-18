@@ -72,10 +72,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
     def _getNsTag(self, tag):
         # Split the namespace URL out of a fully-qualified lxml tag
         # name. Copied from lxml's src/lxml/sax.py.
-        if tag[0] == '{':
-            return tuple(tag[1:].split('}', 1))
-        else:
-            return (None, tag)
+        return tuple(tag[1:].split('}', 1)) if tag[0] == '{' else (None, tag)
 
     def prepare_markup(self, markup, user_specified_encoding=None,
                        exclude_encodings=None,
@@ -145,7 +142,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
             self.nsmaps.append(None)
         elif len(nsmap) > 0:
             # A new namespace mapping has come into play.
-            inverted_nsmap = dict((value, key) for key, value in list(nsmap.items()))
+            inverted_nsmap = {value: key for key, value in list(nsmap.items())}
             self.nsmaps.append(inverted_nsmap)
             # Also treat the namespace mapping as a set of attributes on the
             # tag, so we can recreate it later.
@@ -161,12 +158,10 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         new_attrs = {}
         for attr, value in list(attrs.items()):
             namespace, attr = self._getNsTag(attr)
-            if namespace is None:
-                new_attrs[attr] = value
-            else:
+            if namespace is not None:
                 nsprefix = self._prefix_for_namespace(namespace)
                 attr = NamespacedAttribute(nsprefix, attr, namespace)
-                new_attrs[attr] = value
+            new_attrs[attr] = value
         attrs = new_attrs
 
         namespace, name = self._getNsTag(name)
@@ -177,10 +172,14 @@ class LXMLTreeBuilderForXML(TreeBuilder):
         """Find the currently active prefix for the given namespace."""
         if namespace is None:
             return None
-        for inverted_nsmap in reversed(self.nsmaps):
-            if inverted_nsmap is not None and namespace in inverted_nsmap:
-                return inverted_nsmap[namespace]
-        return None
+        return next(
+            (
+                inverted_nsmap[namespace]
+                for inverted_nsmap in reversed(self.nsmaps)
+                if inverted_nsmap is not None and namespace in inverted_nsmap
+            ),
+            None,
+        )
 
     def end(self, name):
         self.soup.endData()
@@ -200,7 +199,7 @@ class LXMLTreeBuilderForXML(TreeBuilder):
 
     def pi(self, target, data):
         self.soup.endData()
-        self.soup.handle_data(target + ' ' + data)
+        self.soup.handle_data(f'{target} {data}')
         self.soup.endData(ProcessingInstruction)
 
     def data(self, content):
@@ -245,4 +244,4 @@ class LXMLTreeBuilder(HTMLTreeBuilder, LXMLTreeBuilderForXML):
 
     def test_fragment_to_document(self, fragment):
         """See `TreeBuilder`."""
-        return '<html><body>%s</body></html>' % fragment
+        return f'<html><body>{fragment}</body></html>'

@@ -66,7 +66,7 @@ class EntitySubstitution(object):
                 lookup[character] = name
             # But we do want to turn &quot; into the quotation mark.
             reverse_lookup[name] = character
-        re_definition = "[%s]" % "".join(characters_for_re)
+        re_definition = f'[{"".join(characters_for_re)}]'
         return lookup, reverse_lookup, re.compile(re_definition)
     (CHARACTER_TO_HTML_ENTITY, HTML_ENTITY_TO_CHARACTER,
      CHARACTER_TO_HTML_ENTITY_RE) = _populate_class_variables()
@@ -88,17 +88,17 @@ class EntitySubstitution(object):
     @classmethod
     def _substitute_html_entity(cls, matchobj):
         entity = cls.CHARACTER_TO_HTML_ENTITY.get(matchobj.group(0))
-        return "&%s;" % entity
+        return f"&{entity};"
 
     @classmethod
     def _substitute_xml_entity(cls, matchobj):
         """Used with a regular expression to substitute the
         appropriate XML entity for an XML special character."""
         entity = cls.CHARACTER_TO_XML_ENTITY[matchobj.group(0)]
-        return "&%s;" % entity
+        return f"&{entity};"
 
     @classmethod
-    def quoted_attribute_value(self, value):
+    def quoted_attribute_value(cls, value):
         """Make a value into a quoted XML attribute, possibly escaping it.
 
          Most strings will be quoted using double quotes.
@@ -217,7 +217,7 @@ class EncodingDetector:
                  exclude_encodings=None):
         self.override_encodings = override_encodings or []
         exclude_encodings = exclude_encodings or []
-        self.exclude_encodings = set([x.lower() for x in exclude_encodings])
+        self.exclude_encodings = {x.lower() for x in exclude_encodings}
         self.chardet_encoding = None
         self.is_html = is_html
         self.declared_encoding = None
@@ -308,7 +308,7 @@ class EncodingDetector:
         else:
             xml_endpos = 1024
             html_endpos = max(2048, int(len(markup) * 0.05))
-            
+
         declared_encoding = None
         declared_encoding_match = xml_encoding_re.search(markup, endpos=xml_endpos)
         if not declared_encoding_match and is_html:
@@ -316,9 +316,7 @@ class EncodingDetector:
         if declared_encoding_match is not None:
             declared_encoding = declared_encoding_match.groups()[0].decode(
                 'ascii', 'replace')
-        if declared_encoding:
-            return declared_encoding.lower()
-        return None
+        return declared_encoding.lower() if declared_encoding else None
 
 class UnicodeDammit:
     """A class for detecting the encoding of a *ML document and
@@ -439,18 +437,16 @@ class UnicodeDammit:
 
     @property
     def declared_html_encoding(self):
-        if not self.is_html:
-            return None
-        return self.detector.declared_encoding
+        return self.detector.declared_encoding if self.is_html else None
 
     def find_codec(self, charset):
-        value = (self._codec(self.CHARSET_ALIASES.get(charset, charset))
-               or (charset and self._codec(charset.replace("-", "")))
-               or (charset and self._codec(charset.replace("-", "_")))
-               or (charset and charset.lower())
-               or charset
-                )
-        if value:
+        if value := (
+            self._codec(self.CHARSET_ALIASES.get(charset, charset))
+            or (charset and self._codec(charset.replace("-", "")))
+            or (charset and self._codec(charset.replace("-", "_")))
+            or (charset and charset.lower())
+            or charset
+        ):
             return value.lower()
         return None
 
@@ -817,13 +813,7 @@ class UnicodeDammit:
                         pos += size
                         break
             elif byte >= 0x80 and byte in cls.WINDOWS_1252_TO_UTF8:
-                # We found a Windows-1252 character!
-                # Save the string up to this point as a chunk.
-                byte_chunks.append(in_bytes[chunk_start:pos])
-
-                # Now translate the Windows-1252 character into UTF-8
-                # and add it as another, one-byte chunk.
-                byte_chunks.append(cls.WINDOWS_1252_TO_UTF8[byte])
+                byte_chunks.extend((in_bytes[chunk_start:pos], cls.WINDOWS_1252_TO_UTF8[byte]))
                 pos += 1
                 chunk_start = pos
             else:

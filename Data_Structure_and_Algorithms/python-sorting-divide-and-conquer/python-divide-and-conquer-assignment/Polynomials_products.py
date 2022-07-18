@@ -54,7 +54,7 @@ def multiply_optimized(poly1, poly2):
         n = n-1
     ##Dividestep
     if not poly1:
-        return [0]*(len(poly2)-1)
+        return [0]*(len(poly2)-1) if poly2 else []
     if not poly2:
         return [0]*(len(poly1)-1)
     if len(poly1) == 1:

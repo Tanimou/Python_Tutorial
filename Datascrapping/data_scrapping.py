@@ -131,7 +131,7 @@ def Openexcelfile(filepath):
             ),
         )
         y.start()
-
+        
         str2 = StringVar(second_frame, value=list(Prospect_list)[0])
 
     return (
@@ -178,8 +178,9 @@ def scrapping_setup(wb, Week_list, last_list):
         dateto = datefrom + timedelta(days=6)
         Week_list[item[c][2]] = {"Date From": str(datefrom), "Date To": str(dateto)}
 
-
-def find_column(wb, name_column, sheet):
+            
+                    
+def find_column(wb,name_column,sheet):
     with wb.get_sheet(sheet) as sheet1:
         liste1 = list(sheet1.rows())
         #!look for all columns for the first row
@@ -225,7 +226,6 @@ def AssPW_process(wb,name_prospect,name_sample,name_week):
     return q-qq
 """
 
-
 """
 def traitement(filepath,listweek,str1,str2,listAPW):
      with open_workbook(filepath) as wb:
@@ -250,8 +250,7 @@ def traitement(filepath,listweek,str1,str2,listAPW):
      listAPW.append(APW_GEOCHEM)
 """
 
-
-def process(liste2, c, args1, Desp_weekNO, Ass_weekNo, args2, args3):
+def process(liste2,c,args1,Desp_weekNO,Ass_weekNo,args2,args3):
     #!getting the list of prospect and the number of samples
     for item in liste2:
         # *prospect column

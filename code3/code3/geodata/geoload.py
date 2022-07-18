@@ -10,10 +10,10 @@ api_key = False
 # If you have a Google Places API key, enter it here
 # api_key = 'AIzaSy___IDByT70'
 
-if api_key is False:
+if not api_key:
     api_key = 42
     serviceurl = "http://py4e-data.dr-chuck.net/json?"
-else :
+else:
     serviceurl = "https://maps.googleapis.com/maps/api/geocode/json?"
 
 # Additional detail for urllib
@@ -49,8 +49,7 @@ for line in fh:
     except:
         pass
 
-    parms = dict()
-    parms["address"] = address
+    parms = {"address": address}
     if api_key is not False: parms['key'] = api_key
     url = serviceurl + urllib.parse.urlencode(parms)
 
@@ -66,7 +65,7 @@ for line in fh:
         print(data)  # We print in case unicode causes an error
         continue
 
-    if 'status' not in js or (js['status'] != 'OK' and js['status'] != 'ZERO_RESULTS') :
+    if 'status' not in js or js['status'] not in ['OK', 'ZERO_RESULTS']:
         print('==== Failure To Retrieve ====')
         print(data)
         break
