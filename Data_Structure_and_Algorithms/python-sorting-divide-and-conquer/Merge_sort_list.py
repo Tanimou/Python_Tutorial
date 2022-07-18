@@ -145,8 +145,6 @@ def partition(nums, start=0, end=None):
     if nums[l] > nums[end]:
         nums[l], nums[end] = nums[end], nums[l]
         return l
-    else:
-        return end
 
 
 def quicksort(nums, start=0, end=None):

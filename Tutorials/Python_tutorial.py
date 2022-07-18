@@ -1,4 +1,3 @@
-
 import copy
 import os
 import random
@@ -10,11 +9,11 @@ import numpy as np
 ##!we can ask python what type something is by using the type() function
 print(type("hello"))
 
-#nam = input("who are you?")
-#print("welcome", nam)
+# nam = input("who are you?")
+# print("welcome", nam)
 
 #!the format function
-#*optional method that gives users more control when displaying output
+# *optional method that gives users more control when displaying output
 
 animal = "cow"
 item = "moon"
@@ -26,21 +25,21 @@ print(x)
 mylist = ["rock", "paper", "scissors"]
 z = random.choice(mylist)  # will choose between rock, paper and scissors
 print(z)
-mylist=list("ABCDEFGHIJ") 
-a=random.sample(mylist,3) #will pick 3 unique elements from mylist
-a=random.choices(mylist,k=3) #will pick 3 elements multiple times 
+mylist = list("ABCDEFGHIJ")
+a = random.sample(mylist, 3)  # will pick 3 unique elements from mylist
+a = random.choices(mylist, k=3)  # will pick 3 elements multiple times
 cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
 random.shuffle(cards)
 print(cards)
 x = np.random.randint(1, 6, 3)  # will print an list of 3 numbers between 1 and 6
-x = np.random.randint(1, 6, (3, 4)) # will print 3 lists of 4 numbers between 1 and 6
-arr=np.array([[1,2,3],[4,5,6],[7,8,9]])
+x = np.random.randint(1, 6, (3, 4))  # will print 3 lists of 4 numbers between 1 and 6
+arr = np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]])
 print(arr)
 print()
 np.random.shuffle(arr)
 print(arr)
 print()
-
+# hey there
 #! if statement
 x = 30
 if x < 10:
@@ -80,14 +79,14 @@ print(is_cold)
 
 #!While loop
 i = 1
-while(i != 10):
+while i != 10:
     i += 1
     print(i)
 print("Done")
 
 #! try/except structure
-#*you surround a dangerous code section with try and except. similar to try_catch function in javascript
-#*but it will not going to throw an error
+# *you surround a dangerous code section with try and except. similar to try_catch function in javascript
+# *but it will not going to throw an error
 
 astr = "hello bob"
 try:
@@ -102,55 +101,59 @@ try:
     istr = int(astr)  # here, no probleme, python's gonna skip the except block
     print("yeah. no error. Here is istr's value:", istr)
 except:
-    print('An exception occurred')
+    print("An exception occurred")
 
-#*we can enforce an exception, similar to assert statement
-x=5
-if x<0:
+# *we can enforce an exception, similar to assert statement
+x = 5
+if x < 0:
     raise Exception("x should be positive")
 
-#*we can have else statement and finally statement
-#*block of code within the else statement will run if no exception occurred
-#*block of code within the finally statement will run when either exception occurred or not
+# *we can have else statement and finally statement
+# *block of code within the else statement will run if no exception occurred
+# *block of code within the finally statement will run when either exception occurred or not
 astr = "123"
 try:
     istr = int(astr)  # here, no probleme, python's gonna skip the except block
-    
+
 except:
-    print('An exception occurred')
+    print("An exception occurred")
 else:
     print("yeah. no error. Here is istr's value:", istr)
 finally:
     print("done")
 
 #!exception with class
-#*we create a class and we pass the exception as argument
+# *we create a class and we pass the exception as argument
 class ValueTooHighError(Exception):
     pass
+
+
 def test(x):
     if x > 100:
         raise ValueTooHighError("value is too high")
-#test(200)
+
+
+# test(200)
 try:
     test(200)
 except ValueTooHighError as e:
     print(e)
 ##sample try/except
 
-#print("sample try/except")
-#rawstr = input("Enter a number:")
-#try:
- #   ival = int(rawstr)
-#except:
- #   ival = -1
+# print("sample try/except")
+# rawstr = input("Enter a number:")
+# try:
+#   ival = int(rawstr)
+# except:
+#   ival = -1
 
-#if ival > 0:
- #   print("Nice work")
-#else:
- #   print("Not a number")
+# if ival > 0:
+#   print("Nice work")
+# else:
+#   print("Not a number")
 
 #!Functions Strucuture in python
-#*we define a function in python with the def reserved keyword
+# *we define a function in python with the def reserved keyword
 
 
 def print_lyrics():
@@ -161,32 +164,36 @@ def print_lyrics():
 
 print_lyrics()
 
-#*Return statement
+# *Return statement
 
 
 def greet():
-    return"hello"
+    return "hello"
 
 
 print(greet(), "Tanimou")
 
-#*Nested function:
+# *Nested function:
 
 
 def func(x):
     if x == 1:
+
         def rv():
             print("x equal to 1")
+
     else:
+
         def rv():
             print("x is not equal to 1")
+
     return rv
 
 
 new_func = func(1)  # now new_func becomes a new function
 new_func()
 
-#*keyword argument
+# *keyword argument
 
 
 def greet_user(firstname, lastname):
@@ -199,7 +206,7 @@ def greet_user(firstname, lastname):
 greet_user(lastname="smith", firstname="Jim")
 
 #! Loop and iteration
-#*definite loop
+# *definite loop
 for i in [5, 4, 3, 2, 1]:
     print(i)
 print("Blastoff!")
@@ -209,28 +216,28 @@ for friend in friends:
     print("Happy year", friend)
 
 #! the "is" and "is not" operators
-#*these operators are the same as "===" and "!==" in javascript
+# *these operators are the same as "===" and "!==" in javascript
 
 #!Len function
 fruit = "banana"
 print(len(fruit))
-fruits = 'apple'
+fruits = "apple"
 for x in fruits:
     print(x)
 #! Slicing Strings
-#*We can also look at any continuous section of a string using a colon operator
-#*the second number is one beyond the end of the slice "up to but not including"
-#*if the second number is beyond the end of the string, it stops at the end
+# *We can also look at any continuous section of a string using a colon operator
+# *the second number is one beyond the end of the slice "up to but not including"
+# *if the second number is beyond the end of the string, it stops at the end
 s = "Monty python"
 print(s[0:4])
 print(s[6:7])
 print(s[6:20])
 
-#*if we leave the first number or the second number of the slice, it's assumed to be the beginning or the end of the string respectively
+# *if we leave the first number or the second number of the slice, it's assumed to be the beginning or the end of the string respectively
 print(s[:2])
 print(s[8:])
 
-#*we can specify the stephen
+# *we can specify the stephen
 print(s[::2])  # meaning go through s with the step of 2, the result will be: Mnypto
 print(s[2::2])  # meaning start from the third letter till the end with a step of 2
 #! using in as a logical operator
@@ -239,22 +246,22 @@ if "a" in fruit:
     print("Found it")
 
 #! strip()
-#* removes both beginning and ending whitespace
+# * removes both beginning and ending whitespace
 greet = " hello bob"
 print(greet.strip())
 
 #! parsing and extracting
-#* we want to extract uct.ac.za from "From stephen.marquard@uct.ac.za Sat Jan 5"
+# * we want to extract uct.ac.za from "From stephen.marquard@uct.ac.za Sat Jan 5"
 data = "From stephen.marquard@uct.ac.za Sat Jan 5"
 atpos = data.find("@")
 print(atpos)
 sppot = data.find(" ", atpos)
 print(sppot)
-print(data[atpos+1:sppot])
+print(data[atpos + 1 : sppot])
 
 #!Detection of file
-#*we need to import os first
-#*we specify the path where we want to check the existence of the file
+# *we need to import os first
+# *we specify the path where we want to check the existence of the file
 path = "C:\\Users\\tanim\\Desktop\\procuration.docx"
 if os.path.exists(path):
     print("the location exists")
@@ -266,19 +273,19 @@ else:
     print("the location doesn't exist")
 
 #! Reading files
-#*opening a file
+# *opening a file
 ##Before we can read the contents of the file, we must tell python which file we are going to work with and what we'll be doing with this file
 ##this is done by open() function
 ##it returns a "file handle"-a variable used to perform operations on the file
 
-#?handle=open(filename,mode)
+# ?handle=open(filename,mode)
 ##file name is a string
 ##mode is optional and should be "r" if we're planning to read the file and "w if to write"
 fhand = open("mbox.txt")  # *we can also say: with open("mbox.txt") as fhand:
 print(fhand)
 print("\n")
 
-#*Read a file
+# *Read a file
 ##A file handle opened for read can be treated as a sequence of strings
 ##where each line in the file is a string in the sequence
 ##we can use the for statement to iterate through a sequence
@@ -290,21 +297,21 @@ print("Line count:", countLine)
 print("\n")
 fhand.close()
 
-#*reading the whole file
+# *reading the whole file
 fhandd = open("mbox.txt")
 inp = fhandd.read()
 print((inp))
 fhandd.close()
 print("\n")
 
-#*reading each lines of the file
+# *reading each lines of the file
 fhandd = open("mbox.txt")
 inp = fhandd.readlines()
 print((inp))
 fhandd.close()
 print("\n")
 
-#*Searching through a file
+# *Searching through a file
 fhanddd = open("mbox.txt")
 for line in fhanddd:
     line = line.rstrip()
@@ -313,27 +320,27 @@ for line in fhanddd:
 fhanddd.close()
 
 #!Write in the file
-#with open("mbox.txt","a") as fhand: ## "a" means we want to write at the end of the file. "a" stands for "append"
+# with open("mbox.txt","a") as fhand: ## "a" means we want to write at the end of the file. "a" stands for "append"
 #   fhand.write("\nwatashi wa")
 #  fhand.close()
 
-#* "w" overwrite an existing file or create a new file.
-#*int this way we can create different files  in different formats using python
+# * "w" overwrite an existing file or create a new file.
+# *int this way we can create different files  in different formats using python
 with open("index.html", "w") as fhand:
     fhand.write("<p>Hey there</p>")
     fhand.close()
 
- #! Copying a file
- #*there is 3 ways of copying a file but we need to import shutil first
- ##copyfile()= copies contents of a file
- ##copy()= copyfile() + permission mode + destination can be a directory
- ##copy2()= copy() + copies metadata (file's creation and modification times)
+#! Copying a file
+# *there is 3 ways of copying a file but we need to import shutil first
+##copyfile()= copies contents of a file
+##copy()= copyfile() + permission mode + destination can be a directory
+##copy2()= copy() + copies metadata (file's creation and modification times)
 
 # will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
 shutil.copyfile("mbox.txt", "mbox2.txt")
 
 #!Moving a file
-#* need to import os
+# * need to import os
 source = "mbox2.txt"
 # At the end we specify the name of the new file. we can move a directory as well
 destination = "C:\\Users\\tanim\\Desktop\\mbox2.docx"
@@ -346,160 +353,165 @@ else:
 #! Deleting a file
 if os.path.exists(source):
     # if the file is in the same directory just specify the name, otherwise must specify the path
-   os.remove(source)
-   pass
+    os.remove(source)
+    pass
 else:
     print("there is no file to delete")
 
-#*to remove an empty directory (folder): os.rmdir(name_directory or path_to_the_directory)
-#* to delete an unempty folder: shutil.rmtree(name_directory or path_to_the_directory) must import shutil first
+# *to remove an empty directory (folder): os.rmdir(name_directory or path_to_the_directory)
+# * to delete an unempty folder: shutil.rmtree(name_directory or path_to_the_directory) must import shutil first
 
 
 #! Python list
-#*Data structures
-#? Using range function
-#* the range function returns a list of numbers that range from 0 to one less than the parameter. It actually gives an array of indexes, simply put
+# *Data structures
+# ? Using range function
+# * the range function returns a list of numbers that range from 0 to one less than the parameter. It actually gives an array of indexes, simply put
 print(range(4))
 friends = ["Joseph", "Glenn", "Glenn", "Glenn", "Gill"]
 print(range(len(friends)))
 for friend in friends:
     print("happy new year:", friend)
 
-#*in Python we have negatif indexes that allow us to iterate from the end of the list
+# *in Python we have negatif indexes that allow us to iterate from the end of the list
 friends = ["Joseph", "Kanna", "Shinozaki", "Glenn", "Gill"]
 # if we want to iterate from the end, the index =-1
 print(friends[-len(friends)])
 
 print(friends[::-2])  # gonna print elements from the end with a step of 2
 
-#*we can count the number of an element in the list with count()
+# *we can count the number of an element in the list with count()
 friends = ["Joseph", "Glenn", "Glenn", "Glenn", "Gill"]
 print(friends.count("Glenn"))
 
-#*we can sort it
+# *we can sort it
 friends.sort()
 print(friends)
 
-#*we can append another list to a list with extend()
+# *we can append another list to a list with extend()
 friends.extend([4, 8, 15, 16, 23])
 print(friends)
 
-#*to insert a value inside of a list at any position we use insert()
+# *to insert a value inside of a list at any position we use insert()
 friends.insert(1, "tanimou")
 print(friends)
 
-#*append() is used to add at the end of the list a value
+# *append() is used to add at the end of the list a value
 friends.append("hey")
 print(friends)
 
-#*we can also reverse
+# *we can also reverse
 friends.reverse()
 print(friends)
 friends.reverse()
 
-#*and also remove an element
+# *and also remove an element
 friends.remove("Joseph")
 print(friends)
 
-#*to remove the last element of a list we use pop()
+# *to remove the last element of a list we use pop()
 print(friends.pop())
 
-#*or even clear a list
+# *or even clear a list
 friends.clear()
 print(friends)
 
 #!shallow and deep copy
-#*when we assign a variable to a list, both refer to the same list adress
-friend2=friends
-#*that's why if we do something to friend2, changes will occurs to friends too
+# *when we assign a variable to a list, both refer to the same list adress
+friend2 = friends
+# *that's why if we do something to friend2, changes will occurs to friends too
 friend2.append("lala")
 print(friend2)
 print(friends)
-#*to remediate to that we use the shallow copy that uses some method like copy(), slicing for one level deep lists
-#friend2=friends.copy()
-#friend2=friends[:]
-#*let's take an example for deep copy
-#*here we have a deep level list, a 2d list so the shallow copy wouldn't work
-#*we need to use methods like deepcopy( for deep level iterables) and import copy to do so
-#import copy
-org=[[0,1,2,3,4,5],[6,7,8,9,10]]
-#cpy=org.copy()
-cpy=copy.deepcopy(org)
-cpy[0][1]=-10
+# *to remediate to that we use the shallow copy that uses some method like copy(), slicing for one level deep lists
+# friend2=friends.copy()
+# friend2=friends[:]
+# *let's take an example for deep copy
+# *here we have a deep level list, a 2d list so the shallow copy wouldn't work
+# *we need to use methods like deepcopy( for deep level iterables) and import copy to do so
+# import copy
+org = [[0, 1, 2, 3, 4, 5], [6, 7, 8, 9, 10]]
+# cpy=org.copy()
+cpy = copy.deepcopy(org)
+cpy[0][1] = -10
 print(org)
 print(cpy)
 
 ##shallow copy for objects
-#*same things are valide to objects
+# *same things are valide to objects
+
 
 class Person:
-    def __init__(self,name,age):
-        self.name=name
-        self.age=age
-p1=Person("Alex",55)
-#p2=p1
-#*here p1.age will get get changed as well because p2=p1
-#p2.age=28
-#*to remediate to that we use the shallow copy, we use copy.copy() method
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+
+p1 = Person("Alex", 55)
+# p2=p1
+# *here p1.age will get get changed as well because p2=p1
+# p2.age=28
+# *to remediate to that we use the shallow copy, we use copy.copy() method
 p2 = copy.copy(p1)
 p2.age = 28
-#print(p2.age)
-#print(p1.age)
+# print(p2.age)
+# print(p1.age)
 
 ##deep copy for objects
 class Company:
-    def __init__(self,boss,employe):
-        self.boss=boss
-        self.employe=employe
-# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, list-literal, merge-dict-assign, merge-list-append
-p3=Person("bob",24)
+    def __init__(self, boss, employe):
+        self.boss = boss
+        self.employe = employe
 
-company=Company(p1,p2)
-#company_clone=copy.copy(company)
-#*the age of the company will get changed as well eventhough we made a shallow copy
-#*this is because age is at the second level of deepness
-#company_clone.boss.age=57
-#*so we need a deep copy
-company_clone=copy.deepcopy(company)
+
+# sourcery skip: assign-if-exp, aug-assign, default-get, dict-literal, list-literal, merge-dict-assign, merge-list-append
+p3 = Person("bob", 24)
+
+company = Company(p1, p2)
+# company_clone=copy.copy(company)
+# *the age of the company will get changed as well eventhough we made a shallow copy
+# *this is because age is at the second level of deepness
+# company_clone.boss.age=57
+# *so we need a deep copy
+company_clone = copy.deepcopy(company)
 company_clone.boss.age = 57
 print(company_clone.boss.age)
 print(company.boss.age)
 #!creating a list of empty lists
-#*with this method the same object (here an empty list) is duplicated 10 times
-l1=[[]]*10
+# *with this method the same object (here an empty list) is duplicated 10 times
+l1 = [[]] * 10
 print(l1)
-#*that's why eventhough we just modify the first element of our list
-#*all elements get modified with the same value 1
+# *that's why eventhough we just modify the first element of our list
+# *all elements get modified with the same value 1
 l1[0].append(1)
 print(l1)
 
-#*to remediate to that problem we use the for loop method
+# *to remediate to that problem we use the for loop method
 ##when we don't use a variable in a for loop we can simply replace it by "_"
-l2=[[] for _ in range(10)]
+l2 = [[] for _ in range(10)]
 print(l2)
 l2[0].append(1)
 print(l2)
 
 #! enumerate function
-for i,val in enumerate([5,3,4,1]):
-    print(i,val)
+for i, val in enumerate([5, 3, 4, 1]):
+    print(i, val)
 #!Building a list from Scratch
-#*we can create a empty list and then add elements using the append method
-stuff = ['book', 99, 'cookie']
+# *we can create a empty list and then add elements using the append method
+stuff = ["book", 99, "cookie"]
 print(stuff)
 
 #!Average using list
-#numlist = []
-#while True:
+# numlist = []
+# while True:
 #   inp = input("Enter a number: ")
 #  if inp == "done":
 #     break
-#value = float(inp.strip())
-#numlist.append(value)
-#print("Average:", sum(numlist)/len(numlist))
+# value = float(inp.strip())
+# numlist.append(value)
+# print("Average:", sum(numlist)/len(numlist))
 
 #!split() function
-#*the split function split a text into a list of words by using the space delimiter by default
+# *the split function split a text into a list of words by using the space delimiter by default
 line = "first;second;third"
 print(line.split())
 # *the output is 1 because there is no space between the text in line variable.
@@ -516,10 +528,10 @@ joined = " and ".join(l)
 print(joined)
 print("\n")
 #!Another type of list:Deque(Double-ended queue)
-#*Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
-#*with approximately the same performance in either direction
-#*Deque is faster than a list in terms of adding retrieving elements
-#*must import it from collections
+# *Deques are generalisation of stacks and queues. They support thread-safe,memory efficient appends and pops from either side of deque
+# *with approximately the same performance in either direction
+# *Deque is faster than a list in terms of adding retrieving elements
+# *must import it from collections
 d = deque("hello")
 print(d)
 d.append("4")
@@ -543,16 +555,16 @@ print(c)
 print("\n")
 
 #!Python dictionnaries
-#*dictionnaries are like list but while lists are ordered, dictionnaries are not ordered. We can access values of lists using indexes while in dictionnaries we access them with keys
+# *dictionnaries are like list but while lists are ordered, dictionnaries are not ordered. We can access values of lists using indexes while in dictionnaries we access them with keys
 purse = dict()
 purse["money"] = 12
 purse["candy"] = 30
 purse["tissues"] = 75
 print(purse)
 print(purse["candy"])
-purse["candy"] = purse["candy"]+2
+purse["candy"] = purse["candy"] + 2
 print(purse)
-#*Dictionnaries are like lists except that they use keys instead of numbers to look up values
+# *Dictionnaries are like lists except that they use keys instead of numbers to look up values
 ##List
 print("List:")
 lst = list()
@@ -567,45 +579,46 @@ print("Dictionnary:")
 ddd = dict()
 ddd["age"] = 21
 ddd["course"] = 188
-#print(ddd)
+# print(ddd)
 ddd["age"] = 54
-#print(ddd)
+# print(ddd)
 print("\n")
-#delete an item of  list
+# delete an item of  list
 del ddd["age"]
-#*same thing like lists when we assigning a variable to a dictionary, both refer to the same dictionary address
-#fff=ddd
-#*so if we change fff's items, ddd's items will be changed as well
-#*to remedeiate e can use the copy method
+# *same thing like lists when we assigning a variable to a dictionary, both refer to the same dictionary address
+# fff=ddd
+# *so if we change fff's items, ddd's items will be changed as well
+# *to remedeiate e can use the copy method
 
-#*update 2 dictionaries
-fff={"name":"mary","age":30,"course":198}
-ddd |= fff #or ddd.update(fff)
+# *update 2 dictionaries
+fff = {"name": "mary", "age": 30, "course": 198}
+ddd |= fff  # or ddd.update(fff)
 print(ddd)
 #!Dictionnary literals
-#*Another way to declare a dictionary they are like objects in javascript
-#dictionary={key:expression for (key,value) in iterable}
+# *Another way to declare a dictionary they are like objects in javascript
+# dictionary={key:expression for (key,value) in iterable}
 print("Dictionnary literals:")
-jjj = {
-    "chuck": 1,
-    "frad": 42,
-    "jan": 100
-}
+jjj = {"chuck": 1, "frad": 42, "jan": 100}
 print(jjj)
 print(jjj.get("chuck"))  # this is an old way. Same as print(jjj["chuck"])
 print(jjj.get("frad"))
 print("\n")
-cities_in_farenheit = {'new york': 32, "Boston": 75, "los angeles": 100}
-cities_in_celsius = {key: round((value-32)*(5/9))
-                     for (key, value) in cities_in_farenheit.items() if value != 100}
-desc_cities = {key: ("warm" if value >= 45 else "cold")
-               for (key, value) in cities_in_farenheit.items()}
+cities_in_farenheit = {"new york": 32, "Boston": 75, "los angeles": 100}
+cities_in_celsius = {
+    key: round((value - 32) * (5 / 9))
+    for (key, value) in cities_in_farenheit.items()
+    if value != 100
+}
+desc_cities = {
+    key: ("warm" if value >= 45 else "cold")
+    for (key, value) in cities_in_farenheit.items()
+}
 print(cities_in_celsius)
 print(desc_cities)
-#*it's an error to reference a key which is not in the dictionary
-#*we can use the in operator to see if a key is in the dictionary
+# *it's an error to reference a key which is not in the dictionary
+# *we can use the in operator to see if a key is in the dictionary
 ccc = dict()
-print('csev' in ccc)
+print("csev" in ccc)
 
 print("\n")
 
@@ -621,12 +634,12 @@ for name in names:
 print(counts)
 
 #!The get method for dictionary
-#*the pattern of checking to see if a key is already in a dictionnary and assuming a default value if the key is not there is so common
+# *the pattern of checking to see if a key is already in a dictionnary and assuming a default value if the key is not there is so common
 # *that there is a method called get() that does this for us
 
 if name in counts:
     x = counts[name]
 else:
     x = 0
-#*instead of doing that we can simply do:
+# *instead of doing that we can simply do:
 x = counts.get(name, 0)  # *0 is the default value if name not in counts

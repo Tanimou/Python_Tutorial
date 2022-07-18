@@ -26,5 +26,6 @@
   "gitdoc.autoPush": "off",
   "gitdoc.autoPull": "off",
   "gitdoc.commitOnClose": false,
-  "gitdoc.enabled": false
+  "gitdoc.enabled": false,
+  "dvc.dvcPath": "dvc"
 }

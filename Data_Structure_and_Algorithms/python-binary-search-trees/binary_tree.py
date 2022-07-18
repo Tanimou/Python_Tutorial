@@ -56,6 +56,7 @@ class UserDatabase:
         self.users = []
 
     def insert(self, user):
+            # Find the first username greater than the new user's username
         i = 0
         while i < len(self.users):
             # Find the first username greater than the new user's username
