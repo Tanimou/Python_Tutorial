@@ -51,7 +51,7 @@ def parsemaildate(md):
         if tz == '-0000' : tz = '+0000'
         tzh = tz[:3]
         tzm = tz[3:]
-        tz = tzh+":"+tzm
+        tz = f"{tzh}:{tzm}"
     except:
         pass
 

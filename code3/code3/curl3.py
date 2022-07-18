@@ -11,7 +11,7 @@ fname = words[-1]
 
 # Don't overwrite the file
 if os.path.exists(fname):
-    if input('Replace ' + fname + ' (Y/n)?') != 'Y':
+    if input(f'Replace {fname} (Y/n)?') != 'Y':
         print('Data not copied')
         exit()
     print('Replacing', fname)

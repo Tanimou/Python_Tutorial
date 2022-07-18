@@ -18,7 +18,7 @@ print(type("hello"))
 
 animal = "cow"
 item = "moon"
-print("the {} jumped over the {}".format(animal, item))
+print(f"the {animal} jumped over the {item}")
 
 #!Random function
 x = random.randint(1, 6)  # will print a random number between 1 and 6
@@ -26,7 +26,7 @@ print(x)
 mylist = ["rock", "paper", "scissors"]
 z = random.choice(mylist)  # will choose between rock, paper and scissors
 print(z)
-mylist=list("ABCDEFGHIJ") 
+mylist=list("ABCDEFGHIJ")
 a=random.sample(mylist,3) #will pick 3 unique elements from mylist
 a=random.choices(mylist,k=3) #will pick 3 elements multiple times 
 cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, "j", "Q", "K", "A"]
@@ -115,7 +115,7 @@ if x<0:
 astr = "123"
 try:
     istr = int(astr)  # here, no probleme, python's gonna skip the except block
-    
+
 except:
     print('An exception occurred')
 else:
@@ -123,8 +123,6 @@ else:
 finally:
     print("done")
 
-#!exception with class
-#*we create a class and we pass the exception as argument
 class ValueTooHighError(Exception):
     pass
 def test(x):
@@ -323,12 +321,6 @@ with open("index.html", "w") as fhand:
     fhand.write("<p>Hey there</p>")
     fhand.close()
 
- #! Copying a file
- #*there is 3 ways of copying a file but we need to import shutil first
- ##copyfile()= copies contents of a file
- ##copy()= copyfile() + permission mode + destination can be a directory
- ##copy2()= copy() + copies metadata (file's creation and modification times)
-
 # will copy the file that is in the current directory to a new file in the same directory. We can specify the path where we want the new file to be stored
 shutil.copyfile("mbox.txt", "mbox2.txt")
 
@@ -341,7 +333,7 @@ if os.path.exists(destination):
     print("there is already a file there")
 else:
     os.replace(source, destination)
-    print("{} was moved".format(source))
+    print(f"{source} was moved")
 
 #! Deleting a file
 if os.path.exists(source):

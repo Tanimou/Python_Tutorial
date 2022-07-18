@@ -11,7 +11,7 @@ def urlopen(url):
 
     parms = urllib.parse.urlencode(secrets)
 
-    url = url + '&' if url.find('?') > 0 else url + '?'
+    url = f'{url}&' if url.find('?') > 0 else f'{url}?'
     url = url + parms
 
     # print('Retrieving', url)

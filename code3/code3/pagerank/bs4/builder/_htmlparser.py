@@ -52,13 +52,13 @@ class BeautifulSoupHTMLParser(HTMLParser):
     def handle_starttag(self, name, attrs):
         # XXX namespace
         attr_dict = {}
+        attrvalue = '""'
         for key, value in attrs:
             # Change None attribute values to the empty string
             # for consistency with the other tree builders.
             if value is None:
                 value = ''
             attr_dict[key] = value
-            attrvalue = '""'
         self.soup.handle_starttag(name, None, None, attr_dict)
 
     def handle_endtag(self, name):
@@ -87,10 +87,7 @@ class BeautifulSoupHTMLParser(HTMLParser):
 
     def handle_entityref(self, name):
         character = EntitySubstitution.HTML_ENTITY_TO_CHARACTER.get(name)
-        if character is not None:
-            data = character
-        else:
-            data = "&%s;" % name
+        data = character if character is not None else f"&{name};"
         self.handle_data(data)
 
     def handle_comment(self, data):

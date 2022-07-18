@@ -61,16 +61,9 @@ def count_rotations_binary(nums):
         print("lo:", lo, ", hi:", hi, ", mid:",
               mid, ", mid_number:", mid_number)
         if hi == lo+1:
-            if nums[lo] < nums[hi]:
-                return lo
-            else:
-              return hi
-
+            return lo if nums[lo] < nums[hi] else hi
         if nums[hi] < nums[hi-1] and nums[lo+1] < nums[lo]:
-            if n == 0:
-                return len(nums)
-            else:
-                return hi
+            return len(nums) if n == 0 else hi
         if mid > 0 and mid_number < nums[mid-1]:
             # The middle position is the answer
             return mid

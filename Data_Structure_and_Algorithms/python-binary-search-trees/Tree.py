@@ -8,10 +8,10 @@ class TreeNode():
         self.key, self.left, self.right = key, None, None
 
     def __str__(self):
-        return "BinaryTree <{}>".format(self.to_tuple())
+        return f"BinaryTree <{self.to_tuple()}>"
 
     def __repr__(self):
-        return "BinaryTree <{}>".format(self.to_tuple())
+        return f"BinaryTree <{self.to_tuple()}>"
     #!Height of a binary tree
     # *The height/depth of a binary tree is defined as the length of the longest path from its root node to a leaf.
     # *It can be computed recursively, as follows:

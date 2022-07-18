@@ -205,7 +205,6 @@ def add_100(number,lock):
 ##how to share same public data to different processes
 ##we need to use special shared memory objects
 if __name__ == "__main__":
-    
   #  processes=[]
    # num_processes=os.cpu_count()
 
@@ -219,24 +218,23 @@ if __name__ == "__main__":
     #for p in processes:
      #   p.join()
     #print("end main")
-    
+
     #lock=Lock()
     #shared_number=Value("i",0) #i for integer
     #print("number  at beginning",shared_number.value)
     #*let's create 2 processes that will modify shared_number
     #p1=Process(target=add_100,args=(shared_number,lock))
     #p2=Process(target=add_100,args=(shared_number,lock))
-    
+
     #p1.start()
     #p2.start()
-    
+
     #p1.join()
     #p2.join()
-    
+
     #?again a race condition will happen
     #? to prevent this we need Lock()
     #print("number at end",shared_number.value)
-    
 #!Process pool
 #*a process pool can be used to manage multiple processes
 #*it can manage the available number of processes for you and split data 
@@ -300,7 +298,7 @@ message.set_content(body)
 #with smtplib.SMTP_SSL("smtp.gmail.com",465,context=context) as server:
  #   server.login(sender,password)
   #  server.sendmail(sender,receiver, message.as_string())
-  
+
 #!product from itertools
 #*pattern: product(*iterables, repeat=(number))
 #*Cartesian product of input iterables. Equivalent to nested for-loops
@@ -348,7 +346,7 @@ print()
 groupe=groupby(a,key=lambda x: x < 3)
 for key,value in groupe:
     print(key,list(value))
-    
+
 persons=[{"name":"Tim", "age":25},{"name":"John", "age":25}, {"name":"lisa", "age":27}, {"name":"claire", "age":28}]
 groupe=groupby(persons,key=lambda x: x["age"])
 for key, value in groupe:

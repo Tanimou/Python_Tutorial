@@ -140,13 +140,10 @@ def partition(nums, start=0, end=None):
         # Two out-of-place elements found, swap them
         else:
             nums[l], nums[r] = nums[r], nums[l]
-    # print('  ', nums, l, r)
-    # Place the pivot between the two parts
-    if nums[l] > nums[end]:
-        nums[l], nums[end] = nums[end], nums[l]
-        return l
-    else:
+    if nums[l] <= nums[end]:
         return end
+    nums[l], nums[end] = nums[end], nums[l]
+    return l
 
 
 def quicksort(nums, start=0, end=None):

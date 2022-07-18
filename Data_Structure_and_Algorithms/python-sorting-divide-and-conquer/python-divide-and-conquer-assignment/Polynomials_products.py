@@ -52,11 +52,8 @@ def multiply_optimized(poly1, poly2):
     n = max(len(poly1), len(poly2))
     if n % 2 != 0:
         n = n-1
-    ##Divide step
-    if not poly1 and not poly2:
-        return []
     if not poly1:
-        return [0]*(len(poly2)-1)
+        return [0]*(len(poly2)-1) if poly2 else []
     if not poly2:
         return [0]*(len(poly1)-1)
     if len(poly1) == 1:

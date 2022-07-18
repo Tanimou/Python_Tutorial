@@ -15,7 +15,7 @@ pulls = {}
 
 for repo in repos:
     print('Checking repo:', repo)
-    url = api_url + '/' + repo + '/repos' 
+    url = f'{api_url}/{repo}/repos' 
 
     # print('Retrieving', url)
     (str_json, headers) = giturl.urlopen(url)
@@ -48,7 +48,7 @@ for repo in repos:
 
         count = len(js)
         # print(name, count)
-        pulls[repo+'/'+name] = count
+        pulls[f'{repo}/{name}'] = count
 
 print()
 print('Summary:')
@@ -58,7 +58,7 @@ print('Repos without pulls:', count)
 count = 0
 for (k,v) in pulls.items():
     if v == 0 : continue
-    print('Pulls available: ',k,'('+str(v)+')')
+    print('Pulls available: ', k, f'({str(v)})')
     count += 1
 print('No outstanding pulls')
 

@@ -453,14 +453,14 @@ numbers=[1,2,3,4,5,6,7,8,9]
 #beginning,*last=numbers
 #beginning,*middle,last=numbers 
 print(beginning)
-print(last) 
+print(last)
 mytuple=(1,2,3)
 myset={4,5,6}
 print(newlist:=[*mytuple,*myset])
 #*unpack 2 dictionaries
 a={"a":5,"b":6,"c":7}
 b={"d":8,"e":10,"f":22}
-print(c:={**a,**b})
+print(c := a | b)
 #! decorators
 #*Decorator is a function that takes another funcion as argument 
 #*and extends the behaviour of this function without explicitely modifying it
