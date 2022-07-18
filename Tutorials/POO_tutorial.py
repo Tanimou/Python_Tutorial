@@ -18,7 +18,7 @@ class Item(ABC):
     def __init__(self,name:str,price:float,quantity=0): ## we can also initialise a paramater to its default value
                                                         ##when not provided during instanciation like in javascript 
                                                         ##as well as specify the type of parameter like in typescript
-        
+
         #*assert statement is useful when we want to check the validity of parameters and catch errors
         #*before going forward                                               
         assert price >=0, f"Price {price} is not a valid value!"                                            

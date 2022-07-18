@@ -90,18 +90,13 @@ while True:
             conn.commit()
             continue
 
-        print('('+str(len(html))+')', end=' ')
+        print(f'({len(html)})', end=' ')
 
         soup = BeautifulSoup(html, "html.parser")
     except KeyboardInterrupt:
         print('')
         print('Program interrupted by user...')
         break
-    except:
-        print("Unable to retrieve or parse page")
-        cur.execute('UPDATE Pages SET error=-1 WHERE url=?', (url, ) )
-        conn.commit()
-        continue
     #*if the try/except block didn't blow up, then we add the html content in our database
     cur.execute('INSERT OR IGNORE INTO Pages (url, html, new_rank) VALUES ( ?, NULL, 1.0 )', ( url, ) )
     cur.execute('UPDATE Pages SET html=? WHERE url=?', (memoryview(html), url ) )

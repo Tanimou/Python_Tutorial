@@ -86,7 +86,7 @@ def Openexcelfile(filepath):
         # Adding akkakro allekran cma
         y = threading.Thread(target=Adding_lefted_prospect, args=(Prospect_list, last_list, Despatched_list, Assayed_list, ASS_Pending_list))
         y.start()
-        
+
         str2 = StringVar(second_frame, value=list(Prospect_list)[0])
 
     return Prospect_list, Week_list, Despatched_list, Assayed_list, ASS_Pending_list, var, var2, var3, var4, str2, str1,AssaysPen_toweek
@@ -243,30 +243,30 @@ def scrapping_prospect(*args):
     Ass_week = {}
     Desp_weekNO = []
     Ass_weekNo = []
-  
+
     liste2,c=find_column(args[0],"PROSPECT","Samples Data")
     #!getting the list of prospect and the number of samples
     process(liste2, c, args[1], Desp_weekNO, Ass_weekNo, args[2], args[3])
        #!count of each week
-    
+
     Desp_weekNO = dict(Counter(Desp_weekNO))
     Ass_weekNo = dict(Counter(Ass_weekNo))
-    
+
         #!Cumul of each week
-    
+
     cumulweek(Desp_weekNO,Desp_week)
     cumulweek(Ass_weekNo,Ass_week)
 
     Desp_week = dict(sorted(Desp_week.items()))
     Ass_week=dict(sorted(Ass_week.items()))
-    
+
        # print(Desp_week)
-   
+
         #print(Ass_week)
         #print(find_max(Desp_week, "GOVISOU", "RC", 6))
-    
+
         #print(find_max(Ass_week, "GOVISOU", "RC", 6))
-              
+
         #!finding the max of each week
     maxweek(args[4],Desp_week,Ass_week,args[5])
     

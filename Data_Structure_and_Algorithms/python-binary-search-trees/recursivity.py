@@ -13,13 +13,7 @@ from Tree import TreeNode
 def reverseString(input):
     # what is the base case?When can I no longer continue?
     # *one letter or empty string
-    if(input == ""):
-        return ""
-
-    # what is the smallest amount of work I can do in each iteration,between each invocation
-    # what is the small "unit" I can reverse?
-
-    return reverseString(input[1:])+input[0]
+    return "" if (input == "") else reverseString(input[1:])+input[0]
 
 # print(reverseString("hello"))
 
@@ -33,8 +27,8 @@ def isPalindrome(input):
     if(len(input) == 0 | len(input) == 1):
         return True
 
-    if(input[0] == input[len(input)-1]):
-        return isPalindrome(input[1:len(input)-1])
+    if (input[0] == input[len(input)-1]):
+        return isPalindrome(input[1:-1])
 
     # *additional base case to handle non palindrome
     return False
@@ -202,9 +196,7 @@ def reverselistee(node):
 #!Summ of a list
 #*a function that return the sum of a dll/sll
 def sumlist(list):
-    if list is None:
-        return 0
-    return list.head+sumlist(list.next)
+    return 0 if list is None else list.head+sumlist(list.next)
 
 #print(sumlist(n1))
 
@@ -274,13 +266,9 @@ def transformlist(node):
 
 def split(tempHead):
     fast = slow = tempHead
-    while(True):
-         if fast.next is None:
-              break
-         if fast.next.next is None:
-              break
-         fast = fast.next.next
-         slow = slow.next
+    while fast.next is not None and fast.next.next is not None:
+        fast = fast.next.next
+        slow = slow.next
 
     temp = slow.next
     slow.next = None

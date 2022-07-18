@@ -10,10 +10,10 @@ try:
 except:
     pass
 
-dnsmapping = dict()
+dnsmapping = {}
 mapping = {}
 
-def fixsender(sender,allsenders=None) :
+def fixsender(sender,allsenders=None):
     global dnsmapping
     global mapping
     if sender is None : return None
@@ -51,7 +51,7 @@ def fixsender(sender,allsenders=None) :
     # if dns != x : print(x,dns)
     # if dns != dnsmapping.get(dns,dns) : print(dns,dnsmapping.get(dns,dns))
     dns = dnsmapping.get(dns,dns)
-    return mpieces[0] + '@' + dns
+    return f'{mpieces[0]}@{dns}'
 
 def parsemaildate(md):
     # See if we have dateutil
@@ -90,7 +90,7 @@ def parsemaildate(md):
         if tz == '-0000' : tz = '+0000'
         tzh = tz[:3]
         tzm = tz[3:]
-        tz = tzh+":"+tzm
+        tz = f"{tzh}:{tzm}"
     except:
         pass
 
