@@ -1,7 +1,7 @@
 import copy
 import random
 
-# Consider using the modules imported above.
+# Consider using the modules imported above. Ow okay
 
 
 class Hat():
