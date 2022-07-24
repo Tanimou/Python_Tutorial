@@ -3,6 +3,13 @@ from abc import ABC, abstractmethod  # # abc stands for abstract based class
 
 ##here another try for gitkraken client
 #AWESOME
+##blablablablablabla
+ #! Property decorator = read-only attribute : like Getter in javascript
+    # *the attribute name is a private attribute, meaning that it can't be accessed from outside the class no matter what
+    # *if we want to acces in read-only mode we use @property
+    # *this is how we set an attribute to a read-only value
+    # *when calling the property name we don't put parenthesis
+    ok
 
 #!Creation of class
 class Item(ABC):
