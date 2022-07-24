@@ -82,15 +82,13 @@ def add_time(start, duration, day=None):
     day = days_week[i]
     #
     if count == 0:
-      string = (f"{start_h}:{str(startt_m)} {str(timee)}," + " ") + day.capitalize()
+      string = f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}"
     elif count == 1:
-      string = (
-          (f"{start_h}:{str(startt_m)} {str(timee)}, " + day.capitalize()) +
-          " ") + "(next day)"
+      string = (f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}" +
+                " ") + "(next day)"
     if count > 1:
-      string = (
-          (f"{start_h}:{str(startt_m)} {str(timee)}, " + day.capitalize()) +
-          " ") + f"({count} days later)"
+      string = (f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}" +
+                " ") + f"({count} days later)"
 
   return string
 
