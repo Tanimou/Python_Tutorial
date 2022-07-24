@@ -1,3 +1,4 @@
+#hello
 start_h = 0
 start_m = 0
 timee = ""
