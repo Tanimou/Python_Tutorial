@@ -1,5 +1,6 @@
 import json
 import sqlite3
+
 #https: // www.youtube.com/watch?v = qEkUEAz8j3o & ab_channel = freeCodeCampConcepts
 conn = sqlite3.connect('rosterdb.sqlite')
 ##the cursor is generally like a file handler to the database
