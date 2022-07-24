@@ -32,6 +32,9 @@ The Square class should be able to access the Rectangle class methods but should
 If an instance of a Square is represented as a string, it should look like: Square(side=9)
 
 Additionally, the set_width and set_height methods on the Square class should set both the width and height.
+
+Awesome
+So here it's just a test on gitkraken client software
     """
 
 
