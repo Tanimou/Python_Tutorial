@@ -44,53 +44,47 @@ def add_h():
 
 def add_time(start, duration, day=None):
   global start_h, start_m, timee, duration_h, duration_m, count
-  days_week = ["Monday", "Tuesday", "Wednesday",
-               "Thursday", "Friday", "Saturday", "Sunday"]
   start = start.split()
   timee = start[1]
   start = start[0].split(":")
-
   start_h = int(start[0])
-
   start_m = int(start[1])
-
   duration = duration.split(":")
   duration_h = int(duration[0])
   duration_m = int(duration[1])
-
   add_mn()
   count = 0
   add_h()
-
-  startt_m = f"0{start_m}" if len(str(start_m)) == 1 else str(start_m)
+  startt_m = f"0{start_m}" if len(str(start_m)) == 1 else f"{start_m}"
   if day is None:
     if count == 0:
-      string = f"{start_h}:{str(startt_m)} {str(timee)}"
+      return f"{start_h}:{startt_m} {timee}"
     elif count == 1:
-      string = f"{start_h}:{str(startt_m)} {str(timee)} (next day)"
+      return f"{start_h}:{startt_m} {timee} (next day)"
     if count > 1:
-      string = (f"{start_h}:{str(startt_m)} {str(timee)}" +
-                " ") + f"({count} days later)"
+      return f"{start_h}:{startt_m} {timee} " + f"({count} days later)"
   else:
+    days_week = [
+        "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday",
+        "Sunday"
+    ]
     start_index = days_week.index(day.capitalize()) + count
     i = 0
     for _ in range(start_index):
-     i += 1
-     if i > 6:
+      i += 1
+      if i > 6:
         i = 0
-
     day = days_week[i]
-    #
     if count == 0:
-      string = f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}"
+      return f"{start_h}:{startt_m} {timee}, {day.capitalize()}"
     elif count == 1:
-      string = (f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}" +
-                " ") + "(next day)"
-    if count > 1:
-      string = (f"{start_h}:{str(startt_m)} {str(timee)}, {day.capitalize()}" +
-                " ") + f"({count} days later)"
+      return (f"{start_h}:{startt_m} {timee}, {day.capitalize()}" +
+              " ") + "(next day)"
+    else:
+      return (f"{start_h}:{startt_m} {timee}, {day.capitalize()}" +
+              " ") + f"({count} days later)"
 
-  return string
+ 
 
 
-print(add_time("8:16 PM", "466:02", "tuesday"))
+print(add_time("8:16 PM", "24:00", "tuesday"))

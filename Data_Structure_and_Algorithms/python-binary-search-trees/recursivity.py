@@ -145,13 +145,13 @@ n5 = node(4)
 n6 = node(11)
 n7 = node(16)
 n8 = node(20)
-n1.next = n2
-n2.next = n3
-n3.next = n4
-n4.next = n5
-n5.next = n6
-n6.next = n7
-n7.next = n8
+n1.next = n2  # type: ignore
+n2.next = n3  # type: ignore
+n3.next = n4  # type: ignore
+n4.next = n5  # type: ignore
+n5.next = n6  # type: ignore
+n6.next = n7  # type: ignore
+n7.next = n8  # type: ignore
 
 
 def reverseList(node):
@@ -231,7 +231,7 @@ class Linkedlist:
 
         # Append the new node at the end
         # of the linked list
-        curr_node.next = new_node
+        curr_node.next = new_node  # type: ignore
         
 #!merge two sorted single linked lists
 # *in a ordered way
@@ -333,11 +333,11 @@ class DoublyLinkedList:
 
 	# 3. Make next of new node as head and
 	# previous as None (already None)
-        new_node.next = self.head
+        new_node.next = self.head  # type: ignore
 
 	# 4. change prev of head node to new_node
         if self.head is not None:
-            self.head.prev = new_node
+            self.head.prev = new_node  # type: ignore
 
 	# 5. move the head to point to the new node
         self.head = new_node

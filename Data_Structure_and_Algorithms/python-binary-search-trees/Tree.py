@@ -19,14 +19,14 @@ class TreeNode():
     def height(self):
         if self is None:
             return 0
-        return 1 + max(TreeNode.height(self.left), TreeNode.height(self.right))
+        return 1 + max(TreeNode.height(self.left), TreeNode.height(self.right))  # type: ignore
 
     #!size of a binary tree
     # *it's the number of node in a tree
     def size(self):
         if self is None:
             return 0
-        return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)
+        return 1 + TreeNode.size(self.left) + TreeNode.size(self.right)  # type: ignore
 
     #!traversing a binary tree
     # *Inorder traversal:
@@ -36,9 +36,9 @@ class TreeNode():
     def traverse_in_order(self):
         if self is None:
             return []
-        return (TreeNode.traverse_in_order(self.left) +
+        return (TreeNode.traverse_in_order(self.left) +  # type: ignore
                 [self.key] +
-                TreeNode.traverse_in_order(self.right))
+                TreeNode.traverse_in_order(self.right))  # type: ignore
 
     #!traversing a binary tree
     # *Preorder traversal:
@@ -49,8 +49,8 @@ class TreeNode():
         if self is None:
             return []
         return ([self.key] +
-                TreeNode.traverse_pre_order(self.left) +
-                TreeNode.traverse_pre_order(self.right))
+                TreeNode.traverse_pre_order(self.left) +  # type: ignore
+                TreeNode.traverse_pre_order(self.right))  # type: ignore
 
     #!traversing a binary tree
     # *Postorder traversal:
@@ -60,9 +60,9 @@ class TreeNode():
     def traverse_post_order(self):
         if self is None:
             return []
-        return (TreeNode.traverse_post_order(self.right) +
+        return (TreeNode.traverse_post_order(self.right) +  # type: ignore
                 [self.key] +
-                TreeNode.traverse_post_order(self.left))
+                TreeNode.traverse_post_order(self.left))  # type: ignore
 
     #!display the tree
     def display_tree(self, space='\t', level=0):
@@ -75,9 +75,9 @@ class TreeNode():
             print(space*level + str(self.key))
             return
         # If the node has children
-        TreeNode.display_tree(self.right, space, level+1)
+        TreeNode.display_tree(self.right, space, level+1)  # type: ignore
         print(space*level + str(self.key))
-        TreeNode.display_tree(self.left, space, level+1)
+        TreeNode.display_tree(self.left, space, level+1)  # type: ignore
 
     #!convert a binary tree into tuple
     def to_tuple(self):
@@ -85,7 +85,7 @@ class TreeNode():
             return None
         if self.left is None and self.right is None:
             return self.key
-        return TreeNode.to_tuple(self.left),  self.key, TreeNode.to_tuple(self.right)
+        return TreeNode.to_tuple(self.left),  self.key, TreeNode.to_tuple(self.right)  # type: ignore
 
     #!convert a tuple into binary tree
     @staticmethod
@@ -106,9 +106,9 @@ class TreeNode():
             return TreeNode(data)
         # *small amount of work in each iteration
         if(self.key < data):
-            self.right = TreeNode.InsertNode(self.right, data)
+            self.right = TreeNode.InsertNode(self.right, data)  # type: ignore
         else:
-            self.left = TreeNode.InsertNode(self.left, data)
+            self.left = TreeNode.InsertNode(self.left, data)  # type: ignore
         return self
 
     def find(self, key):
@@ -117,9 +117,9 @@ class TreeNode():
         if key == self.key:
             return self
         if key < self.key:
-            return TreeNode.find(self.left, key)
+            return TreeNode.find(self.left, key)  # type: ignore
         if key > self.key:
-            return TreeNode.find(self.right, key)
+            return TreeNode.find(self.right, key)  # type: ignore
 
 
 # *we can represent a binary tree to a tuple

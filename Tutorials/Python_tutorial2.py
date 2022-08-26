@@ -278,9 +278,9 @@ print("\n")
 
 #!Regex (regular expression)
 with open("mbox.txt") as hand:
-   for line in hand:
-       line = line.rstrip()
-   print(line) if re.search("^From", line) else print("Not found")
+   for linee in hand:
+       linee = linee.rstrip()
+   print(linee) if re.search("^From", linee) else print("Not found")
 #*greedy matching
 ##the repeat characters(*and+) push outward in both directions to match the largest possible string
 
@@ -371,12 +371,12 @@ print(c)
 #!lambda function or anonymous function like in javascript
 
 # similar to func2=function(x){return x+5} or func2= x =>x+5 in javascript
-def func2(x): return x+5
+def func2(x): return x+5  # type: ignore
 
 print(func2(9))
 
-def funcc(x):
-    return func2(x)+85
+def funcc(x):  # type: ignore
+    return func2(x)+85  # type: ignore
 
 print(funcc(9))
 
@@ -402,7 +402,7 @@ print(newList1)
 print("\n")
 
 #!local and global variable
-def foo():
+def foo():  # type: ignore
     #*every variable created inside a function are local variable
     #*so if we want to access to the global variable number, we need to add this keywword: global
     global number
@@ -449,10 +449,11 @@ def fooo(a,b,*,c):
 fooo(1,2,c=3)
 #*the unpacking function of the * operator will unpack elements into a list
 numbers=[1,2,3,4,5,6,7,8,9]
-*beginning,last=numbers
+#*beginning,last=numbers
 #beginning,*last=numbers
-#beginning,*middle,last=numbers 
+beginning,*middle,last=numbers 
 print(beginning)
+print(middle)
 print(last)
 mytuple=(1,2,3)
 myset={4,5,6}
@@ -500,8 +501,8 @@ def repeat(num_times):
         @functools.wraps(func) #just to keep the identity of repeat()
         def wrapper(*args,**kwargs):
             for _ in range(num_times):
-                result=func(*args,**kwargs)
-            return result
+                resulta=func(*args,**kwargs)
+            return resulta
         return wrapper
     return decorator_repeat
 
@@ -533,7 +534,7 @@ def debug(func):
 
 @debug#it's like we say start_end=debug(start_end)
 @start_end #it's like we say say_hello=start_end(say_hello)
-def say_hello(name):
+def say_hello(name):  # type: ignore
     print(f"hello {name}")
     
 say_hello("Alex")

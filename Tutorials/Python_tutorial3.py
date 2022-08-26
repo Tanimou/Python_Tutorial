@@ -5,8 +5,15 @@ import ssl
 import time  # (smtplib:simple mail transfert protocol library)
 from contextlib import contextmanager
 from email.message import EmailMessage
-from itertools import (accumulate, combinations, cycle, groupby, permutations,
-                       product, repeat)
+from itertools import (
+    accumulate,
+    combinations,
+    cycle,
+    groupby,
+    permutations,
+    product,
+    repeat,
+)
 from json import JSONEncoder
 from multiprocessing import Array, Lock, Pool, Process, Value
 from threading import Lock, Thread
@@ -478,8 +485,8 @@ def firstn_generator(n):
         yield num
         num+=1
         
-print(sum(firstn(10)))
 print(sum(firstn_generator(10)))
+print(sum(firstn(10)))
 
 #*generators expressions: the same as list comprehension but with parentheses instead of brackets
 mygeneraor=(i for i in range(10) if i%2==0) #generator expression
@@ -516,7 +523,7 @@ class ManagedFile:
 with ManagedFile("notebook.txt") as f:
     print("do some stuffs")
     f.write("haha")
-    f.dosomething()
+    #f.dosomething()
 print("continuing")
 
 ##with function

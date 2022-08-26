@@ -34,7 +34,7 @@ def bfs(graph,head):
     queue = [head]
     parent=[None for _ in range(len(graph.data))]
     distance=[None for _ in range(len(graph.data))]
-    distance[head]=0
+    distance[head]=0  # type: ignore
     idx=0
     while idx < len(queue):
         current=queue[idx]
@@ -45,7 +45,7 @@ def bfs(graph,head):
             if not discovered[node]:
                 discovered[node]=True
                 parent[node]=current
-                distance[node]=1+distance[current]
+                distance[node]=1+distance[current]  # type: ignore
                 queue.append(node)
     return queue,distance,parent
 
@@ -206,15 +206,15 @@ def SPBFS(graph, src, dest):
         for neighbor in graph.data[node]:
             if not visited[neighbor]:
                 visited[neighbor] = True
-                queue.append((neighbor, distance+1))
+                queue.append((neighbor, distance+1))  # type: ignore
                 parent[neighbor] = node
         idx += 1
     if visited[dest]:
         path = [dest]
         idx = parent[dest]
         path.append(idx)
-        while parent[idx] is not None:
-            idx = parent[idx]
+        while parent[idx] is not None:  # type: ignore
+            idx = parent[idx]  # type: ignore
             path.append(idx)
         path.reverse()
         for node, dist in enumerate(queue):
