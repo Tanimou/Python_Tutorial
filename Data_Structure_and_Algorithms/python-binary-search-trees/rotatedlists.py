@@ -55,16 +55,16 @@ def count_rotations_binary(nums):
     n = 0
     while lo <= hi:
         mid = int((lo+hi)//2)
-        mid_number = nums[mid]
+       # mid_number = nums[mid]
 
         # Uncomment the next line for logging the values and fixing errors.
         print("lo:", lo, ", hi:", hi, ", mid:",
-              mid, ", mid_number:", mid_number)
+              mid, ", mid_number:", nums[mid])
         if hi == lo+1:
             return lo if nums[lo] < nums[hi] else hi
         if nums[hi] < nums[hi-1] and nums[lo+1] < nums[lo]:
             return len(nums) if n == 0 else hi
-        if mid > 0 and mid_number < nums[mid-1]:
+        if mid > 0 and nums[mid] < nums[mid-1]:
             # The middle position is the answer
             return mid
 

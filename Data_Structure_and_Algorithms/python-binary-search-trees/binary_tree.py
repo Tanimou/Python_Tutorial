@@ -1,4 +1,5 @@
 from Tree import TreeNode
+
 """
 QUESTION 1: As a senior backend engineer, you are tasked with developing a fast in-memory data structure to manage profile information (username, name and email) for 100 million users. It should allow the following operations to be performed efficiently:
 
@@ -50,8 +51,8 @@ The various functions can be implemented as follows:
 """
 
 
-class UserDatabase:
-    def __init__(self):
+class UserDatabase(User):
+    def __init__(self):     
         self.users = []
 
     def insert(self, user):
@@ -184,10 +185,10 @@ class BSTNode():
         if self is None:
             self = BSTNode(key, value)
         elif key < self.key:
-            self.left = BSTNode.insert(self.left, key, value)
+            self.left = BSTNode.insert(self.left, key, value)  # type: ignore
             self.left.parent = self
         elif key > self.key:
-            self.right = BSTNode.insert(self.right, key, value)
+            self.right = BSTNode.insert(self.right, key, value)  # type: ignore
             self.right.parent = self
         return self
     
@@ -197,9 +198,9 @@ class BSTNode():
         if key == self.key:
             return self
         if key < self.key:
-            return BSTNode.find(self.left, key)
+            return BSTNode.find(self.left, key)  # type: ignore
         if key > self.key:
-            return BSTNode.find(self.right, key)
+            return BSTNode.find(self.right, key) # type: ignore
 
     def update(self, key, value):
         target = BSTNode.find(self, key)
@@ -216,7 +217,7 @@ class BSTNode():
     def list_all(self):
         if self is None:
             return []
-        return BSTNode.list_all(self.left) + [(self.key, self.value)] + BSTNode.list_all(self.right)
+        return BSTNode.list_all(self.left) + [(self.key, self.value)] + BSTNode.list_all(self.right)  # type: ignore
     
     
 '''
@@ -246,7 +247,7 @@ def find(node, key):
     
 # *let's use this to recreate our tree
 # *to recreate the first node, we can use the insert function with None as the target tree
-tree = BSTNode.insert(None, jadhesh.username, jadhesh)
+tree = BSTNode.insert(None, jadhesh.username, jadhesh)  # type: ignore
 tree.insert( biraj.username, biraj)
 tree.insert( sonaksh.username, sonaksh)
 tree.insert( aakash.username, aakash)
@@ -305,4 +306,4 @@ def make_balanced_bst(data, lo=0, hi=None, parent=None):
 
 data = [(user.username, user) for user in users]
 tree = make_balanced_bst(data)
-TreeNode.display_tree(tree, "   ")
+TreeNode.display_tree(tree, "   ")  # type: ignore

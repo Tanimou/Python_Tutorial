@@ -1,15 +1,12 @@
 import csv
 from abc import ABC, abstractmethod  # # abc stands for abstract based class
 
-##here another try for gitkraken client
-#AWESOME
-##blablablablablabla
- #! Property decorator = read-only attribute : like Getter in javascript
+#! Property decorator = read-only attribute : like Getter in javascript
     # *the attribute name is a private attribute, meaning that it can't be accessed from outside the class no matter what
     # *if we want to acces in read-only mode we use @property
     # *this is how we set an attribute to a read-only value
     # *when calling the property name we don't put parenthesis
-    ok
+    
 
 #!Creation of class
 class Item(ABC):
@@ -101,10 +98,10 @@ class Item(ABC):
         for item in items:
             # *instanciation
             Item(
-                name=item.get("name"),
+                name=item.get("name"),  # type: ignore
                 # because items is a list of strings we need to convert price and quantity to a number
-                price=float(item.get("price")),
-                quantity=int(item.get("quantity")),
+                price=float(item.get("price")),  # type: ignore
+                quantity=int(item.get("quantity")),  # type: ignore
             )
 
     #! a static method doesn't need to pass an object or a class as a first parameter

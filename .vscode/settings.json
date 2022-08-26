@@ -27,5 +27,6 @@
   "gitdoc.autoPull": "off",
   "gitdoc.commitOnClose": false,
   "gitdoc.enabled": false,
-  "dvc.dvcPath": "dvc"
+  "dvc.dvcPath": "dvc",
+  "python.analysis.typeCheckingMode": "off"
 }
