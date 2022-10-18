@@ -62,10 +62,7 @@ def dfs(graph,head):
         if not discovered[current]:
             discovered[current]=True
             result.append(current)
-            for node in graph.data[current]:
-                if not discovered[node]:
-                     stack.append(node)
-
+            stack.extend(node for node in graph.data[current] if not discovered[node])
     return result
 #print(dfs(graph1,3))
 

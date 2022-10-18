@@ -53,9 +53,9 @@ def add_time(start, duration, day=None):
   duration_h = int(duration[0])
   duration_m = int(duration[1])
   add_mn()
-  count = 0
   add_h()
   startt_m = f"0{start_m}" if len(str(start_m)) == 1 else f"{start_m}"
+  count = 0
   if day is None:
     if count == 0:
       return f"{start_h}:{startt_m} {timee}"
@@ -78,11 +78,9 @@ def add_time(start, duration, day=None):
     if count == 0:
       return f"{start_h}:{startt_m} {timee}, {day.capitalize()}"
     elif count == 1:
-      return (f"{start_h}:{startt_m} {timee}, {day.capitalize()}" +
-              " ") + "(next day)"
+      return f"{start_h}:{startt_m} {timee}, {day.capitalize()} (next day)"
     else:
-      return (f"{start_h}:{startt_m} {timee}, {day.capitalize()}" +
-              " ") + f"({count} days later)"
+      return f"{start_h}:{startt_m} {timee}, {day.capitalize()} " + f"({count} days later)"
 
  
 
